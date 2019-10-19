@@ -1,0 +1,296 @@
+/*小程序管理*/
+.picopera-table{
+    border: 1px solid rgba(0,0,0,.125);
+    clear:both;
+    width:100%;
+}
+.picopera-table tr{
+    text-align:center;
+    border-bottom:1px solid rgba(0,0,0,.125);
+    line-height:48px;
+}
+.picopera-table th{
+    background:rgba(0,0,0,.05);
+}
+input.intstyle{
+    border:1px solid #dee2e6;
+    border-radius:2px;
+    line-height:30px;
+    text-align:center;
+}
+input.intwidth1{
+    width:80px;
+}
+input.intwidth2{
+    width:300px;
+}
+div.wordstyle{
+    display:inline-block;
+    font-size:12px;
+    line-height:30px;
+}
+.field {
+    position: relative;
+    vertical-align: middle;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    border-radius: 4px;
+    padding: 0px 10px;
+    overflow: hidden;
+    color: #007bff;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.form_revise input {
+    width: 280px;
+}
+.blue {
+    border:1px solid #007bff;
+}
+input.btnstyle{
+    border-radius:4px;
+    color:#fff;
+    line-height:28px;
+    margin: 0 5px;
+    font-size:14px;
+    padding:0 10px;
+    cursor:pointer;
+}
+.bluebg{
+    background:#007bff;
+}
+.redbg{
+    background:#E04923;
+}
+.greenbg{
+    background:#97d54c;
+}
+.addbtnbox{
+    display:inline-block;
+    width:98%;
+}
+.addbtnbox label{
+    display:inline-block;
+    float:right;
+    border: 1px solid #007bff;
+    color:#007bff;
+    border-radius:4px;
+    line-height:30px;
+    padding:0 15px;
+    cursor:pointer;
+}
+/*布草管理*/
+.roomtopcont{
+    display:inline-block;
+    width:99%;
+}
+.alter>.btn{margin-left:1rem;}
+.dirty{/*.脏*/
+    background:#FFCC00;
+}
+.wait{/*.待检查*/
+    background:#B4ECB4;
+}
+/*.room-manage .roomtopcont>a{*/
+    /*display:inline-block;*/
+    /*border-radius:4px;*/
+    /*cursor:pointer;*/
+    /*padding:0 15px;*/
+    /*line-height:35px;*/
+    /*color:#fff !important;*/
+    /*float:right;*/
+/*}*/
+.room-manage .nav-pills .nav-link{
+    width:8rem;
+    background:#e6e7e8;
+    text-align: center;
+    margin-left:1rem;
+}
+.room-manage .nav-pills .nav-link.active{
+    background:#007bff;
+    /*color:#ffc107;*/
+}
+.roomwrapper{
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:4px;
+    margin-top:1rem;
+}
+/*label{*/
+    /*font-weight:normal !important;*/
+/*}*/
+ul.roomnums{
+    display:inline-block;
+    list-style:none;
+    width:100%;
+    margin-top:2rem;
+    margin-bottom:0;
+    padding:0;
+    padding:0 0 0 2rem;
+}
+ul.roomnums li{
+    width:10rem;
+    height:10rem;
+    /*line-height:10rem;*/
+    min-width:5.8rem;
+    text-align:center;
+    display:inline-block;
+    margin-right:1.6rem;
+    cursor:pointer;
+    margin-bottom:2rem;
+    position:relative;
+    color:#838383;
+}
+ul.roomnums li label{
+    display:inline-block;
+    width:100%;
+    height:100%;
+}
+input.checkbox{
+    position:absolute;
+    right:2px;
+    top:2px;
+}
+ul.roomnums li a{
+    cursor:pointer;
+    display:inline-block;
+    width:100%;
+    height:100%;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+ul.roomnums li label input:checked+a{
+    border:1px solid #ffc107;
+}
+ul.roomnums li a.active{
+    color:#ffc107;
+    /*border:1px solid #ffc107;*/
+}
+ul.roomnums li span{
+    width:100%;
+    position:absolute;
+    top:25%;
+    left:0;
+}
+ul.roomnums li.on{
+    color:#e08e0b;
+    border:1px solid #e08e0b;
+}
+.updatelinen{
+    padding:0.5rem 0;
+}
+.updatelinen a{
+    display:inline-block;
+    border-radius:4px;
+}
+.updatelinen ul{
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+.updatelinen ul li{
+    display:inline-block;
+    margin-right:0.8rem;
+}
+.updatelinen ul li input[type='radio'] {
+    margin-right: 0.7rem;
+    margin-left: 1rem;
+}
+.updatelinen a.active:hover{
+    color:#fff;
+    background:#e08e0b;
+}
+.hotelclerk{
+    display:inline-block;
+    width:100%;
+    margin:0.5rem 0;
+}
+.hotelclerk ul{
+    display:inline-block;
+    width:100%;
+    margin:0;
+    padding:0;
+}
+.hotelclerk ul li{
+    display:inline-block;
+    margin-right:2rem;
+    margin-bottom:0.8rem;
+}
+.hotelclerk ul li input[type='radio']{
+    margin-right:0.7rem;
+    margin-left:1rem;
+}
+h1.taskh1{
+    display:inline-block;
+    font-size:18px;
+    width:100%;
+    margin-bottom:0.8rem;
+    line-height:30px;
+}
+h1.taskh1 span{
+    display:inline-block;
+}
+.entrycontent{
+    text-align:center;
+}
+.entrycontent input.entryint{
+    border-radius:4px;
+    line-height:38px;
+    border:none;
+    border:1px solid #ccc;
+    width:70%;
+    padding-left:1rem;
+}
+a.addstaff{
+    float:right;
+    display:inline-block;
+    border-radius:4px;
+    padding:0 12px;
+    line-height:30px;
+    color:#fff !important;
+    font-size:14px;
+    cursor:pointer;
+}
+.floormain{
+    display:inline-block;
+    margin-left:1rem;
+}
+.floormain select{
+    height:35px;
+    line-height:35px;
+    width:150px;
+}
+.floormain input{
+    margin-right:1rem;
+}
+.floormain input.intbutton{
+    border:none;
+    display:inline-block;
+    border-radius:2px;
+    width:8rem;
+    line-height:38px;
+    background:#e6e7e8;
+}
+.floormain input.intbutton.active{
+    background:#fff;
+    color:#ffc107;
+}
+input:focus { outline: none; }
+.roomwrapper .rooms-item{
+    display:none;
+}
+
+

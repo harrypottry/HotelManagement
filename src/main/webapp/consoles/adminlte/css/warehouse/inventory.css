@@ -1,0 +1,90 @@
+input:focus { outline: none; }
+/*头部栏*/
+.dropdown-toggle::after{
+    display:none;
+}
+.navbar-custom-menu{
+    float:right;
+    margin-right:1rem;
+    padding:7px 0;
+}
+.navbar-custom-menu ul li{
+    margin-right:1rem;
+}
+.navbar-nav{
+    float:left;
+}
+.main-headertwo{
+    display:inline-block;
+    width:81%;
+}
+.navbar-custom-menu a{
+    color:#4b545c;
+}
+.navbar-custom-menu a span{
+    font-size:0.9rem;
+}
+/*库存管理*/
+.inventorybody{
+    background:#f2f2f2;
+}
+.stockmains{
+    display:inline-block;
+    width:100%;
+    border-bottom:1px solid #797979;
+}
+h1.titleh1{
+    display:inline-block;
+    font-size:1rem;
+}
+.stockbtnmain{
+    display:inline-block;
+}
+.stockbtnmain input{
+    display:inline-block;
+    border-radius:4px;
+    border:none;
+    border: 1px solid #797979;
+    color: #3c3034;
+    cursor:pointer;
+    min-width: 8rem;
+    margin-left: 2rem;
+}
+.stockbtnmain input.active{
+    border:1px solid #249bd3;
+    background:#249bd3;
+    color:#fff;
+}
+.stockbottombtn{
+    text-align:center;
+}
+.stockbottombtn input{
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    color:#fff;
+    min-width: 11rem;
+    margin-left: 2rem;
+}
+.pbtn{
+    padding:1rem;
+}
+.pbtn>input {
+    min-width: 11rem;
+    margin-left: 2rem;
+}
+.inventorymain{
+    display:inline-block;
+    width:100%;
+    padding:1rem 0;
+}
+.inventorymain span{
+    color: #3c3034;
+    font-size:0.8rem;
+    margin-left:1rem;
+}
+.form-control {
+    display: inline-block;
+    width: 10rem;
+}
+

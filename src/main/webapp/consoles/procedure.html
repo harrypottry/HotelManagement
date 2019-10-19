@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AAroom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="adminlte/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <script src="adminlte/mydesign/bootstrap.min.css"></script>
+    <script src="adminlte/mydesign/jquery.min.js"></script>
+    <script src="adminlte/mydesign/bootstrap.min.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- 左侧导航 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 导航head -->
+        <a href="index.html" class="brand-link">
+            <img src="adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">AAroom</span>
+        </a>
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info"><a>当前登录：郝玉棠</a></div>
+            </div>
+            <!-- 动态导航nav -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!-- 页面内容 -->
+    <div class="content-wrapper">
+        <section class="content-header"><!-- 页名 -->
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>小程序管理</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content"><!--main-->
+            <div class="container-fluid">
+                <div class="row" style="margin-bottom:15px;">
+                    <div class="col-sm-4">
+                        <button id="addBtn" class="btn btn-info" style="width:200px;" >
+                            <i class="glyphicon glyphicon-plus"></i>添加数据
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th width="10%">图片顺序</th>
+                                <th width="15%">图片样式</th>
+                                <th width="25%">链接地址</th>
+                                <th width="25%">跳转地址</th>
+                                <th width="25%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablecontent">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--添加图片模态框-->
+            <div class="modal" id="addDialog" role="dialog"
+                 aria-labelledby="addDialogLabel" aria-hidden="true" data-backdrop="static">
+                <!--<form id="bannerFormAdd" name="bannerFormAdd" method="post" action= "/console/api/banner" enctype="multipart/form-data">-->
+                <div class="modal-dialog" style="width:500px;">
+                    <form id = "bannerFormAdd">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-primary" id="addDialogLabel">
+                                    添加图片
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row" style="margin:10px;">
+                                    <div class="field">
+                                        <a class="file blue" href="javascript:">上传图片<input type="file" name="id_pic_path" id="bannerAdd" ></a><br>
+                                        <!--图片浏览区域-->
+                                            <img  id="file_view" width="80px" height="auto">
+                                        <!--图片确认提交按钮-->
+                                        <br>
+                                        <input type="button" class="btn btn-mini" id="upload" value="确定上传" />
+                                        <input id="businessLicensePicVal" value="" type="hidden">
+                                        <div class="wordstyle fileerrorTip1"></div>
+                                        <div class="wordstyle showFileName1"></div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin:10px;">
+                                    <div class="form-group">
+                                        <label for="imgnumAdd" class="col-sm-4 control-label">图片顺序</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="imgnumAdd" name="img_num" placeholder="请输入图片顺序">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin:10px;">
+                                    <div class="form-group">
+                                        <label for="urlAdd" class="col-sm-4 control-label">链接地址</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="urlAdd" name="url" placeholder="请输入链接地址">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default">
+                                    取消
+                                </button>
+                                <button id="addConfirmBtn" type="submit" class="btn btn-primary">
+                                    确定
+                                </button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </form>
+                </div><!-- /.modal dialog-->
+            </div>
+            <!--修改图片模态框-->
+            <div class="modal" id="editDialog" role="dialog"
+                 aria-labelledby="editDialogLabel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog" style="width:500px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-primary" id="editDialogLabel">
+                                修改图片
+                            </h4>
+                        </div>
+                        <form id="myformEdit1">
+                            <div class="modal-body">
+                                <input type="hidden" id="idEdit" value="" name="id">
+                                <div class="row" style="margin:10px;">
+                                    <div class="form-group">
+                                        <label for="imgnumEdit" class="col-sm-4 control-label">图片顺序</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="imgnumEdit" name="img_num" placeholder="请输入图片顺序">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin:10px;">
+                                    <div class="form-group">
+                                        <label for="urlEdit" class="col-sm-4 control-label">跳转地址</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="urlEdit" name="url" placeholder="请输入跳转地址">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default1">
+                                取消
+                            </button>
+                            <button id="editConfirmBtn" type="button" class="btn btn-primary">
+                                确定
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal dialog-->
+            </div>
+        </section>
+    </div>
+</div>
+<script src="adminlte/js/jquery.min.js"></script>
+<script src="adminlte/js/dataTables.min.js"></script>
+<script src="adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="adminlte/js/adminlte.min.js"></script>
+<script src="adminlte/js/script.js"></script>
+<script src="adminlte/js/banner.js"></script>
+</body>
+</html>

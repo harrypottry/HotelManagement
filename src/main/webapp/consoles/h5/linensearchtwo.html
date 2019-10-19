@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 库管-阿姨布草查询</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/iosSelect.css">
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+		<div class="taskdetails" style="display:block">
+			<div class="linenserch">
+				<div class="searchmain">
+					<p>
+						<span>
+							<img src="../adminlte/img/h5/search.png" class="searchicon"/>
+							<input type="hidden" class="form-control" name="bank_id" id="bankId" placeholder="请选择阿姨" value="">
+							<span id="showBank" class="select-value">请选择阿姨</span>
+							<img src="../adminlte/img/h5/downjt.png" class="downselect"/>
+					    </span>
+                        <button class="searchbtns gray">查询</button>
+					</p>
+					<div class="container"></div>
+				</div>
+				<div class="searchconts searchcontstwo">
+					<p>
+						<a>布草名称</a>
+						<a>材质</a>
+						<a>规格</a>
+						<a>干净/脏/总数</a>
+					</p>
+					<div class="searchlistinfo">
+
+					</div>
+					<div class="summain"></div>
+				</div>
+			</div>
+			<!--<div class="searchbox">-->
+				<!--<button class="gray">查询</button>-->
+			<!--</div>-->
+		</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script type="text/javascript" src="../adminlte/js/h5/iosSelect.js"></script>
+<script>
+	$(function(){
+        var datas=[];
+        //获得本酒店所有保洁员
+        $.ajax({
+            type: "get",
+            url: "/app/console/api/GetEmployeeName",
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                for(var i in data.data){
+                    datas[i]={'id': data.data[i].id, 'value': data.data[i].name}
+                }
+            }
+        });
+        if(datas==null || datas==undefined){
+			return false
+        }else{
+            //仿select
+            var showBankDom = document.querySelector('#showBank');
+            var bankIdDom = document.querySelector('#bankId');
+            showBankDom.addEventListener('click', function () {
+                var bankId = showBankDom.dataset['id'];
+                var bankName = showBankDom.dataset['value'];
+                var bankSelect = new IosSelect(1,
+                    [datas],
+                    {
+                        container: '.container',
+                        itemHeight: 50,
+                        itemShowCount: 3,
+                        oneLevelId: bankId,
+                        callback: function (selectOneObj) {
+                            bankIdDom.value = selectOneObj.id;
+                            showBankDom.innerHTML = selectOneObj.value;
+                            showBankDom.dataset['id'] = selectOneObj.id;
+                            showBankDom.dataset['value'] = selectOneObj.value;
+                            //查询按钮判断变色
+                            if(bankIdDom.value == null || bankIdDom.value.length == 0){
+                                $(".searchbtns").addClass('gray');
+                            }else{
+                                $(".searchbtns").addClass('red');
+                                $(".searchbtns").removeClass('gray');
+                            }
+                            $(".searchconts").show();
+                            //点击查询
+                            $(".searchbtns").click(function(){
+                                $.ajax({
+                                    type: "post",
+                                    url: "/app/console/api/GetCleanerCloth",
+                                    data: {id:showBankDom.dataset['id']},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        // console.log(data);
+                                        var $html='';
+                                        var x;
+                                        var datas=data.data[1];
+                                        data.data.list={};
+                                        for(var i in datas){
+                                            x={};
+                                            for (var j of datas[i].clothTypes) {
+                                                x[j.cloth_kind] = j.desc;
+                                            }
+                                            data.data.list[i]=x;
+                                            if(data.data.list[i].Type==null){
+                                                data.data.list[i].Type='';
+                                            }
+                                            if(data.data.list[i].Material==null){
+                                                data.data.list[i].Material='';
+                                            }
+                                            if(data.data.list[i].Size==null){
+                                                data.data.list[i].Size='';
+                                            }
+                                            $html+='<ul><li>'+data.data.list[i].Type+'</li><li>'+data.data.list[i].Material+'</li><li>'+data.data.list[i].Size+'</li><li>'+datas[i].clean+'/'+datas[i].dirty+'/'+datas[i].all+'</li></ul>';
+                                        }
+                                        $('.searchlistinfo').html($html);
+                                        var $divs='';
+                                        $divs+='<h1 class="total">合计：'+data.data[0].Sum+'件</h1>';
+                                        $('.summain').html($divs);
+                                    }
+                                });
+                            })
+                        }
+                    });
+            });
+		}
+	})
+</script>
+</body>
+</html>

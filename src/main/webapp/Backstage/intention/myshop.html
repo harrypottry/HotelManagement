@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的门店</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#shoplist"  data-toggle="tab">门店列表</a></li>
+                <li class="nav-item"><a class="nav-link" href="#addshop" data-toggle="tab">添加门店</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="shoplist"><!--门店列表-->
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li>
+                                <b>门店名称：</b>
+                                <input type="text" class="form-control" data-id="hotelName">
+                            </li>
+                            <li>
+                                <b>门店状态：</b>
+                                <select class="form-control" data-id="status">
+                                    <option value="0">全部</option>
+                                    <option value="1">待入库</option>
+                                    <option value="2">入库审批中</option>
+                                    <option value="3">入库未通过</option>
+                                    <option value="4">已入库</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>业主姓名：</b>
+                                <input type="text" class="form-control" data-id="owernName">
+                            </li>
+                            <li>
+                                <span class="btn btn-danger query">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span class="btn btn-danger btn-sm download">导出</span></span>
+                    </div>
+                    <table class="table table-striped" id="table" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>门店名称</th>
+                            <th>业主姓名</th>
+                            <th>门店地址</th>
+                            <th>添加日期</th>
+                            <th>门店状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane" id="addshop"><!--添加门店-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>酒店名称：</b><input type="text" class="form-control hotelName" data-id="hotelName"></p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>酒店地址：</b><span data-toggle="distpicker"><select class="form-control" id="province1" style="width:6.5rem" data-id="hotelProvince"></select>&nbsp;<select class="form-control" id="city1" style="width:7rem" data-id="hotelCity"></select>&nbsp;<select class="form-control" id="district1" style="width:7rem" data-id="hotelCounty"></select></span>
+                                    </p>
+                                    <p><b class="inputname"><span>* </span>详细地址：</b><input type="text" class="form-control" data-id="hotelStreetAddress"></p>
+                                    <p><b class="inputname"><span>* </span>房间总数：</b><input type="text" class="form-control" data-id="roomNum"></p>
+                                    <p><b class="inputname" style="vertical-align:top;"><span>* </span>门头照片：</b><span class="upimg"><b>上传门头照片</b><img src=""><input class="import-btn" type="file" accept="image/*" data-id="doorwayPhoto"></span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>业主姓名：</b><input type="text" class="form-control" data-id="owernName"></p>
+                                    <p><b class="inputname"><span>* </span>业主电话：</b><input type="text" class="form-control" data-id="owernPhone"></p>
+                                    <p><b class="inputname">业主邮箱：</b><input type="text" class="form-control" data-id="owernEmail"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <b class="inputname" style="vertical-align:top;">业主身份证：</b><span class="upimg"><b>上传业主身份证正面</b><img src=""><input class="import-btn" type="file" accept="image/*" data-id="owernIdcardPhotoz"></span>
+                                        <span class="upimg"><b>上传业主身份证反面</b><img src=""><input class="import-btn" type="file" accept="image/*" data-id="owernIdcardPhotof"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><b class="inputname" style="vertical-align:top;">备注：</b><textarea class="form-control" rows="3" style="width:70%" data-id="remark"></textarea></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <span class="btn btn-secondary" data-id="1">保存</span>
+                                    <span class="btn btn-danger" data-id="2">提交</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/distpicker.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+//门店列表#shoplist
+// 查询
+$('#shoplist .query').click(function(datas,pageCount){//页面请求表格数据   pageCount:总页码数
+    datas={};
+    $('#shoplist .form-control').each(function(){
+        datas[$(this).attr('data-id')]=$(this).val();
+    });
+    $('#table').dataTable({
+        scrollY:window.innerHeight-420,
+        scrollX:true,
+        destroy:true,
+        ordering:false,//排序
+        lengthChange:false,
+        paging:true,
+        aLengthMenu:[20],
+        filter:false,
+        serverSide: true,  //启用服务器端分页
+        searching:false,  //禁用原生搜索
+        ajax: function (data, callback, settings){
+            datas.pageNo=(data.start / data.length)+1;//当前页码
+            datas.pageSize='20';//每页条数
+            $.ajax({
+                type:"GET",
+                url:'/console/api/getIntentionStoreData',
+                cache: false,//禁用缓存
+                data:datas,//传入组装的参数
+                dataType:"json",
+                success: function (result) {
+                    pageCount=result.data.pageCount;//总页码
+                    var returnData = {};//封装返回数据
+                    returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                    returnData.recordsTotal = result.data.count;//返回数据全部记录
+                    returnData.recordsFiltered = result.data.count;//后台不实现过滤功能，每次查询均视作全部结果
+                    returnData.data = result.data.dataList;//返回的数据列表
+                    callback(returnData);
+                }
+            });
+        },
+        // 列表表头字段
+        columns:[
+            {data:'hotelName'},
+            {data:'owernName'},
+            {data:'hotelStreetAddress'},
+            {data:'create_time'},
+            {data:'status'},
+            {data:'status'}
+        ],
+        columnDefs:[
+            {
+                "render": function(value){
+                    var status=['','待入库','入库审批中','入库未通过','已入库'];
+                    return status[value];
+                },
+                "targets":-2 //门店状态列
+            },
+            {
+                "render": function (value,type,row,spanhref){
+                    // if(value=='1'){spanhref='editbasic.html'}//待入库-编辑修改酒店概况
+                    // if(value=='2'){spanhref='editagree.html'}//入库审批中-编辑修改签约信息
+                    spanhref='details.html';
+                    return '<span class="getbtn" data-href='+spanhref+' data-id='+row.id+'>进入</span>';
+                },
+                "targets":-1 //操作列
+            }
+        ],
+        language:{
+            "sProcessing": "加载中...",
+            "sLengthMenu": "每页 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "未加载到匹配的数据",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "<",
+                "sNext": ">",
+                "sLast": "末页",
+                "sJump": "跳转"
+            }
+        },
+        fnDrawCallback: function(table) {
+            if(pageCount>7){//页码大于7出现页码跳转方式
+                $('#table_paginate .pagination').append('<li class="jump">跳至&nbsp;&nbsp;<input type="text">&nbsp;&nbsp;页&nbsp;&nbsp;<a href="javascript:void(0);" class="page-link" data-dt-id="#table">GO</a></li>');
+            }
+        }
+    });
+});
+$(document).on("click","span.getbtn",function(Id){//点击操作内按钮--进入--status状态判断跳转不同页面
+    sessionStorage.setItem('surveyId',$(this).attr('data-id'));
+    // window.open($(this).attr('data-href'));//新窗口
+    location.href =$(this).attr('data-href');//
+});
+// 导出
+$('#shoplist .download').click(function(datas){//导出
+    datas={};
+    $('#shoplist .form-control').each(function(){
+        datas[$(this).attr('data-id')]=$(this).val();
+    });
+    downloads('/console/api/exportIntentionStoreData',datas);//导出请求
+});
+//添加门店#addshop
+    var $distpicker = $('#distpicker');//省市县
+    var basic={};//酒店概况数据
+    // 验证酒店名称是否重复
+    $('#addshop .hotelName').change(function () {
+        $.ajax({
+            url :'/console/api/getIntentionStoreByHotelName',
+            data :{hotelName:$(this).val()},
+            type: "GET",
+            success:function(data){
+                if(data){
+                    alert('酒店名称已存在！');
+                    $('#addshop .hotelName').focus();
+                }
+            }
+        });
+    });
+    // 照片上传
+    $('#addshop .import-btn').change(function($input,file){
+        $input=$(this);
+        file=$input[0].files[0];
+        var formData = new FormData();
+        formData.append('file',file);
+        $.ajax({
+            url:'/console/api/addIntentionStoreSurveyPhoto',
+            type: 'post',
+            processData: false,// 告诉jQuery不要去处理发送的数据
+            contentType: false,// 告诉jQuery不要去设置Content-Type请求头
+            data:formData,
+            success: function (res) {
+                if(res.length){
+                    basic[$input.attr('data-id')]=res[0];
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function(e){
+                        $input.prev('img').attr('src',e.target.result).show();
+                    }
+                }else{
+                    $input.prev('img').hide();
+                    basic[$input.attr('data-id')]='';
+                }
+            }
+        })
+    });
+    $('#addshop .btn').click(function(goon){//保存或提交
+        basic['type']=$(this).attr('data-id');//1保存2提交
+        goon=true;
+        $('#addshop .form-control').each(function(name){
+            name=$(this).attr('data-id');
+            basic[name]=$(this).val();
+            if(basic.type=='1'&&name=='hotelName'){//1保存--酒店名称必填
+                if(!$(this).val()){
+                    goon=false;alert('请填写酒店名称！');$(this).focus();return false;
+                }
+            }
+            if(basic.type=='2'&&!(name=='hotelCity'||name=='hotelCounty'||name=='owernEmail'||name=='remark')){//2提交
+                if(!$(this).val()){
+                    goon=false;
+                    alert('请填写必填项！');
+                    $(this).focus();return false;
+                }
+            }
+        });
+        if(goon){
+            if(basic.type=='2'){//2提交
+                if(!basic['doorwayPhoto']){alert('请上传门头照片！');return false;}
+                if(!basic['owernIdcardPhotoz']){alert('请上传业主身份证正面！');return false;}
+                if(!basic['owernIdcardPhotof']){alert('请上传业主身份证反面！');return false;}
+            }
+            $.ajax({
+                url:'/console/api/addIntentionStoreSurvey',
+                type: 'post',
+                contentType: 'application/json',
+                data:JSON.stringify(basic),
+                success: function (res){
+                    if(res.status=='success'){
+                        $('#addshop input.form-control').each(function(){$(this).val('');});
+                        $('#addshop .upimg>img').hide();
+                        $('#addshop textarea.form-control').val('');
+                        basic={};
+                    }
+                    warn(res.msg);
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.IntentionStoreMapper" >
+
+    <insert id="addIntentionStoreSurvey" parameterType="com.aaroom.beans.IntentionStoreSurvey">
+        INSERT INTO intention_store_survey(id, hotel_name, hotel_province, hotel_city, hotel_county, hotel_street_address, room_num, doorway_photo, owern_name, owern_phone, owern_email, owern_idcard_photoz, owern_idcard_photof, remark, status, type)
+        VALUES (#{isdata.id}, #{isdata.hotelName}, #{isdata.hotelProvince}, #{isdata.hotelCity}, #{isdata.hotelCounty}, #{isdata.hotelStreetAddress}, #{isdata.roomNum}, #{isdata.doorwayPhoto}, #{isdata.owernName}, #{isdata.owernPhone}, #{isdata.owernEmail}, #{isdata.owernIdcardPhotoz}, #{isdata.owernIdcardPhotof}, #{isdata.remark}, #{isdata.status}, #{isdata.type})
+    </insert>
+
+    <sql id="Intention_Store_Column_List">
+        id id, hotel_name hotelName, hotel_province hotelProvince, hotel_city hotelCity, hotel_county hotelCounty, hotel_street_address hotelStreetAddress, room_num roomNum, doorway_photo doorwayPhoto, owern_name owernName,
+        owern_phone owernPhone, owern_email owernEmail, owern_idcard_photoz owernIdcardPhotoz, owern_idcard_photof owernIdcardPhotof, remark remark, status status, type type, create_time create_time
+    </sql>
+
+    <select id="getIntentionStoreByHotelName" parameterType="java.lang.String" resultType="com.aaroom.beans.IntentionStoreSurvey">
+        SELECT
+        <include refid="Intention_Store_Column_List" />
+        FROM intention_store_survey WHERE hotel_name = #{hotelName}
+    </select>
+
+    <insert id="saveIntentionStoreInfo" parameterType="com.aaroom.beans.IntentionStoreInfo">
+        INSERT INTO intention_store_info(id, survey_id, give_material, give_other, type, content, type_s)
+        VALUES (#{isi.id}, #{isi.surveyId}, #{isi.giveMaterials}, #{isi.giveOther}, #{isi.type}, #{isi.content}, #{isi.typeS})
+    </insert>
+
+    <insert id="saveIntentionStoreInfoBed" parameterType="com.aaroom.beans.IsiBed"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO isi_bed(isi_id, bed_type, bed_size, bed_num)
+        VALUES
+        <foreach collection="ibs" item="ib" separator=",">
+            (#{isiId}, #{ib.bedType}, #{ib.bedSize}, #{ib.bedNum})
+        </foreach>
+    </insert>
+    
+    <select id="getIntentionStoreData" resultType="com.aaroom.beans.IntentionStoreSurvey">
+        SELECT
+        <include refid="Intention_Store_Column_List" />
+        FROM intention_store_survey
+        <where>
+            <if test="hotelName != null and hotelName != ''">
+                hotel_name LIKE "%" #{hotelName} "%"
+            </if>
+            <if test="owernName != null and owernName != ''">
+                AND owern_name LIKE "%" #{owernName} "%"
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="getIntentionStoreSurvey" resultType="com.aaroom.beans.IntentionStoreSurvey">
+        SELECT
+        <include refid="Intention_Store_Column_List"/>
+        FROM intention_store_survey WHERE id = #{surveyId}
+    </select>
+    
+    <update id="updateIntentionStoreSurvey" parameterType="com.aaroom.beans.IntentionStoreSurvey">
+        UPDATE intention_store_survey SET hotel_name = #{iss.hotelName}, hotel_province = #{iss.hotelProvince}, hotel_city = #{iss.hotelCity}, hotel_county = #{iss.hotelCounty}, hotel_street_address = #{iss.hotelStreetAddress}, room_num = #{iss.roomNum},
+        doorway_photo = #{iss.doorwayPhoto}, owern_name = #{iss.owernName}, owern_phone = #{iss.owernPhone}, owern_email = #{iss.owernEmail},
+        owern_idcard_photoz = #{iss.owernIdcardPhotoz}, owern_idcard_photof = #{iss.owernIdcardPhotof}, remark = #{iss.remark}, type = #{iss.type}
+        WHERE id = #{iss.id}
+    </update>
+
+    <insert id="addIntentionStoreContract" parameterType="com.aaroom.beans.IntentionStoreContract">
+        INSERT INTO intention_store_contract(id, isi_id, first_party, first_party_signatory, cooperation_date, signing_date, protocol_num, protocol_photo, supplement_protocol_num, supplement_protocol_photo,
+        five_card_sfzz, five_card_sfzf, five_card_yy, five_card_ws, five_card_txhy, type)
+        VALUES (#{isc.id}, #{isc.isiId}, #{isc.firstParty}, #{isc.firstPartySignatory}, #{isc.cooperationDate}, #{isc.signingDate}, #{isc.protocolNum}, #{isc.protocolPhoto}, #{isc.supplementProtocolNum}, #{isc.supplementProtocolPhoto},
+        #{isc.fiveCardSfzz}, #{isc.fiveCardSfzf}, #{isc.fiveCardYy}, #{isc.fiveCardWs}, #{isc.fiveCardTxhy}, #{isc.type})
+    </insert>
+
+    <sql id="Intention_Store_Info_Column_List">
+        id id, survey_id surveyId, give_material giveMaterials, give_other giveOther, type type, content content, type_s typeS
+    </sql>
+
+    <select id="getIntentionStoreInfo" resultType="com.aaroom.beans.IntentionStoreInfo">
+        SELECT
+        <include refid="Intention_Store_Info_Column_List"/>
+        FROM intention_store_info WHERE survey_id = #{surveyId}
+    </select>
+
+    <sql id="Isi_Bed_Column_List">
+        id id, isi_id isiId, bed_type bedType, bed_size bedSize, bed_num bedNum
+    </sql>
+
+    <select id="getIsiBedByIsiId" resultType="com.aaroom.beans.IsiBed">
+        SELECT
+        <include refid="Isi_Bed_Column_List"/>
+        FROM isi_bed WHERE isi_id = #{isiId}
+    </select>
+
+    <sql id="Intention_Store_Contract_Column_List">
+        id id, isi_id isiId, first_party firstParty, first_party_signatory firstPartySignatory, cooperation_date cooperationDate, signing_date signingDate, protocol_num protocolNum, protocol_photo protocolPhoto, supplement_protocol_num supplementProtocolNum, supplement_protocol_photo supplementProtocolPhoto,
+        five_card_sfzz fiveCardSfzz, five_card_sfzf fiveCardSfzf, five_card_yy fiveCardYy, five_card_ws fiveCardWs, five_card_txhy fiveCardTxhy, type type
+    </sql>
+
+    <select id="getIntentionStoreContract" resultType="com.aaroom.beans.IntentionStoreContract">
+        SELECT
+        <include refid="Intention_Store_Contract_Column_List"/>
+        FROM intention_store_contract WHERE isi_id = #{isiId}
+    </select>
+
+    <update id="updateIntentionStoreContract" parameterType="com.aaroom.beans.IntentionStoreContract">
+        UPDATE intention_store_contract SET first_party = #{isc.firstParty}, first_party_signatory = #{isc.firstPartySignatory}, cooperation_date = #{isc.cooperationDate}, signing_date = #{isc.signingDate}, protocol_num = #{isc.protocolNum}, protocol_photo = #{isc.protocolPhoto}, supplement_protocol_num = #{isc.supplementProtocolNum}, supplement_protocol_photo = #{isc.supplementProtocolPhoto},
+        five_card_sfzz = #{isc.fiveCardSfzz}, five_card_sfzf = #{isc.fiveCardSfzf}, five_card_yy = #{isc.fiveCardYy}, five_card_ws = #{isc.fiveCardWs}, five_card_txhy = #{isc.fiveCardTxhy}, type = #{isc.type}
+        WHERE id = #{isc.id}
+    </update>
+    
+    <update id="updateIntentionStoreInfo" parameterType="com.aaroom.beans.IntentionStoreInfo">
+        UPDATE intention_store_info SET give_material = #{isi.giveMaterial}, give_other = #{isi.giveOther}, type = #{isi.type}, content = #{isi.content}, type_s = #{isi.typeS}
+        WHERE id = #{isi.id}
+    </update>
+    
+    <update id="updateIsiBed" parameterType="com.aaroom.beans.IsiBed">
+        UPDATE isi_bed SET bed_type = #{ib.bedType}, bed_size = #{ib.bedSize}, bed_num = #{ib.bedNum} WHERE id = #{ib.id}
+    </update>
+    <sql id="Province_Column_List">
+        id id, name name, flag flag, isHot isHot, status status
+    </sql>
+
+    <select id="getProvinceInfo" parameterType="java.lang.String" resultType="com.aaroom.beans.Province">
+        SELECT
+        <include refid="Province_Column_List"/>
+        FROM province WHERE id = #{id}
+    </select>
+
+    <sql id="City_Column_List">
+        id id, provinceCode provinceCode, name name, flag flag, isHot isHot, status status
+    </sql>
+
+    <select id="getCityInfo" parameterType="java.lang.String" resultType="com.aaroom.beans.City">
+        SELECT
+        <include refid="City_Column_List"/>
+        FROM city WHERE id = #{id}
+    </select>
+
+    <sql id="County_Column_List">
+        id id, cityCode cityCode, name name, flag flag, isHot isHot, status status
+    </sql>
+
+    <select id="getCountyInfo" parameterType="java.lang.String" resultType="com.aaroom.beans.County">
+        SELECT
+        <include refid="County_Column_List"/>
+        FROM county WHERE id = #{id}
+    </select>
+</mapper>

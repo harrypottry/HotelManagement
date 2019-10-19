@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ClothLogMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.ClothLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mission_id" property="mission_id" jdbcType="INTEGER"/>
+    <result column="direction" property="direction" jdbcType="INTEGER" />
+    <result column="possessor_id" property="possessor_id" jdbcType="INTEGER" />
+    <result column="possessor_type" property="possessor_type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+    <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+    <result column="is_active" property="is_active" jdbcType="TINYINT" />
+    <result column="cloth_id" property="cloth_id" jdbcType="INTEGER"/>
+    <result column="hotel_id" property="hotel_id" jdbcType="INTEGER"/>
+    <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,mission_id, direction, possessor_id, possessor_type, status, create_time, update_time, creater_id,
+    updater_id, is_active,colth_id,hotel_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cloth_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getClothLogListBypossessor_type" resultType="com.aaroom.beans.ClothLog" >
+    select * FROM cloth_log
+    WHERE
+    id IN ( SELECT max( id ) FROM cloth_log GROUP BY cloth_id )
+    AND hotel_id = #{hotel_id}
+    AND direction=1
+    <if test="possessor_type != null">
+      AND possessor_type=#{possessor_type}
+    </if>
+  </select>
+  <select id="getClothLogListByCurrentMonth" resultType="com.aaroom.beans.ClothLog" >
+    select * FROM cloth_log
+    WHERE direction = #{direction}
+    AND possessor_type = #{possessor_type}
+    AND hotel_id = #{hotel_id}
+    AND create_time between #{EarlyTime} and #{NearTime} order by create_time desc
+  </select>
+  <select id="getClothLogListByDay" resultType="com.aaroom.beans.ClothLog" >
+    select * FROM cloth_log
+    WHERE direction = #{direction}
+    AND possessor_type = #{possessor_type}
+    AND hotel_id = #{hotel_id}
+    AND create_time like #{DayTime}
+  </select>
+  <select id="getClothLogListDuringHotel" resultType="com.aaroom.beans.ClothLog" >
+    select * FROM cloth_log
+    WHERE 1=1
+    <if test="direction!=null">
+      AND direction = #{direction}
+    </if>
+    <if test="possessor_type!=null">
+      AND possessor_type = #{possessor_type}
+    </if>
+    <if test="cloth_id!=null">
+      AND cloth_id = #{cloth_id}
+    </if>
+    <if test="hotel_id!=null">
+      AND hotel_id = #{hotel_id}
+    </if>
+    <if test="status!=null">
+      AND status = #{status}
+    </if>
+    <if test="EarlyTime!=null">
+      AND create_time &lt; #{EarlyTime}
+    </if>
+    order by create_time desc
+  </select>
+  <select id="getCountByhotelId" resultType="java.lang.Integer" >
+    select count(1) FROM cloth_log
+    WHERE
+    id IN ( SELECT max( id ) FROM cloth_log GROUP BY cloth_id )
+    AND hotel_id = #{hotel_id}
+    AND possessor_type in (0,1,2)
+  </select>
+  <select id="getCountByhotelIdAndWashFactory" resultType="java.lang.Integer" >
+    select count(1) FROM cloth_log
+    WHERE hotel_id = #{hotel_id}
+    AND possessor_type = #{possessor_type}
+    AND direction = #{direction}
+    AND create_time between #{starttime} and #{endtime}
+  </select>
+  <select id="getClothLogListBypossessor_type_comment" resultType="com.aaroom.beans.ClothLog" >
+    SELECT
+	*
+FROM
+	cloth_log as cl
+	LEFT JOIN cloth as c on cl.cloth_id = c.id
+WHERE
+	cl.id IN ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+	AND cl.hotel_id = #{hotel_id}
+	AND cl.direction =1
+    <if test="possessor_type != null">
+      AND cl.possessor_type=#{possessor_type}
+    </if>
+    <if test="comment == 2">
+      and c.comment IS NOT null
+    </if>
+    order by cl.create_time desc
+    <if test="index != null  and pageSize != null  ">
+      limit #{index},#{pageSize}
+    </if>
+  </select>
+  <select id="getClothLogListByPossessor_typeAndStutasAndTypeAndSize" resultType="com.aaroom.beans.ClothLog" >
+    SELECT
+    *
+    FROM
+    cloth_log as cl
+    LEFT JOIN cloth as c on cl.cloth_id = c.id
+    WHERE
+    cl.id IN ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+    AND cl.hotel_id = #{hotel_id}
+    AND cl.direction =1
+    <if test="possessor_type != null">
+      AND cl.possessor_type=#{possessor_type}
+    </if>
+    <if test="status != null">
+      AND cl.status=#{status}
+    </if>
+    order by cl.create_time desc
+    <if test="index != null  and pageSize != null  ">
+      limit #{index},#{pageSize}
+    </if>
+  </select>
+  <select id="getClothLogListByPossessor_typeAndStutasAndTypeAndSizeNoLimitDownExcel" resultType="com.aaroom.beans.ClothLog" >
+    SELECT
+    *
+    FROM
+    cloth_log as cl
+    LEFT JOIN cloth as c on cl.cloth_id = c.id
+    WHERE
+    cl.id IN ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+    AND cl.hotel_id = #{hotel_id}
+    AND cl.direction =1
+    <if test="possessor_type != null">
+      AND cl.possessor_type=#{possessor_type}
+    </if>
+    <if test="status != null">
+      AND cl.status=#{status}
+    </if>
+    order by cl.create_time desc
+  </select>
+  <select id="getClothLogListByPossessor_typeAndStutasAndTypeAndSizeNoLimit" resultType="java.lang.Integer" >
+    SELECT
+    count(1)
+    FROM
+    cloth_log as cl
+    LEFT JOIN cloth as c on cl.cloth_id = c.id
+    WHERE
+    cl.id IN ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+    AND cl.hotel_id = #{hotel_id}
+    AND cl.direction =1
+    <if test="possessor_type != null">
+      AND cl.possessor_type=#{possessor_type}
+    </if>
+    <if test="status != null">
+      AND cl.status=#{status}
+    </if>
+    order by cl.create_time desc
+  </select>
+  <select id="getClothLogListByHotelidRoomid" resultType="com.aaroom.beans.ClothLog" >
+    SELECT
+	*
+FROM
+	cloth_log as cl
+	LEFT JOIN cloth as c on cl.cloth_id = c.id
+WHERE
+	cl.id IN ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+	AND cl.hotel_id = #{hotel_id}
+	AND cl.direction =1
+    AND cl.possessor_id= #{room_id}
+    AND cl.possessor_type= #{possessor_type}
+  </select>
+  <select id="downgetClothLogList" resultType="com.aaroom.beans.ClothLog" >
+    SELECT
+	*
+FROM
+	cloth_log as cl
+	LEFT JOIN cloth as c on cl.cloth_id = c.id
+WHERE
+	cl.id IN ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+	AND cl.hotel_id = #{hotel_id}
+	AND cl.direction =1
+    <if test="possessor_type != null">
+      AND cl.possessor_type=#{possessor_type}
+    </if>
+    <if test="comment == 2">
+      and c.comment IS NOT null
+    </if>
+    order by cl.create_time desc
+  </select>
+  <select id="downgetClothLogListcount" resultType="java.lang.Integer" >
+    SELECT
+	count(1)
+FROM
+	cloth_log as cl
+	LEFT JOIN cloth as c on cl.cloth_id = c.id
+WHERE
+	cl.id IN ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+	AND cl.hotel_id = #{hotel_id}
+	AND cl.direction =1
+    <if test="possessor_type != null">
+      AND cl.possessor_type=#{possessor_type}
+    </if>
+    <if test="comment == 2">
+      and c.comment IS NOT null
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cloth_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.ClothLog" >
+    insert into cloth_log (id, mission_id,direction, possessor_id,
+      possessor_type, status, create_time, 
+      update_time, creater_id, updater_id, 
+      is_active,cloth_id,hotel_id)
+    values (#{id,jdbcType=INTEGER}, #{mission_id,jdbcType=INTEGER},  #{direction,jdbcType=INTEGER}, #{possessor_id,jdbcType=VARCHAR},
+      #{possessor_type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP},
+      #{update_time,jdbcType=TIMESTAMP}, #{creater_id,jdbcType=INTEGER}, #{updater_id,jdbcType=INTEGER},
+      #{is_active,jdbcType=TINYINT}, #{cloth_id,jdbcType=INTEGER},#{hotel_id,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.aaroom.beans.ClothLog" >
+    insert into cloth_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mission_id != null" >
+        mission_id,
+      </if>
+      <if test="direction != null" >
+        direction,
+      </if>
+      <if test="possessor_id != null" >
+        possessor_id,
+      </if>
+      <if test="possessor_type != null" >
+        possessor_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="creater_id != null" >
+        creater_id,
+      </if>
+      <if test="updater_id != null" >
+        updater_id,
+      </if>
+      <if test="is_active != null" >
+        is_active,
+      </if>
+      <if test="cloth_id != null" >
+        cloth_id,
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mission_id != null" >
+        #{mission_id,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null" >
+        #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="possessor_id != null" >
+        #{possessor_id,jdbcType=VARCHAR},
+      </if>
+      <if test="possessor_type != null" >
+        #{possessor_type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        #{is_active,jdbcType=TINYINT},
+      </if>
+      <if test="cloth_id != null" >
+        #{cloth_id,jdbcType=INTEGER},
+      </if>
+      <if test="hotel_id != null" >
+        #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.ClothLog" >
+    update cloth_log
+    <set >
+      <if test="mission_id != null" >
+        mission_id = #{mission_id,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null" >
+        direction = #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="possessor_id != null" >
+        possessor_id = #{possessor_id,jdbcType=VARCHAR},
+      </if>
+      <if test="possessor_type != null" >
+        possessor_type = #{possessor_type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        creater_id = #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        updater_id = #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        is_active = #{is_active,jdbcType=TINYINT},
+      </if>
+      <if test="cloth_id != null" >
+        cloth_id = #{cloth_id,jdbcType=INTEGER},
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id = #{hotel_id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.ClothLog" >
+    update cloth_log
+    set mission_id = #{mission_id,jdbcType=INTEGER},
+      direction = #{direction,jdbcType=INTEGER},
+      possessor_id = #{possessor_id,jdbcType=VARCHAR},
+      possessor_type = #{possessor_type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      creater_id = #{creater_id,jdbcType=INTEGER},
+      updater_id = #{updater_id,jdbcType=INTEGER},
+      is_active = #{is_active,jdbcType=TINYINT},
+      cloth_id = #{cloth_id,jdbcType=INTEGER},
+      hotel_id = #{hotel_id，jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getClothLogByClothId"  resultType="com.aaroom.beans.ClothLog">
+    SELECT
+	*
+FROM
+	cloth_log AS cl
+WHERE
+	cloth_id = #{cloth_id,jdbcType=INTEGER}
+GROUP BY
+	cloth_id
+HAVING
+	cl.possessor_type = 2
+	AND cl.possessor_id = #{hotel_id,jdbcType=VARCHAR}
+	AND cl.direction = 1
+  </select>
+  <select id="getClothLogByClothIdAndHotelId"  resultType="com.aaroom.beans.ClothLog">
+SELECT * FROM cloth_log AS cl WHERE
+cl.cloth_id = #{cloth_id,jdbcType=INTEGER}
+AND cl.id in ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+AND	cl.hotel_id = #{hotel_id,jdbcType=INTEGER}
+  </select>
+  <select id="getMaxClothLogByClothId"  resultType="com.aaroom.beans.ClothLog">
+SELECT * FROM cloth_log AS cl WHERE
+cl.cloth_id = #{cloth_id,jdbcType=INTEGER}
+AND cl.id in ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+  </select>
+  <select id="getMaxClothLogByPossessor_typeAndPossessor_id"  resultType="com.aaroom.beans.ClothLog">
+SELECT * FROM cloth_log AS cl WHERE
+cl.possessor_id = #{possessor_id} AND cl.possessor_type = #{possessor_type}
+AND cl.id in ( SELECT max( cloth_log.id ) FROM cloth_log GROUP BY cloth_log.cloth_id )
+  </select>
+  <select id="getLogListByMissionidPossessorTypeidDirectionid" parameterType="com.aaroom.beans.ClothLog" resultType="java.lang.Integer" >
+ select cloth_id from cloth_log where mission_id = #{mission_id}
+ and direction = #{direction} and possessor_type = #{possessor_type} and status=#{status,jdbcType=INTEGER}
+  </select>
+  <select id="getClothIdByClothId"  resultType="java.lang.Integer">
+    SELECT
+	distinct cl.cloth_id
+FROM
+	cloth_log AS cl
+WHERE
+	cl.mission_id = #{mission_id,jdbcType=INTEGER}
+  </select>
+  <select id="getclothlogByroomId"  parameterType="com.aaroom.beans.ClothLog" resultType="com.aaroom.beans.ClothLog">
+SELECT * FROM cloth_log
+WHERE possessor_id = #{possessor_id,jdbcType=VARCHAR} AND possessor_type = #{possessor_type,jdbcType=INTEGER}
+  </select>
+  <select id="getLogListByMissionId" resultType="com.aaroom.beans.ClothLog">
+SELECT * FROM cloth_log
+WHERE mission_id = #{mission_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteLogById">
+delete  FROM cloth_log WHERE id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteLogByClothlog" parameterType="com.aaroom.beans.ClothLog">
+delete FROM cloth_log WHERE id IN(
+select p.id from (
+SELECT max( id )id FROM cloth_log
+WHERE direction = #{direction,jdbcType=INTEGER}
+AND possessor_id = #{possessor_id,jdbcType=INTEGER}
+AND possessor_type = #{possessor_type,jdbcType=INTEGER}
+AND status = #{status,jdbcType=INTEGER}
+AND cloth_id = #{cloth_id,jdbcType=INTEGER}
+AND hotel_id = #{hotel_id,jdbcType=INTEGER}
+GROUP BY cloth_id
+) p
+)
+  </delete>
+  <select id="getLogListByEmpId" resultType="com.aaroom.beans.ClothLog">
+    SELECT
+	*
+    FROM
+	`cloth_log`
+    WHERE
+	id IN ( SELECT max( id ) FROM cloth_log GROUP BY cloth_id )
+	AND possessor_type = #{possessor_type}
+	<if test="possessor_id != null">
+	AND possessor_id =#{possessor_id}
+    </if>
+	and hotel_id = #{hotel_id}
+    <if test="status != null">
+      AND status =#{status}
+    </if>
+  </select>
+  <select id="GetLogListNearBy" resultType="com.aaroom.beans.ClothLog">
+    SELECT
+	*
+    FROM
+	`cloth_log`
+    WHERE
+	id IN ( SELECT max( id ) FROM cloth_log GROUP BY cloth_id )
+	AND possessor_type = #{possessor_type}
+	<if test="possessor_id != null">
+	AND possessor_id =#{possessor_id}
+    </if>
+	and hotel_id = #{hotel_id}
+    <if test="direction != null">
+      AND direction =#{direction}
+    </if>
+  </select>
+
+  <insert id="saveCleanerlog">
+    insert into cloth_log (hotel_id,cloth_id,direction,possessor_id,possessor_type, status)
+    values (#{hotel_id,jdbcType=VARCHAR},#{cloth_id,jdbcType=INTEGER},1,#{possessor_id,jdbcType=VARCHAR},1,0)
+  </insert>
+  <insert id="saveStorelog">
+    insert into cloth_log (hotel_id,cloth_id,direction,possessor_id,possessor_type,status)
+    values (#{hotel_id,jdbcType=VARCHAR},#{cloth_id,jdbcType=INTEGER},0,#{possessor_id,jdbcType=VARCHAR},2,0)
+  </insert>
+
+  <insert id="saveDirtyEmpOutlog">
+    insert into cloth_log (hotel_id,cloth_id,direction,possessor_id,possessor_type, status)
+    values (#{hotel_id,jdbcType=VARCHAR},#{cloth_id,jdbcType=INTEGER},0,#{possessor_id,jdbcType=VARCHAR},1,1)
+  </insert>
+  <insert id="saveDirtyStoreInlog">
+    insert into cloth_log (hotel_id,cloth_id,direction,possessor_id,possessor_type,status)
+    values (#{hotel_id,jdbcType=VARCHAR},#{cloth_id,jdbcType=INTEGER},1,#{possessor_id,jdbcType=VARCHAR},2,1)
+  </insert>
+  <select id="getClothLogListByClean" resultType="com.aaroom.beans.ClothLog">
+   SELECT
+	cl.*
+FROM
+	cloth_log cl
+	 JOIN mission m ON cl.hotel_id = #{hotel_id}
+	AND cl.mission_id = #{mission_id}
+	AND cl.possessor_type = 0
+	AND cl.possessor_id = #{possessor_id}
+	AND cl.`status` = 0
+	AND cl.direction = 1
+	AND cl.mission_id = m.id
+	AND m.`status` = 1
+  </select>
+  <select id="setUUID" resultType="com.aaroom.beans.ClothLog">
+      SELECT * FROM cloth_log WHERE id  = (SELECT max( cloth_log.id ) FROM cloth_log  WHERE cloth_id = #{cloth_id})
+  </select>
+</mapper>

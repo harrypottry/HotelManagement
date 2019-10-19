@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>酒店信息-业主-审批</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <link rel="stylesheet" href="../css/style2.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link" href="#projectorder"  data-toggle="tab">立项单</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#hotelinfo" data-toggle="tab">酒店信息</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane" id="projectorder"><!--立项单-->
+                    <div class="condition row ">
+                        <span class="col-6">立项单</span>
+                        <span class="col-6 rightinfo"><a>查看签约信息</a> <a>下载PDF</a></span>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-6">
+                                    <p><b class="inputname">甲方：</b><span>XX酒店有限公司</span></p>
+                                    <p>
+                                        <b class="inputname">甲方签约人：</b><span>蒋双娇</span>
+                                    </p>
+                                    <p><b class="inputname">乙方签约人：</b><span>王伟</span></p>
+                                    <p><b class="inputname">房间数：</b><span>40间</span></p>
+                                    <p><b class="inputname">项目咨询费：</b><span>500元/间</span></p>
+                                    <p><b class="inputname">合作服务费：</b><span>2%/月</span></p>
+                                    <p><b class="inputname">输送客源费：</b><span>8%/月</span></p>
+                                </div>
+                                <div class="col-md-5">
+                                    <p><b class="inputname">合同编号：</b><span>73979100</span></p>
+                                    <p>
+                                        <b class="inputname">签约日期：</b><span>2019-01-20</span>
+                                    </p>
+                                    <p><b class="inputname">合同期限：</b><span>2019-01-20 - 2010-01-20</span></p>
+                                    <p><b class="inputname">PMS初始安装费：</b><span>20000元 减免</span></p>
+                                    <p><b class="inputname">PMS系统维护费：</b><span>500元/月 减免</span></p>
+                                    <p><b class="inputname">OTA代运营费：</b><span>1800元/月 减免</span></p>
+                                    <p><b class="inputname">履约保证金：</b><span>50000元</span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p>
+                                        <b class="inputname" style="vertical-align:top;">赠送物资：</b><span>门招</span> <span>前台/吧台背景墙</span> <span>床旗</span>
+                                        <span>抱枕</span> <span>会员卡</span> <span>品牌标识贴</span> <span>电梯门海报</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p>
+                                        <b class="inputname" style="vertical-align:top;"><span>* </span>酒店名字：</b><span>AA酒店</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p>
+                                        <b class="inputname" style="vertical-align:top;"><span>* </span>对接人：</b>
+                                        <p class="buttstyle"><span>酒店</span><span>蒋双娇</span> <span>15211100000</span></p>
+                                        <p class="buttstyle"><span>筹建</span><span>蒋双娇</span> <span>15211100000</span></p>
+                                        <p class="buttstyle"><span>设计</span><span>蒋双娇</span> <span>15211100000</span></p>
+                                        <p class="buttstyle"><span>物资</span><span>蒋双娇</span> <span>15211100000</span></p>
+                                        <p class="buttstyle"><span>运营</span><span>蒋双娇</span> <span>15211100000</span></p>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p><b class="inputname" style="vertical-align:top;">备注：</b><span>这里是备注</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row makecopymain">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <h1><b>抄送</b> <span>立项后会通知以下成员</span></h1>
+                                <div class="makecopyname">
+                                    <p>
+                                        <span class="spanname">媛</span>
+                                        <a>吕方媛</a>
+                                    </p>
+                                    <p>
+                                        <span class="spanname">媛</span>
+                                        <a>吕方媛</a>
+                                    </p>
+                                    <p>
+                                        <span class="spanname">媛</span>
+                                        <a>吕方媛</a>
+                                    </p>
+                                    <!--<div class="addcopy">-->
+                                        <!--<span></span><br/>-->
+                                        <!--<a>添加</a>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-12 text-center">-->
+                                <!--<span class="btn btn-secondary" data-id="1">保存</span>-->
+                                <!--<span class="btn btn-danger lixiang" data-id="2">立项</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="tab-pane active show" id="hotelinfo"><!--酒店信息-->
+                    <div class="condition row ">
+                        <span class="col-6">酒店基础信息</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h1title"><b>基础信息</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>酒店名称：</b><span>AA连锁上海酒店</span></p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>酒店地址：</b><span>上海市 上海市 长宁区</span>
+                                    </p>
+                                    <p><b class="inputname"><span>* </span>详细地址：</b><span>当代MOMA倍格生态</span></p>
+                                    <p><b class="inputname">所在商业区：</b><span>当代MOMA</span></p>
+                                    <p><b class="inputname"><span>* </span>经度：</b><span>东经102‘15’51‘86</span></p>
+                                    <p><b class="inputname"><span>* </span>纬度：</b><span>北纬102‘15’51‘86</span></p>
+                                    <p><b class="inputname"><span>* </span>电话：</b><span>18777700000</span></p>
+                                    <p><b class="inputname">传真：</b><span></span></p>
+                                </div>
+                                <div class="col-md-5">
+                                    <p><b class="inputname"><span>* </span>门店ID：</b><span>78399002</span></p>
+                                    <p><b class="inputname">邮政编码：</b><span>738289</span></p>
+                                    <p><b class="inputname">预计开业时间：</b><span></span></p>
+                                    <p><b class="inputname">最近装修时间：</b><span></span></p>
+                                    <p><b class="inputname"><span>* </span>房间数量：</b><span>34</span></p>
+                                    <p><b class="inputname"><span>* </span>酒店建筑体：</b><span>独栋</span></p>
+                                    <p><b class="inputname">所属品牌：</b><span>AA</span></p>
+                                    <p><b class="inputname"><span>* </span>是否可接待外宾：</b><span>是</span></p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>酒店 Wifi</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p class="buttstyletwo buttstylethree">
+                                        <b class="inputname"><span>* </span>Wifi：</b><span>账号：18777700000</span> <span>密码：18777700000</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>联系人信息</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-6">
+                                    <p class="buttstyletwo">
+                                        <b class="inputname"><span>* </span>姓名：</b><span>蒋双娇</span>
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname"><span>* </span>手机：</b><span>18777700001</span>
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname"><span>* </span>qq：</b><span>18777700001</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <p class="buttstyletwo">
+                                        <b class="inputname"><span>* </span>邮箱：</b><span>18777700001@qq.com</span>
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname"><span>* </span>职务：</b><span>业主</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>渠道合作</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p>
+                                        <span class="cooperatespan on">携程</span>
+                                        <span class="cooperatespan">去哪儿</span>
+                                        <span class="cooperatespan">微信</span>
+                                        <span class="cooperatespan on">美团</span>
+                                        <span class="cooperatespan">酒店管家</span>
+                                        <span class="cooperatespan">百度推广</span>
+                                        <span class="cooperatespan">艺龙</span>
+                                        <span class="cooperatespan on">同程</span>
+                                        <span class="cooperatespan">拉手</span>
+                                        <span class="cooperatespan">有间房APP</span>
+                                        <span class="cooperatespan">其它请填写</span>
+                                        <!--<textarea class="form-control cooperatetarea" rows="3" style="width:70%" placeholder="多行输入"></textarea>-->
+                                    </p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b><span>*</span>可用支付方式</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p>
+                                        <span class="cooperatespan on">微信</span>
+                                        <span class="cooperatespan">支付宝</span>
+                                        <span class="cooperatespan on">银联</span>
+                                        <span class="cooperatespan">visa</span>
+                                        <span class="cooperatespan">mastercard</span>
+                                        <span class="cooperatespan">其它请填写</span>
+                                        <!--<textarea class="form-control cooperatetarea" rows="3" style="width:70%" placeholder="多行输入"></textarea>-->
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="condition row ">
+                                <span class="col-6">酒店综合信息</span>
+                            </div>
+                            <h1 class="h1title"><b><span>*</span>酒店简介</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p><span>上海三湘大厦位于长宁区中山西路1243号，紧邻内环线，附近地铁4号线、3号线、10号线虹桥路地铁口站（步行约十分钟），介于虹桥开发区和徐家汇商业圈之间，交通便利。</span></p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>地理位置/交通</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="position1">
+                                        <p><span>*</span>主要交通场站</p>
+                                        <p>距离酒店公里数</p>
+                                        <p>如何到达酒店</p>
+                                    </div>
+                                    <div class="position1 position2">
+                                        <p><span>浦东国际机场</span></p>
+                                        <p><span>30</span> 公里</p>
+                                        <p><span>可由机场乘坐机场巴士XX线到XX地铁后，换乘出租车</span></p>
+                                        <!--<img src="../img/close.png" class="closeimg"/>-->
+                                    </div>
+                                    <div class="position1 position2">
+                                        <p><span>虹桥火车站</span></p>
+                                        <p><span>30</span> 公里</p>
+                                        <p><span>可由机场乘坐机场巴士XX线到XX地铁后，换乘出租车</span></p>
+                                        <!--<img src="../img/close.png" class="closeimg"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-1"></div>-->
+                                <!--<div class="col-md-10">-->
+                                    <!--<img src="../img/addimg.png" class="addimg" style="margin-left:0;">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="row" style="margin-top:4rem;">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <!--<p class="exampleword">例：可有XX机场乘坐机场巴士XX线至XX地后，换乘出租车约5分钟即达酒店；<br/>由XX机场乘坐机场快轨至XX站，换乘地铁X号线至X站由X出口出站，向西步行约5分钟即达酒店。</p>-->
+                                    <div class="position1">
+                                        <p><span>*</span>参考地标</p>
+                                        <p>距离酒店公里数</p>
+                                        <p>如何到达该地标</p>
+                                    </div>
+                                    <div class="position1 position2">
+                                        <p><span>大润发</span></p>
+                                        <p><span>30</span> 公里</p>
+                                        <p><span>可由机场乘坐机场巴士XX线到XX地铁后，换乘出租车</span></p>
+                                        <!--<img src="../img/close.png" class="closeimg"/>-->
+                                    </div>
+                                    <div class="position1 position2">
+                                        <p><span>XX商场</span></p>
+                                        <p><span>30</span> 公里</p>
+                                        <p><span>可由机场乘坐机场巴士XX线到XX地铁后，换乘出租车</span></p>
+                                        <!--<img src="../img/close.png" class="closeimg"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-1"></div>-->
+                                <!--<div class="col-md-10">-->
+                                    <!--<img src="../img/addimg.png" class="addimg" style="margin-left:0;">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <h1 class="h1title"><b>旅游指南</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p><span>上海三湘大厦位于长宁区中山西路1243号，紧邻内环线，附近地铁4号线、3号线、10号线虹桥路地铁口站（步行约十分钟），介于虹桥开发区和徐家汇商业圈之间，交通便利。</span></p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>温馨提示</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p><span></span></p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b><span>*</span>酒店服务及设施</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p>
+                                        <span class="cooperatespan on">商务中心</span>
+                                        <span class="cooperatespan on">洗衣服务</span>
+                                        <span class="cooperatespan">送餐服务</span>
+                                        <span class="cooperatespan">POS刷卡</span>
+                                        <span class="cooperatespan">积分兑换</span>
+                                        <span class="cooperatespan">旅游服务</span>
+                                        <span class="cooperatespan">ATM取款机</span>
+                                        <span class="cooperatespan">前台贵重物品保险柜</span>
+                                        <span class="cooperatespan on">免费停车</span>
+                                        <span class="cooperatespan">市话</span>
+                                        <span class="cooperatespan on">热水淋浴</span>
+                                        <span class="cooperatespan">星级床垫</span>
+                                        <span class="cooperatespan">会议服务</span>
+                                        <span class="cooperatespan">SPA</span>
+                                        <span class="cooperatespan on">液晶电视</span>
+                                        <span class="cooperatespan on">宽带</span>
+                                        <span class="cooperatespan on">在线支付</span>
+                                        <span class="cooperatespan">免费打车</span>
+                                        <span class="cooperatespan on">Wifi</span>
+                                        <span class="cooperatespan">棋牌麻将</span>
+                                        <span class="cooperatespan">叫醒服务</span>
+                                        <span class="cooperatespan">提供发票</span>
+                                        <span class="cooperatespan">免费早餐</span>
+                                        <span class="cooperatespan">停车场 10元/小时</span>
+                                        <span class="cooperatespan">早餐 10元/份</span>
+                                        <span class="cooperatespan on">其它：X服务</span>
+                                        <!--<textarea class="form-control cooperatetarea" rows="3" style="width:70%" placeholder="多行输入"></textarea>-->
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <span class="btn btn-secondary" data-id="1">拒绝</span>
+                                    <span class="btn btn-danger" data-id="2">同意</span>
+                                </div>
+                            </div>
+                            <div class="condition row ">
+                                <span class="col-6">状态</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="statediv">
+                                        <span class="spanname">伟</span>
+                                        <p class="stateinfo">
+                                            <label>店长</label><a class="submit_a">已提交</a><a class="submit_a">已提交</a><a class="submit_a">已提交</a><span class="datespan">2019-01-10  17:30</span>
+                                        </p>
+                                    </div>
+                                    <div class="divline"></div>
+                                    <div class="statediv">
+                                        <span class="spanname">康</span>
+                                        <p class="stateinfo">
+                                            <label>我</label><a class="approva_a">审批中</a><a class="via_a">已通过</a><a class="resuse_a">已拒绝</a><span class="datespan">2019-01-10  17:30</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <span class="btn btn-secondary btn-reject" data-id="1">拒绝</span>
+                                    <span class="btn btn-danger" data-id="2">同意</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!--酒店信息-业主审批拒绝-->
+<div class="modal examination">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">拒绝意见</b></p>
+                <div class="rejectdiv">
+                    <textarea rows="3" placeholder="请输入退回理由" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.examination')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/distpicker.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    $('.btn-reject').click(function () {//审批拒绝
+        $('.examination').fadeToggle(200);
+    });
+    $(".makecopydiv ul li").click(function(){
+        $(this).addClass('active').siblings().removeClass();
+    })
+    $("span.cooperatespan").click(function(){
+        $(this).toggleClass('active');
+    })
+</script>
+</body>
+</html>

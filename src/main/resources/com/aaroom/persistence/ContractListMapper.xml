@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ContractListMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.ContractList" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="contract_number" property="contractNumber" jdbcType="VARCHAR" />
+    <result column="contract_type" property="contractType" jdbcType="INTEGER" />
+    <result column="contract_number_touch" property="contractNumberTouch" jdbcType="VARCHAR" />
+    <result column="contract_recipient_id" property="contractRecipientId" jdbcType="INTEGER" />
+    <result column="contract_receive_time" property="contractReceiveTime" jdbcType="TIMESTAMP" />
+    <result column="contract_signatory_id" property="contractSignatoryId" jdbcType="INTEGER" />
+    <result column="contract_status" property="contractStatus" jdbcType="INTEGER" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, contract_number, contract_type, contract_number_touch, contract_recipient_id, 
+    contract_receive_time, contract_signatory_id, contract_status, comments, create_time, 
+    update_time, create_id, update_id, is_active
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aaroom.beans.ContractListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from contract_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contract_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aaroom.beans.ContractListExample" >
+    delete from contract_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.ContractList" >
+    insert into contract_list (id, contract_number, contract_type, 
+      contract_number_touch, contract_recipient_id, 
+      contract_receive_time, contract_signatory_id, 
+      contract_status, comments, create_time, 
+      update_time, create_id, update_id, 
+      is_active)
+    values (#{id,jdbcType=INTEGER}, #{contractNumber,jdbcType=VARCHAR}, #{contractType,jdbcType=INTEGER}, 
+      #{contractNumberTouch,jdbcType=VARCHAR}, #{contractRecipientId,jdbcType=INTEGER}, 
+      #{contractReceiveTime,jdbcType=TIMESTAMP}, #{contractSignatoryId,jdbcType=INTEGER}, 
+      #{contractStatus,jdbcType=INTEGER}, #{comments,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, #{updateId,jdbcType=INTEGER}, 
+      #{isActive,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.ContractList" >
+    insert into contract_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contractNumber != null" >
+        contract_number,
+      </if>
+      <if test="contractType != null" >
+        contract_type,
+      </if>
+      <if test="contractNumberTouch != null" >
+        contract_number_touch,
+      </if>
+      <if test="contractRecipientId != null" >
+        contract_recipient_id,
+      </if>
+      <if test="contractReceiveTime != null" >
+        contract_receive_time,
+      </if>
+      <if test="contractSignatoryId != null" >
+        contract_signatory_id,
+      </if>
+      <if test="contractStatus != null" >
+        contract_status,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contractNumber != null" >
+        #{contractNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contractType != null" >
+        #{contractType,jdbcType=INTEGER},
+      </if>
+      <if test="contractNumberTouch != null" >
+        #{contractNumberTouch,jdbcType=VARCHAR},
+      </if>
+      <if test="contractRecipientId != null" >
+        #{contractRecipientId,jdbcType=INTEGER},
+      </if>
+      <if test="contractReceiveTime != null" >
+        #{contractReceiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractSignatoryId != null" >
+        #{contractSignatoryId,jdbcType=INTEGER},
+      </if>
+      <if test="contractStatus != null" >
+        #{contractStatus,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aaroom.beans.ContractListExample" resultType="java.lang.Integer" >
+    select count(*) from contract_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update contract_list
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.contractNumber != null" >
+        contract_number = #{record.contractNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractType != null" >
+        contract_type = #{record.contractType,jdbcType=INTEGER},
+      </if>
+      <if test="record.contractNumberTouch != null" >
+        contract_number_touch = #{record.contractNumberTouch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractRecipientId != null" >
+        contract_recipient_id = #{record.contractRecipientId,jdbcType=INTEGER},
+      </if>
+      <if test="record.contractReceiveTime != null" >
+        contract_receive_time = #{record.contractReceiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.contractSignatoryId != null" >
+        contract_signatory_id = #{record.contractSignatoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.contractStatus != null" >
+        contract_status = #{record.contractStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.comments != null" >
+        comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isActive != null" >
+        is_active = #{record.isActive,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update contract_list
+    set id = #{record.id,jdbcType=INTEGER},
+      contract_number = #{record.contractNumber,jdbcType=VARCHAR},
+      contract_type = #{record.contractType,jdbcType=INTEGER},
+      contract_number_touch = #{record.contractNumberTouch,jdbcType=VARCHAR},
+      contract_recipient_id = #{record.contractRecipientId,jdbcType=INTEGER},
+      contract_receive_time = #{record.contractReceiveTime,jdbcType=TIMESTAMP},
+      contract_signatory_id = #{record.contractSignatoryId,jdbcType=INTEGER},
+      contract_status = #{record.contractStatus,jdbcType=INTEGER},
+      comments = #{record.comments,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      is_active = #{record.isActive,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.ContractList" >
+    update contract_list
+    <set >
+      <if test="contractNumber != null" >
+        contract_number = #{contractNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contractType != null" >
+        contract_type = #{contractType,jdbcType=INTEGER},
+      </if>
+      <if test="contractNumberTouch != null" >
+        contract_number_touch = #{contractNumberTouch,jdbcType=VARCHAR},
+      </if>
+      <if test="contractRecipientId != null" >
+        contract_recipient_id = #{contractRecipientId,jdbcType=INTEGER},
+      </if>
+      <if test="contractReceiveTime != null" >
+        contract_receive_time = #{contractReceiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractSignatoryId != null" >
+        contract_signatory_id = #{contractSignatoryId,jdbcType=INTEGER},
+      </if>
+      <if test="contractStatus != null" >
+        contract_status = #{contractStatus,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.ContractList" >
+    update contract_list
+    set contract_number = #{contractNumber,jdbcType=VARCHAR},
+      contract_type = #{contractType,jdbcType=INTEGER},
+      contract_number_touch = #{contractNumberTouch,jdbcType=VARCHAR},
+      contract_recipient_id = #{contractRecipientId,jdbcType=INTEGER},
+      contract_receive_time = #{contractReceiveTime,jdbcType=TIMESTAMP},
+      contract_signatory_id = #{contractSignatoryId,jdbcType=INTEGER},
+      contract_status = #{contractStatus,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      update_id = #{updateId,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

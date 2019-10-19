@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.AppBannerMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.AppBanner" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="pic_path" property="pic_path" jdbcType="VARCHAR" />
+    <result column="img_num" property="img_num" jdbcType="INTEGER" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+    <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+    <result column="is_active" property="is_active" jdbcType="TINYINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.aaroom.beans.AppBanner" >
+    insert into app_banner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="pic_path != null" >
+        pic_path,
+      </if>
+      <if test="img_num != null" >
+        img_num,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="creater_id != null" >
+        creater_id,
+      </if>
+      <if test="updater_id != null" >
+        updater_id,
+      </if>
+      <if test="is_active != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="pic_path != null" >
+        #{pic_path,jdbcType=VARCHAR},
+      </if>
+      <if test="img_num != null" >
+        #{img_num,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        #{is_active,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="getAppBanner" resultType="com.aaroom.beans.AppBanner">
+    select * from app_banner
+  </select>
+</mapper>

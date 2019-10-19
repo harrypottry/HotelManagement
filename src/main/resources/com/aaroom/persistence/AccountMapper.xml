@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.Account" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="hotel_id" property="hotelId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="with_price" property="withPrice" jdbcType="DOUBLE" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="TINYINT" />
+    <result column="update_price" property="updatePrice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, account_name, hotel_id, price, with_price, begin_time, end_time, status, type,
+    comments, create_time, update_time, create_id, update_id, is_active, update_price
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aaroom.beans.AccountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aaroom.beans.AccountExample" >
+    delete from account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.Account" >
+    insert into account (id, account_name, hotel_id,
+    price, with_price, begin_time,
+    end_time, status, type,
+    comments, create_time, update_time,
+    create_id, update_id, is_active,
+    update_price)
+    values (#{id,jdbcType=INTEGER}, #{accountName,jdbcType=VARCHAR}, #{hotelId,jdbcType=INTEGER},
+    #{price,jdbcType=DOUBLE}, #{withPrice,jdbcType=DOUBLE}, #{beginTime,jdbcType=TIMESTAMP},
+    #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER},
+    #{comments,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{createId,jdbcType=INTEGER}, #{updateId,jdbcType=INTEGER}, #{isActive,jdbcType=TINYINT},
+    #{updatePrice,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.Account" >
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountName != null" >
+        account_name,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="withPrice != null" >
+        with_price,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+      <if test="updatePrice != null" >
+        update_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accountName != null" >
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="withPrice != null" >
+        #{withPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=TINYINT},
+      </if>
+      <if test="updatePrice != null" >
+        #{updatePrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aaroom.beans.AccountExample" resultType="java.lang.Integer" >
+    select count(*) from account
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update account
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountName != null" >
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotelId != null" >
+        hotel_id = #{record.hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.withPrice != null" >
+        with_price = #{record.withPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.beginTime != null" >
+        begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.comments != null" >
+        comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isActive != null" >
+        is_active = #{record.isActive,jdbcType=TINYINT},
+      </if>
+      <if test="record.updatePrice != null" >
+        update_price = #{record.updatePrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update account
+    set id = #{record.id,jdbcType=INTEGER},
+    account_name = #{record.accountName,jdbcType=VARCHAR},
+    hotel_id = #{record.hotelId,jdbcType=INTEGER},
+    price = #{record.price,jdbcType=DOUBLE},
+    with_price = #{record.withPrice,jdbcType=DOUBLE},
+    begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+    end_time = #{record.endTime,jdbcType=TIMESTAMP},
+    status = #{record.status,jdbcType=INTEGER},
+    type = #{record.type,jdbcType=INTEGER},
+    comments = #{record.comments,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    create_id = #{record.createId,jdbcType=INTEGER},
+    update_id = #{record.updateId,jdbcType=INTEGER},
+    is_active = #{record.isActive,jdbcType=TINYINT},
+    update_price = #{record.updatePrice,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.Account" >
+    update account
+    <set >
+      <if test="accountName != null" >
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="withPrice != null" >
+        with_price = #{withPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=TINYINT},
+      </if>
+      <if test="updatePrice != null" >
+        update_price = #{updatePrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.Account" >
+    update account
+    set account_name = #{accountName,jdbcType=VARCHAR},
+      hotel_id = #{hotelId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      with_price = #{withPrice,jdbcType=DOUBLE},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      update_id = #{updateId,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=TINYINT},
+      update_price = #{updatePrice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getAccountSum" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM account
+    WHERE hotel_id = #{hotelId}
+  </select>
+
+  <select id="getAccountInfo" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM account
+    WHERE id = #{id}
+  </select>
+
+  <update id="updateAccountStatus" parameterType="com.aaroom.beans.Account">
+    UPDATE account
+    SET status = #{status}, update_price = #{updatePrice} WHERE id = #{id}
+  </update>
+
+</mapper>

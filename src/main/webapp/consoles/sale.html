@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AAroom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="adminlte/css/dataTables.bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        /*滚动条分页后无用删除*/
+        .dataTables_scrollBody::-webkit-scrollbar{width:5px;}
+        /*定义滚动条轨道 内阴影+圆角*/
+        .dataTables_scrollBody::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius:10px;}
+        /*定义滑块 内阴影+圆角*/
+        .dataTables_scrollBody::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);}
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+            <!--<li class="nav-item d-none d-sm-inline-block">-->
+            <!--<a href="index.html" class="nav-link">xx管理系统</a>-->
+            <!--</li>-->
+        </ul>
+    </nav>
+    <!-- 左侧导航 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 导航head -->
+        <a href="index.html" class="brand-link">
+            <img src="adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">AAroom</span>
+        </a>
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info"><a>当前登录：郝玉棠</a></div>
+            </div>
+            <!-- 动态导航nav -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!-- 页面内容 -->
+    <div class="content-wrapper">
+        <section class="content-header"><!-- 页名 -->
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>布草管理</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content"><!--main-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="btn-group" style="float:right;margin:-2px 0 -3px;">
+                                    <form id="downForm" name="downexcel" method="post" action="/api/downloadexcel" enctype="multipart/form-data">
+                                    <input type="submit" class="btn btn-primary btn-sm" value="导出表格">
+                                    </form>
+                                </div>
+                                <h3 class="card-title">布草购买记录</h3>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped table-valign-middle" id="mains">
+                                    <thead>
+                                    <tr>
+                                        <th>布草Id</th>
+                                        <th>类型</th>
+                                        <th>价格</th>
+                                        <!--<th>酒店名称</th>-->
+                                        <th>时间</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="adminlte/js/jquery.min.js"></script>
+<script src="adminlte/js/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="adminlte/js/fnReloadAjax.js"></script>
+<script src="adminlte/js/adminlte.min.js"></script>
+<script src="adminlte/js/script.js"></script>
+<script>
+    $(document).ready(function(){
+       initialize();//初始化页面
+    });
+    function initialize(){
+        $("#mains").dataTable({
+            destroy:true,
+            ordering:false,//排序
+            lengthChange:false,
+            paging:true,
+            aLengthMenu:[7],
+            filter:false,
+            serverSide: true,  //启用服务器端分页
+            searching: false,  //禁用原生搜索
+            columnDefs: [{
+                "targets": 'nosort',  //列的样式名
+                "orderable": false    //包含上样式名‘nosort’的禁止排序
+            }],
+            ajax: function (data, callback, settings){
+                console.log(data);
+                //封装请求参数
+                var param = {};
+                param.pageNo=(data.start / data.length)+1;//当前页码
+                param.pageSize='7';//每页条数
+                //ajax请求数据
+                $.ajax({
+                    type: "POST",
+                    url: "/api/linenorderlist",
+                    cache: false,  //禁用缓存
+                    data: param,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        setTimeout(function () {//setTimeout仅为测试延迟效果
+                            var returnData = {};//封装返回数据
+                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                            returnData.recordsTotal = result.paging.count;//返回数据全部记录
+                            returnData.recordsFiltered = result.paging.count;//后台不实现过滤功能，每次查询均视作全部结果
+                            returnData.data = result.data;//返回的数据列表
+                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                            callback(returnData);
+                        },100);
+                    }
+                });
+            },
+            //列表表头字段
+            columns:[
+                {data:'linen_id'},
+                {data:'type_id'},
+                {data:'type_id'},
+                {data:'create_time'}
+            ],
+            columnDefs:[
+                {
+                    "render": function (value) {
+                        var type=['','大床四件套（1.8米床）','单人床三件套（1.2米床）','浴巾'];
+                        value=type[value];
+                        return value;
+                    },
+                    "targets":1 //指定渲染列
+                },
+                {
+                    "render": function (value) {
+                        var type=['','20元','15元','10元'];
+                        value=type[value];
+                        return value;
+                    },
+                    "targets":2 //指定渲染列
+                },
+                {
+                    "render": function (value) {
+                        value=value.substring(0, 19).replace('T',' ');
+                        return value;
+                    },
+                    "targets":3 //指定渲染列
+                }
+            ],
+            language:{
+                "sProcessing": "加载中...",
+                "sLengthMenu": "每页 _MENU_ 项",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+                "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "未加载到匹配的数据",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页",
+                    "sJump": "跳转"
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

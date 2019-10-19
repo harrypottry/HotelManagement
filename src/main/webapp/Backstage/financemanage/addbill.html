@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新增账单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <style>
+        #example,#addbill{display:none}
+        #addbill>.table th,#addbill>.table td{border:0;text-align:left;}
+        #addbill>.table td>.form-control{width:7rem;background:0;}
+        #addbill>.table td:nth-child(1)>select{width:10rem;}
+        #addbill>.table td:nth-child(2)>select{width:4rem;}
+        #addbill>.table tr:nth-child(1)>td>.btn{display:none;}
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content"><!--新增账单-->
+            <div class="condition row" style="display:inline-block">
+                <span class="col-6">新增账单</span>
+            </div>
+            <div class="card">
+                <ul class="card-body nav">
+                    <li>
+                        <b>选择酒店：</b><input type="text" class="form-control hotelId" name="" id="hotelId">
+                    </li>
+                    <li>
+                        <span class="btn btn-danger" onclick="confirm()">确定</span>
+                    </li>
+                </ul>
+                <table id="example">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="form-control type">
+                                    <option value="8">PMS系统维护费</option>
+                                    <option value="9">OTA代运营费</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control monthNum">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control monthTime" value="" readonly></td>
+                            <td><input type="text" class="form-control price" value=""></td>
+                            <td><span class="btn btn-danger btn-sm">删除</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="card-body" id="addbill">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>收费项目</th>
+                                <th>账单月数</th>
+                                <th>起始月份</th>
+                                <th>每月金额</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <p><span class="btn btn-danger" id="addRow">添加</span></p>
+                    <p style="text-align: center"><span class="btn btn-danger" onclick="getbill()">生成账单</span></p>
+                </div>
+            </div>
+            <div class="table-header row">
+                <span class="col-6">历史新增账单</span>
+                <span class="col-6"></span>
+            </div>
+            <table class="table table-striped" id="history" style="width:100%">
+                <thead>
+                <tr>
+                    <th>收费项目</th>
+                    <th>账单月份</th>
+                    <th>每月金额</th>
+                    <th>添加日期</th>
+                </tr>
+                </thead>
+            </table>
+        </section>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    var hotelId;
+    $(document).ready(function(){
+        $quickQuery({"hotelId":hotels.slice(1)},{'isPage':false});
+    });
+    $("#hotelId").focus(function(){
+        $('#addbill').hide();
+        $("#history>tbody").html('');
+        $("#history_wrapper>.row:nth-child(3)").html('');
+    });
+    function confirm(){//点击确定
+        hotelId=$('#hotelId').attr('name');
+        if(hotelId){
+            $('#hotelId').val(hotelbug[hotelId]);
+            $('#addbill').show();
+            $("#addbill>table>tbody").html('');
+            $('#addRow').click();
+            request();
+        }else{
+            alert('请选择酒店');
+        }
+    }
+    $('#addRow').click(function($tr){//点击添加
+        $("#addbill>table>tbody").append($("#example>tbody>tr").clone());
+        $("#addbill>table>tbody>tr:last-child>td>.monthTime").datepicker({//年月事件
+            autoclose:true,
+            format:'yyyy-mm',
+            language:"zh",
+            minViewMode:'months'//截止到月份
+        });
+    });
+    $(document).on('click','#addbill>.table tr>td>.btn',function(){//点击删除
+        $(this).parents('tr').remove();
+    });
+    function getbill(datas){//生成账单
+        datas=[];
+        $('#addbill>table>tbody>tr>td>.price').each(function(list){
+            if($(this).val()){
+                list={};
+                list.hotelId=hotelId;
+                list.type=$(this).parents('tr').find('.type').val();
+                list.monthNum=$(this).parents('tr').find('.monthNum').val();
+                list.monthTime=$(this).parents('tr').find('.monthTime').val();
+                list.price=$(this).val();
+                datas.push(list);
+            }
+        });
+        if(datas.length){
+            $.ajax({
+                url:'/console/api/insertAccounts',
+                type: 'POST',
+                // data:datas,
+                contentType:'application/json',
+                data:JSON.stringify(datas),
+                success: function (res) {
+                    if(res.status=='succeed'){
+                        confirm();//默认点击确认按钮
+                    }
+                    warn(res.msg);
+                }
+            })
+        }else{
+           alert('请填写每月金额！');
+        }
+    }
+    function request(datas){//历史新增账单
+        datas={};
+        $('#history').dataTable({
+            destroy:true,
+            ordering:false,//排序
+            lengthChange:false,
+            paging:true,
+            aLengthMenu:[20],
+            filter:false,
+            serverSide: true,  //启用服务器端分页
+            searching:false,  //禁用原生搜索
+            ajax: function (data, callback, settings){
+                datas.hotelId=hotelId;
+                datas.pageNo=(data.start / data.length)+1;//当前页码
+                datas.pageSize='20';//每页条数
+                $.ajax({
+                    type:"GET",
+                    url:'/consoles/api/getAllHistoryList',
+                    cache: false,//禁用缓存
+                    data:datas,//传入组装的参数
+                    dataType:"json",
+                    success: function (result) {
+                        setTimeout(function () {//setTimeout仅为测试延迟效果
+                            var returnData = {};//封装返回数据
+                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                            returnData.recordsTotal = result.data.count;//返回数据全部记录
+                            returnData.recordsFiltered = result.data.count;//后台不实现过滤功能，每次查询均视作全部结果
+                            returnData.data = result.data.dataList;//返回的数据列表
+                            callback(returnData);
+                        },100);
+                    }
+                });
+            },
+            // 列表表头字段
+            columns:[
+                {data:'type'},
+                {data:'beginTime'},
+                {data:'price'},
+                {data:'createTime'}
+            ],
+            columnDefs:[
+                {
+                    "render": function (value){
+                        var Type={'8':'PMS系统维护费','9':'OTA代运营费'};
+                        return Type[value];
+                    },
+                    "targets":0 //操作列
+                }
+            ],
+            language:{
+                "sProcessing": "加载中...",
+                "sLengthMenu": "每页 _MENU_ 项",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+                "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "未加载到匹配的数据",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "<",
+                    "sNext": ">",
+                    "sLast": "末页",
+                    "sJump": "跳转"
+                }
+            }
+        });
+    };
+</script>
+</body>
+</html>

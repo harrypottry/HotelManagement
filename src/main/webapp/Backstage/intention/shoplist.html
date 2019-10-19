@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>门店列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content"><!--门店列表-->
+            <div class="condition row" style="display:inline-block">
+                <span class="col-6">门店列表</span>
+            </div>
+            <div class="card">
+                <ul class="card-body nav">
+                    <li>
+                        <b>门店名称：</b>
+                        <input type="text" class="form-control" data-id="hotelName">
+                    </li>
+                    <li>
+                        <b>门店状态：</b>
+                        <select class="form-control" data-id="status">
+                            <option value="0">全部</option>
+                            <!--<option value="1">待入库</option>-->
+                            <!--<option value="2">入库审批中</option>-->
+                            <!--<option value="3">入库未通过</option>-->
+                            <!--<option value="4">已入库</option>-->
+                        </select>
+                    </li>
+                    <li>
+                        <b>业主姓名：</b>
+                        <input type="text" class="form-control" data-id="owernName">
+                    </li>
+                    <li>
+                        <span class="btn btn-danger query">查询</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-header row">
+                <span class="col-6"></span>
+                <span class="col-6">
+                    <span class="btn btn-danger btn-sm download">导出</span>
+                </span>
+            </div>
+            <table class="table table-striped" id="table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>门店名称</th>                    
+                        <th>业主姓名</th>
+                        <th>门店地址</th>
+                        <th>拓展</th>
+                        <th>添加日期</th>
+                        <th>门店状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </section>
+    </div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    // 查询
+    $('.query').click(function(datas,pageCount){//页面请求表格数据   pageCount:总页码数
+        datas={};
+        $('.form-control').each(function(){
+            datas[$(this).attr('data-id')]=$(this).val();
+        });
+        $('#table').dataTable({
+            scrollY:window.innerHeight-420,
+            scrollX:true,
+            destroy:true,
+            ordering:false,//排序
+            lengthChange:false,
+            paging:true,
+            aLengthMenu:[20],
+            filter:false,
+            serverSide: true,  //启用服务器端分页
+            searching:false,  //禁用原生搜索
+            ajax: function (data, callback, settings){
+                datas.pageNo=(data.start / data.length)+1;//当前页码
+                datas.pageSize='20';//每页条数
+                $.ajax({
+                    type:"GET",
+                    url:'/console/api/getIntentionStoreData',
+                    cache: false,//禁用缓存
+                    data:datas,//传入组装的参数
+                    dataType:"json",
+                    success: function (result) {
+                        pageCount=result.data.pageCount;//总页码
+                        var returnData = {};//封装返回数据
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.data.count;//返回数据全部记录
+                        returnData.recordsFiltered = result.data.count;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data.dataList;//返回的数据列表
+                        callback(returnData);
+                    }
+                });
+            },
+            // 列表表头字段
+            columns:[
+                {data:'hotelName'},
+                {data:'owernName'},
+                {data:'hotelStreetAddress'},
+                {data:'status'},
+                {data:'create_time'},
+                {data:'status'},
+                {data:'status'}
+            ],
+            columnDefs:[
+                {
+                    "render": function(value){
+                        var status=['','待入库','入库审批中','入库未通过','已入库'];
+                        return status[value];
+                    },
+                    "targets":-2 //门店状态列
+                },
+                {
+                    "render": function (value){
+                        return '<span class="getbtn" name='+value+'>进入</span>';
+                    },
+                    "targets":-1 //操作列
+                }
+            ],
+            language:{
+                "sProcessing": "加载中...",
+                "sLengthMenu": "每页 _MENU_ 项",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+                "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "未加载到匹配的数据",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "<",
+                    "sNext": ">",
+                    "sLast": "末页",
+                    "sJump": "跳转"
+                }
+            },
+            fnDrawCallback: function(table) {
+                if(pageCount>7){//页码大于7出现页码跳转方式
+                    $('#table_paginate .pagination').append('<li class="jump">跳至&nbsp;&nbsp;<input type="text">&nbsp;&nbsp;页&nbsp;&nbsp;<a href="javascript:void(0);" class="page-link" data-dt-id="#table">GO</a></li>');
+                }
+            }
+        });
+    });
+    $(document).on("click","span.getbtn",function(status){//点击操作内按钮--进入--status状态判断跳转不同页面
+        status=$(this).attr('name');
+        console.log(status);//Pan-adjust1
+    });
+    // 导出
+    $('.download').click(function(datas){//导出
+        datas={};
+        $('.form-control').each(function(){
+            datas[$(this).attr('data-id')]=$(this).val();
+        });
+        downloads('/console/api/exportIntentionStoreData',datas);//导出请求
+    }); 
+</script>
+</body>
+</html>

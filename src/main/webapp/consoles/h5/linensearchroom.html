@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>AA连锁酒店 库管-房间布草查询</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+	<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+	<link rel="stylesheet" href="../adminlte/css/h5/iosSelect.css">
+	<style>
+		.searchcontstwo p a, .searchcontstwo ul li {
+			width: 25%;
+			text-align: center;
+			display: block;
+			float: left;
+		}
+		.searchcontstwo p a:last-child, .searchcontstwo ul li:last-child {
+			width: 22%;
+		}
+	</style>
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+		<div class="taskdetails" style="display:block">
+			<div class="linenserch">
+				<div class="searchmain">
+					<p>
+						<span>
+							<img src="../adminlte/img/h5/search.png" class="searchicon"/>
+							<input type="hidden" class="form-control" id="bankId" name="bank_id" placeholder="请选择房间" value="">
+							<span id="showBank" class="select-value">请选择房间</span>
+							<img src="../adminlte/img/h5/downjt.png" class="downselect"/>
+					    </span>
+						<button class="searchbtns gray">查询</button>
+					</p>
+					<div class="container"></div>
+				</div>
+				<div class="searchconts searchcontstwo">
+					<p>
+						<a>布草ID</a>
+						<a>布草名称</a>
+						<a>材质</a>
+						<a>规格</a>
+					</p>
+					<div class="searchlistinfo">
+
+					</div>
+					<div class="summain"></div>
+				</div>
+			</div>
+			<!--<div class="searchbox">-->
+			<!--<button class="gray">查询</button>-->
+			<!--</div>-->
+		</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script type="text/javascript" src="../adminlte/js/h5/iosSelect.js"></script>
+<script>
+    $(function(){
+        var datas=[];
+        //获得本酒店所有房间
+        $.ajax({
+            type: "post",
+            url: "/app/console/api/GetHotelFloorAndRoom",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                data.list=[];
+                for(var i in data.data){
+                    for(var j in data.data[i].floor_room){
+                        data.list[data.list.length]=data.data[i].floor_room[j];
+                        for(var a in data.list){
+                            datas[a]={'id': data.list[a].id, 'value': data.list[a].room_name }
+						}
+                    }
+                }
+            }
+        });
+        if(datas==null){
+            return false
+        }else{
+            //仿select
+            var showBankDom = document.querySelector('#showBank');
+            var bankIdDom = document.querySelector('#bankId');
+            showBankDom.addEventListener('click', function () {
+                var bankId = showBankDom.dataset['id'];
+                var bankName = showBankDom.dataset['value'];
+
+                var bankSelect = new IosSelect(1,
+                    [datas],
+                    {
+                        container: '.container',
+                        itemHeight: 50,
+                        itemShowCount: 3,
+                        oneLevelId: bankId,
+                        callback: function (selectOneObj) {
+                            bankIdDom.value = selectOneObj.id;
+                            showBankDom.innerHTML = selectOneObj.value;
+                            showBankDom.dataset['id'] = selectOneObj.id;
+                            showBankDom.dataset['value'] = selectOneObj.value;
+                            //查询按钮判断变色
+                            if(bankIdDom.value == null || bankIdDom.value.length == 0){
+                                $(".searchbtns").addClass('gray');
+                            }else{
+                                $(".searchbtns").addClass('red');
+                                $(".searchbtns").removeClass('gray');
+                            }
+                            $(".searchconts").show();
+                            //点击查询
+                            $(".searchbtns").click(function(){
+                                $.ajax({
+                                    type: "post",
+                                    url: "/app/console/api/SearchClothByRoom",
+                                    data: {room_name:showBankDom.dataset['value']},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        console.log(data);
+                                        var $divs='';
+                                        var x;
+                                        var datam=data.data[0];
+                                        data.data.list2={};
+                                        for(var m in datam){
+                                            x={};
+                                            for(var n of datam[m].clothTypes_name){
+												x[n.cloth_kind] = n.desc;
+											}
+                                            data.data.list2[n]=x;
+                                            if(data.data.list2[n].Type==null){
+                                                data.data.list2[n].Type='';
+                                            }
+                                            if(data.data.list2[n].Material==null){
+                                                data.data.list2[n].Material='';
+                                            }
+                                            if(data.data.list2[n].Size==null){
+                                                data.data.list2[n].Size='';
+                                            }
+                                            $divs+='<ul><li>'+datam[m].id+'</li><li>'+data.data.list2[n].Type+'</li><li>'+data.data.list2[n].Material+'</li><li>'+data.data.list2[n].Size+'</li></ul>';
+										}
+                                        $('.searchlistinfo').html($divs);
+                                        var $divs2='';
+                                        $divs2+='<h1 class="total">合计：'+data.data[1].SumAll+'件</h1>';
+                                        $('.summain').html($divs2);
+                                    }
+                                });
+                            })
+                        }
+                    });
+            });
+        }
+    })
+</script>
+</body>
+</html>

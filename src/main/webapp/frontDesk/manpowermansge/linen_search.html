@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>库存查询</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <style>
+        ul.card-body>li {
+            padding: 0.3rem 1rem;
+        }
+        ul.card-body>li:nth-child(5){
+            border:0;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <div class="navheader">
+            <dl class="leftinfodl">
+                <dt><img src="" /></dt>
+            </dl>
+            <div class="rightinfoconts">
+                <p><img src="../../import/img/mail.png"/> 站内信</p>
+                <p><img src="../../import/img/center.png"/> 帮助中心</p>
+                <p><img src="../../import/img/shezhi.png"/> 账户设置</p>
+                <p><button class="offwork" onclick="off()">下班</button></p>
+            </div>
+        </div>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+            <img src="../../import/img/logo.png" alt="AdminLTE Logo" class="elevation-3" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="lease">
+                    <div class="condition conditionone row">
+                        <span class="col-6">库存查询</span>
+                    </div>
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li>
+                                <b>布草名称：</b>
+                                <select class="form-control employeeId" id="linenname">
+                                    <option value="">全部</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>布草规格：</b>
+                                <select class="form-control employeeId" id="linensize">
+                                    <option value="">全部</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>洁净程度：</b>
+                                <select class="form-control employeeId" id="selectjc">
+                                    <option name="status" value="">全部</option>
+                                    <option name="status" value="0">干净</option>
+                                    <option name="status" value="1">脏</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>位置：</b>
+                                <select class="form-control employeeId" id="select">
+                                    <option name="possessor_type" value="">全部</option>
+                                    <option name="possessor_type" value="2">库房</option>
+                                    <option name="possessor_type" value="1">员工</option>
+                                    <option name="possessor_type" value="0">房间</option>
+                                    <option name="possessor_type" value="3">洗衣厂</option>
+                                </select>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn()">查询</span>
+                                <!--<span class="btn btn-danger" onclick="">批量导出</span>-->
+                            </li>
+                        </ul>
+                        <!--<ul class="card-body nav">-->
+                            <!--<li>-->
+                                <!--<b>报损：</b>-->
+                                <!--<select class="form-control employeeId" id="selectbs">-->
+                                    <!--<option name="type" value="">全部</option>-->
+                                    <!--<option name="type" value="QRBroken">二维码损坏</option>-->
+                                    <!--<option name="type" value="Broken">损坏</option>-->
+                                    <!--<option name="type" value="Lost">丢失</option>-->
+                                <!--</select>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<span class="btn btn-danger" onclick="btns()">查询</span>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    </div>
+                    <div class="condition row conditiontwo">
+                        <span class="col-6">
+                            <b>报损：</b>
+                            <select class="form-control employeeId" id="selectbs" onchange="btns()">
+                                <option name="type" value="">全部</option>
+                                <option name="type" value="QRBroken">二维码损坏</option>
+                                <option name="type" value="Broken">损坏</option>
+                                <option name="type" value="Lost">丢失</option>
+                            </select>
+                        </span>
+                        <span class="col-6"><span onclick="download('search')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped" id="leasetable">
+                                <thead>
+                                <tr>
+                                    <th>布草名称</th>
+                                    <th>规格</th>
+                                    <th>布草材质</th>
+                                    <th>布草ID</th>
+                                    <th>所在位置</th>
+                                    <th>清洁程度</th>
+                                    <th>报损情况</th>
+                                    <th>报损处理</th>
+                                    <th>最新更新时间</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    $(document).ready(function(){
+        request('/console/api/ShowClothType','');//布草名称
+        request('/console/api/ShowClothTypeSize','');//布草规格
+        btn();//初始化页面
+    });
+    function request(url,datas,btn) {
+        $.ajax({
+            type: "get",
+            contentType: "application/json;charset=UTF-8",
+            url: url,
+            data: datas,
+            dataType: 'json',
+            success: function (data) {
+                var $select;
+                if (url == '/console/api/ShowClothType') {//布草名称
+                    $select='';
+                    for(var i of data.data){
+                        $select+='<option value="'+i.id+'" name="cloth_typeType">'+i.desc+'</option>';
+                    }
+                    $("#linenname").append($select)
+                }
+                if (url == '/console/api/ShowClothTypeSize') {//布草规格
+                    $select='';
+                    for(var i of data.data){
+                        $select+='<option value="'+i.id+'" name="cloth_typeSize">'+i.desc+'</option>';
+                    }
+                    $("#linensize").append($select)
+                }
+            }
+        })
+    }
+    function btn(datas) {
+        datas={};
+        datas['cloth_typeType']=$("#linenname").val();//布草名称
+        datas['cloth_typeSize']=$("#linensize").val();//布草规格
+        datas['possessor_type']=$("#select").val();//位置
+        datas['status']=$("#selectjc").val();//洁净
+        $("#leasetable").dataTable({
+            destroy:true,
+            ordering:false,//排序
+            lengthChange:false,
+            paging:true,
+            aLengthMenu:[20],
+            filter:false,
+            serverSide: true,  //启用服务器端分页
+            searching: false,  //禁用原生搜索
+            columnDefs: [{
+                "targets": 'nosort',  //列的样式名
+                "orderable": false    //包含上样式名‘nosort’的禁止排序
+            }],
+            ajax: function (data, callback, settings){
+                //ajax请求数据
+                datas.pageNo=(data.start / data.length)+1;//当前页码
+                $.ajax({
+                    type: "post",
+                    url: "/wx/console/api/getAllStoreClothOrder",
+                    cache: false,  //禁用缓存
+                    data:datas,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result){
+                        var returnData = {};//封装返回数据
+                        // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.paging.count;//返回数据全部记录
+                        returnData.recordsFiltered = result.paging.count;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        callback(returnData);
+                        $('.count').html(result.paging.count);//共多少条
+                    }
+                });
+            },
+            columns:[//列表表头字段
+                {data:'clothTypeList'},
+                {data:'clothTypeList'},
+                {data:'clothTypeList'},
+                {data:'cloth_id'},
+                {data:'possessor_type'},
+                {data:'cleanStatus'},
+                {data:'type'},
+                {data:'status'},
+                {data:'update_time'}
+            ],
+            columnDefs:[
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Type'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":0 //操作列
+                },
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Size'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":1 //操作列
+                },
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Material'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":2 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'0':'房间','1':'员工','2':'库房','3':'洗衣厂'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":4 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'0':'干净','1':'脏'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":5 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'Lost':'丢失','Broken':'损坏','QRBroken':'二维码损坏','null':''};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":6 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'0':'已报损','1':'已处理','null':''};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":7 //操作列
+                }
+            ],
+            language:{
+                "sProcessing": "加载中...",
+                "sLengthMenu": "每页 _MENU_ 项",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+                "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "未加载到匹配的数据",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页",
+                    "sJump": "跳转"
+                }
+            }
+        });
+    }
+    //报损查询
+    function btns(datas) {
+        datas={};
+        datas['type']=$("#selectbs").val();//报损
+        $("#leasetable").dataTable({
+            destroy:true,
+            ordering:false,//排序
+            lengthChange:false,
+            paging:true,
+            aLengthMenu:[20],
+            filter:false,
+            serverSide: true,  //启用服务器端分页
+            searching: false,  //禁用原生搜索
+            columnDefs: [{
+                "targets": 'nosort',  //列的样式名
+                "orderable": false    //包含上样式名‘nosort’的禁止排序
+            }],
+            ajax: function (data, callback, settings){
+                //ajax请求数据
+                datas.pageNo=(data.start / data.length)+1;//当前页码
+                $.ajax({
+                    type: "post",
+                    url: "/wx/console/api/GetWebErrorCloth",
+                    cache: false,  //禁用缓存
+                    data:datas,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result){
+                        var returnData = {};//封装返回数据
+                        // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.paging.count;//返回数据全部记录
+                        returnData.recordsFiltered = result.paging.count;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data;//返回的数据列表
+                        callback(returnData);
+                        $('.count').html(result.paging.count);//共多少条
+                    }
+                });
+            },
+            columns:[//列表表头字段
+                {data:'clothTypeList'},
+                {data:'clothTypeList'},
+                {data:'clothTypeList'},
+                {data:'cloth_id'},
+                {data:'possessor_type'},
+                {data:'cleanStatus'},
+                {data:'type'},
+                {data:'status'},
+                {data:'update_time'}
+            ],
+            columnDefs:[
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Type'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":0 //操作列
+                },
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Size'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":1 //操作列
+                },
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Material'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":2 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'0':'房间','1':'员工','2':'库房','3':'洗衣厂'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":4 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'0':'干净','1':'脏'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":5 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'Lost':'丢失','Broken':'损坏','QRBroken':'二维码损坏'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":6 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'0':'已报损','1':'已处理'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":7 //操作列
+                }
+            ],
+            language:{
+                "sProcessing": "加载中...",
+                "sLengthMenu": "每页 _MENU_ 项",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+                "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "未加载到匹配的数据",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页",
+                    "sJump": "跳转"
+                }
+            }
+        });
+    }
+    function download(Ids,datas,url) {//导出
+        datas={};
+        datas['cloth_typeType']=$("#linenname").val();//布草名称
+        datas['cloth_typeSize']=$("#linensize").val();//布草规格
+        datas['possessor_type']=$("#select").val();//位置
+        datas['status']=$("#selectjc").val();//洁净
+        if(Ids=='search'){
+            url='/wx/console/api/DownLoadAllStoreClothExcel';
+        }
+        delete datas.pageNo;
+        delete datas.pageSize;
+        //导出请求
+        var form = document.createElement("form");
+        form.style.display = 'none';
+        form.action = url;
+        form.method ="post";
+        document.body.appendChild(form);
+        for(var key in datas){
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = datas[key];
+            form.appendChild(input);
+        }
+        form.submit();
+        form.remove();
+    }
+</script>
+</body>
+</html>

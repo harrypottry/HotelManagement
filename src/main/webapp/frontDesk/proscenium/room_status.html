@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>房态管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <div class="navheader">
+            <dl class="leftinfodl">
+                <dt><img src="" /></dt>
+            </dl>
+            <div class="rightinfoconts">
+                <p><img src="../../import/img/mail.png"/> 站内信</p>
+                <p><img src="../../import/img/center.png"/> 帮助中心</p>
+                <p><img src="../../import/img/shezhi.png"/> 账户设置</p>
+                <p><button class="offwork" onclick="off()">下班</button></p>
+            </div>
+        </div>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+            <img src="../../import/img/logo.png" alt="AdminLTE Logo" class="elevation-3" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href=""  data-toggle="tab">实时房态</a></li>
+                <!--<li class="nav-item"><a class="nav-link" href="" data-toggle="tab">在店客人</a></li>-->
+                <!--<li class="nav-item"><a class="nav-link" href="" data-toggle="tab">房态条图</a></li>-->
+                <!--<li class="nav-item"><a class="nav-link" href="" data-toggle="tab">远期房态</a></li>-->
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="lease">
+                    <div class="card">
+                        <ul class="card-body nav statuscolor">
+
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="floormain">
+                            <!--<div class="condition conditionone row">-->
+                                <!--<span class="col-6">一层</span>-->
+                            <!--</div>-->
+                            <!--<div class="room-body">-->
+                                <!--<ul class="roommanage">-->
+                                    <!--<li class="org">-->
+                                        <!--<label>9999</label>-->
+                                        <!--<div class="roominfos">-->
+                                            <!--<p>-->
+                                                <!--<a>大床房</a><br/>-->
+                                                <!--<a>无窗</a>-->
+                                            <!--</p>-->
+                                        <!--</div>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+
+                            <!--<div class="condition conditionone row">-->
+                                <!--<span class="col-6">二层</span>-->
+                            <!--</div>-->
+                            <!--<div class="room-body">-->
+                                <!--<ul class="roommanage">-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!---->
+<div class="statuslistmain">
+    <ul>
+        <li name="0">空闲</li>
+        <li name="1">脏房</li>
+        <li name="2">待检查</li>
+        <li name="3">已入住</li>
+        <li name="4">已预订</li>
+        <li name="5">维修房</li>
+        <li name="6">清洁中</li>
+    </ul>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    $(document).ready(function(){
+        request();
+    });
+        var floor='';
+        var index='';
+        var roomliid='';
+        function request() {
+            $.ajax({// 获取房间列表
+                type: "get",
+                url: "/wx/console/api/getroomlistbyloginid",
+                data: '',
+                success: function (data) {
+                    // console.log(data);
+                    var $html = '';
+                    var roomnum0 = 0, roomnum1 = 0, roomnum2 = 0, roomnum3 = 0, roomnum4 = 0, roomnum5 = 0,
+                        roomnum6 = 0;
+                    var $lis = '',
+                        liclass = '';
+                    for (var i in data.data) {
+                        var item = data.data[i];
+                        var list = [];
+                        for (var j of item) {
+                            if (i != floor) {
+                                floor = i;
+                                $html += '</ul></div><div class="condition conditionone row"><span class="col-6">' + i + '层</span></div><div class="room-body"><ul class="roommanage">';
+                            }
+                            if (j.status == 0) {
+                                roomnum0++;
+                                liclass = 'green';
+                            } else if (j.status == 1) {
+                                roomnum1++;
+                                liclass = 'brown';
+                            } else if (j.status == 2) {
+                                roomnum2++;
+                                liclass = 'yellow';
+                            } else if (j.status == 3) {
+                                roomnum3++;
+                                liclass = 'pink';
+                            } else if (j.status == 4) {
+                                roomnum4++;
+                                liclass = 'org';
+                            } else if (j.status == 5) {
+                                roomnum5++;
+                                liclass = 'purple';
+                            } else if (j.status == 6) {
+                                roomnum6++;
+                                liclass = 'gray';
+                            }
+                            $html += '<li name="' + j.id + '" class="' + liclass + '"><label>' + j.room_name + '</label><div class="roominfos"><p><a>' + j.room_type_name + '</a></p></div></li>';
+                            $(".floormain").html($html);
+                        }
+                    }
+                    $lis += '<li><span class="green"></span><a>空闲：' + roomnum0 + '</a> </li><li><span class="brown"></span><a>脏房：' + roomnum1 + '</a> </li><li><span class="yellow"></span><a>待检查：' + roomnum2 + '</a> </li><li><span class="pink"></span><a>已入住：' + roomnum3 + '</a> </li><li><span class="org"></span><a>已预订：' + roomnum4 + '</a> </li><li><span class="purple"></span><a>维修房：' + roomnum5 + '</a> </li><li><span class="gray"></span><a>清洁中：' + roomnum6 + '</a> </li>';
+                    $('ul.statuscolor').html($lis);
+                    $(".roommanage li").click(function () {
+                        index = $(this).index();
+                        var widthnum = $(this).width() / 6;
+                        var heigthnum = $(this).height() - 10;
+                        var toppx = $(this).offset().top - $(window).scrollTop();
+                        var leftpx = $(this).offset().left;
+                        $(".statuslistmain").show();
+                        $(".statuslistmain").css({'top': toppx + heigthnum, 'left': leftpx + widthnum});
+                        roomliid = $(this).attr('name');
+                    })
+                }
+            });
+        }
+    //点击状态
+    $('.statuslistmain ul li').click(function () {
+        $(this).addClass('active').siblings().removeClass();
+        var stausli = $(this).attr('name');
+        //房态管理
+        $.ajax({
+            type: "post",
+            url: "/console/api/postRoomStatus",
+            data: {room_id: roomliid, status: stausli},
+            success: function (data) {
+                // console.log(data);
+                $(".statuslistmain").hide();
+                request();
+                // var liclass = ['green', 'brown', 'yellow', 'pink', 'org', 'purple', 'gray'];
+                // $(".roommanage li").eq(index).attr('class', liclass[stausli]);
+                //window.location.reload();//刷新当前页面
+            }
+        });
+    })
+</script>
+</body>
+</html>

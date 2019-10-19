@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>布草预定</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <div class="navheader">
+            <dl class="leftinfodl">
+                <dt><img src="" /></dt>
+            </dl>
+            <div class="rightinfoconts">
+                <p><img src="../../import/img/mail.png"/> 站内信</p>
+                <p><img src="../../import/img/center.png"/> 帮助中心</p>
+                <p><img src="../../import/img/shezhi.png"/> 账户设置</p>
+                <p><button class="offwork" onclick="off()">下班</button></p>
+            </div>
+        </div>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+            <img src="../../import/img/logo.png" alt="AdminLTE Logo" class="elevation-3" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="condition conditionone row">
+                <span class="col-6">布草预定</span>
+            </div>
+            <p class="promptinfo"><span>*建议数量</span>通过PMS已预订、已入住、脏房总数来推算各个布草的所需数量</p>
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered table-striped" id="linentable">
+                        <thead>
+                        <tr>
+                            <th>布草名称</th>
+                            <th>规格</th>
+                            <th>布草材质</th>
+                            <th>预订数量</th>
+                            <th>今日预订数量</th>
+                            <th>建议数量</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <div class="totalmain">
+                        <div class="totalright">
+                            <p>总计：<a>0</a></p>
+                            <span class="btn btn-danger reservebtn">提交</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+$(function(){
+    $(document).ready(function(){
+        request();//初始化页面
+    });
+    var datalist = [];
+    function request(){//初始化请求布草列表
+        $('#linentable').dataTable({
+            ordering:false,//排序
+            scrollY:window.innerHeight-254,
+            scrollCollapse:true,
+            paging:false,
+            filter:false,
+            info:false,
+            destroy:true,
+            ajax: function (data, callback, settings){
+                $.ajax({
+                    type:"POST",
+                    url:'/console/api/suggestClothBooking',
+                    cache: false,//禁用缓存
+                    data:'',//传入组装的参数
+                    dataType:"json",
+                    success: function (result) {
+                        var returnData = {};//封装返回数据
+                        returnData.data = result.data;
+                        callback(returnData);
+                        //输入值总和
+                        // $("input.inputnums").bind("input propertychange",function(event){
+                        //     var inputs = $('input.inputnums');
+                        //     var val = 0;
+                        //     inputs.each(function () {
+                        //         val += +this.value;//值转换为number，然后相加
+                        //     });
+                        //     $(".totalright p a").html(val);
+                        // })
+                        //今日预订数量总计
+                        var currentNums = $('span.currentNum');
+                        var nums=0;
+                        currentNums.each (function () {
+                            nums += parseInt ($ (this).text ());
+                        });
+                        $(".totalright p a").html(nums);
+                    }
+                });
+            },
+            // 列表表头字段
+            columns:[
+                {data:'cloth_types'},
+                {data:'cloth_types'},
+                {data:'cloth_types'},
+                {data:'cloth_type_id'},
+                {data:'currentNum'},
+                {data:'sum'}
+            ],
+            columnDefs:[
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Type'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":0 //操作列
+                },
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Size'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":1 //操作列
+                },
+                {
+                    "render": function (value){
+                        for(var i of value){
+                            if(i.cloth_kind=='Material'){
+                                value=i.desc;break;
+                            }
+                        }
+                        return value;
+                    },
+                    "targets":2 //操作列
+                },
+                {
+                    "render": function (value){
+                        value='<input type="text" class="form-control inputnums" placeholder="单行输入" value="" name="'+value+'">';
+                        return value;
+                    },
+                    "targets":3 //操作列
+                },
+                {
+                    "render": function (value){
+                        value='<span class="currentNum" value="'+value+'">'+value+'</span>';
+                        return value;
+                    },
+                    "targets":4 //操作列
+                },
+                {
+                    "render": function (value){
+                        value='<span class="spans" name="'+value+'">'+value+'</span>';
+                        return value;
+                    },
+                    "targets":5 //操作列
+                }
+            ]
+        });
+    }
+    //点击提交
+    $(".reservebtn").click(function(){
+        var inputs=$('.inputnums');
+        // var spans=$('.spans');//建议数量
+        for(var j=0; j<inputs.length; j++){
+            var obj={};
+            var inputvalue=$(inputs[j]).val();
+            var id=$(inputs[j]).attr('name');
+            // var spansname=$(spans[j]).attr('name');
+            if(inputvalue==""){
+                obj.cloth_type_id=id;
+                obj.num="0";
+                // obj.num=spansname;
+            }else{
+                obj.cloth_type_id=id;
+                obj.num=inputvalue;
+            }
+            datalist.push(obj);
+        }
+        //布草预定
+        $.ajax({
+            type: "post",
+            url: '/console/api/postClothBooking',
+            contentType: 'application/json',
+            data:JSON.stringify(datalist),
+            // data: {clothBookingJson:datalist},
+            dataType: 'json',
+            success: function (data) {
+                // console.log(data);
+                if(data.errorCode==0){
+                    request();//初始化页面
+                    $(".totalright p a").html(0);
+                    warn('布草预定成功');
+                }else{
+                    warn('预定失败，请重新操作');
+                }
+            }
+        })
+    })
+})
+</script>
+</body>
+</html>

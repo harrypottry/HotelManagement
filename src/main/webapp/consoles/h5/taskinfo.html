@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 保洁</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain" id="tabBox">
+        <!--<div class="find_nav_list hd">-->
+            <!--<ul class="tituls">-->
+                <!--<li class="on"><a>本月已做任务</a></li>-->
+                <!--<li><a>任务详情列表</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <div class="bd">
+            <div class="taskdetails" style="display:block;">
+                <div class="taskdetail mt1 mlr">
+                    <p><a>¥</a><label class="totallabel"></label><br/><span>本月预计收入</span></p>
+                    <p><label><img src="../adminlte/img/h5/iconxx.png"/>5.0</label><br/><span>评分</span></p>
+                </div>
+                <div class="tasklist tasklistnew mt1 mlr">
+                    <p><a>任务类型</a><a>合格数量</a><a>不合格数量</a></p>
+                    <div class="taskconts">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<!--<script src="../adminlte/js/h5/TouchSlide.1.1.js"></script>-->
+<script>
+	$(function(){
+        //滑动/点击切换
+        // TouchSlide( { slideCell:"#tabBox",
+        //     endFun:function(i){ //高度自适应
+        //         var bd = document.getElementById("tabBox-bd");
+        //         // bd.parentNode.style.height = bd.children[i].children[0].offsetHeight+"px";
+        //         if(i>0)bd.parentNode.style.transition="200ms";//添加动画效果
+        //     }
+        // });
+		//本月已做任务
+        $.ajax({
+            type: "get",
+            url: "/app/console/api/showMissionByEmpMonth",
+            dataType: "json",
+            success: function (data) {
+                var data=data.data;
+                var $labels='';
+                var $html = '';
+                for(var i in data.mission_detail){
+                    $html+='<ul><li>'+data.mission_detail[i].desc+'</li><li>'+data.mission_detail[i].OK+'</li><li>'+data.mission_detail[i].UnOK+'</li></ul>'
+				}
+				$labels+=''+data.count+'';
+                $(".totallabel").append($labels);
+				$('.taskconts').html($html);
+            }
+        });
+	})
+
+</script>
+</body>
+</html>

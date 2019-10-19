@@ -1,0 +1,96 @@
+/*小程序管理*/
+.picopera-table{
+    border: 1px solid rgba(0,0,0,.125);
+    clear:both;
+    width:100%;
+}
+.picopera-table tr{
+    text-align:center;
+    border-bottom:1px solid rgba(0,0,0,.125);
+    line-height:48px;
+}
+.picopera-table th{
+    background:rgba(0,0,0,.05);
+}
+input.intstyle{
+    border:1px solid #dee2e6;
+    border-radius:2px;
+    line-height:30px;
+    text-align:center;
+}
+input.intwidth1{
+    width:80px;
+}
+input.intwidth2{
+    width:300px;
+}
+div.wordstyle{
+    display:inline-block;
+    font-size:12px;
+    line-height:30px;
+}
+.field {
+    position: relative;
+    vertical-align: middle;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    border-radius: 4px;
+    padding: 0px 10px;
+    overflow: hidden;
+    color: #007bff;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.form_revise input {
+    width: 280px;
+}
+.blue {
+    border:1px solid #007bff;
+}
+input.btnstyle{
+    border-radius:4px;
+    color:#fff;
+    line-height:28px;
+    margin: 0 5px;
+    font-size:14px;
+    padding:0 10px;
+    cursor:pointer;
+}
+.bluebg{
+    background:#007bff;
+}
+.redbg{
+    background:#E04923;
+}
+.greenbg{
+    background:#97d54c;
+}
+.addbtnbox{
+    display:inline-block;
+    width:98%;
+}
+.addbtnbox label{
+    display:inline-block;
+    float:right;
+    border: 1px solid #007bff;
+    color:#007bff;
+    border-radius:4px;
+    line-height:30px;
+    padding:0 15px;
+    cursor:pointer;
+}
+
+

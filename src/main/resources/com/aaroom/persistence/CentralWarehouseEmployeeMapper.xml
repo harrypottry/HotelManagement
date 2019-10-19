@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.CentralWarehouseEmployeeMapper" >
+    <resultMap id="BaseResultMap" type="com.aaroom.beans.CentralWarehouseEmployee" >
+        <id column="central_warehouse_id" property="central_warehouse_id" jdbcType="INTEGER" />
+        <result column="employee_id" property="employee_id" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+        <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+        <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+        <result column="is_active" property="is_active" jdbcType="TINYINT" />
+    </resultMap>
+    <select id="getById" resultType="com.aaroom.beans.CentralWarehouseEmployee">
+        select *  from central_warehouse_employee
+        where employee_id=#{id}
+    </select>
+
+</mapper>

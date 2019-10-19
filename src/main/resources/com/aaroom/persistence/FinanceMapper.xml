@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.FinanceMapper" >
+
+   <select id="getRentalList" resultType="com.aaroom.model.FinanceListView">
+       SELECT cl.cloth_id clothId,cl.create_time beginDate,hb.hotel_name hotelName,cl.hotel_id hotelId,cp.rental_price rentalPrice, cl.uuid uuid FROM cloth_log cl
+       JOIN hotel_base hb ON cl.hotel_id = hb.id
+       JOIN cloth_price cp ON cp.cloth_id = cl.cloth_id
+       <where>
+           cl.possessor_type = #{dateType} and cl.direction = #{direction}
+           <if test="beginDate != null and beginDate != ''">
+               <![CDATA[ and DATE_FORMAT(cl.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{beginDate},'%Y-%m-%d')]]>
+           </if>
+           <if test="endDate != null and endDate != ''">
+               <![CDATA[ and DATE_FORMAT(cl.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{endDate},'%Y-%m-%d')]]>
+           </if>
+           <if test="hotelId != null">
+               and hb.id = #{hotelId}
+           </if>
+       </where>
+      GROUP BY cl.uuid
+   </select>
+
+    <select id="getWashList" resultType="com.aaroom.model.FinanceListView">
+       SELECT cl.cloth_id clothId,cl.create_time beginDate,hb.hotel_name hotelName,cl.hotel_id hotelId,cp.collect_wash_price collectWashPrice,cp.pay_wash_price payWashPrice,el.name washFactory, cl.uuid uuid FROM cloth_log cl
+        JOIN hotel_base hb ON cl.hotel_id = hb.id
+        JOIN cloth_price cp ON cp.cloth_id = cl.cloth_id
+        JOIN employee el ON el.id = cl.possessor_id
+        <where>
+            cl.possessor_type = #{dateType} and cl.direction = #{direction}
+            <if test="beginDate != null and beginDate != ''">
+                <![CDATA[ and DATE_FORMAT(cl.create_time,'%Y-%m-%d') >= DATE_FORMAT(#{beginDate},'%Y-%m-%d')]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[ and DATE_FORMAT(cl.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{endDate},'%Y-%m-%d')]]>
+            </if>
+            <if test="hotelId != null">
+                and hb.id = #{hotelId}
+            </if>
+            <if test="employeeId != null and employeeId != ''">
+                and el.id = #{employeeId}
+            </if>
+        </where>
+        GROUP BY cl.uuid
+    </select>
+
+    <!--<insert id="saveClaimImportData" parameterType="com.aaroom.beans.ClaimAccount" useGeneratedKeys="true" keyProperty="id">-->
+        <!--INSERT INTO claim_account(flow_number, transaction_date, hotel_id, drawee,-->
+        <!--type, payment_account, transaction_amount, summary, receiving_bank, claimed_amount,-->
+        <!--tobe_claimed_amount, claim_times, update_date, status)-->
+        <!--VALUES(#{ca.flowNumber}, #{ca.transactionDate}, #{ca.hotelId}, #{ca.drawee},-->
+        <!--#{ca.type}, #{ca.paymentAccount}, #{ca.transactionAmount}, #{ca.summary},-->
+        <!--#{ca.receivingBank}, #{ca.claimedAmount}, #{ca.tobeClaimedAmount}, #{ca.claimTimes}, #{ca.updateDate}, #{ca.status})-->
+    <!--</insert>-->
+    <insert id="saveClaimImportData" parameterType="com.aaroom.beans.ClaimAccount" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO claim_account(flow_number, transaction_date, drawee,
+         payment_account, transaction_amount, summary, receiving_bank, claim_times, status)
+        VALUES
+        <foreach collection="claimAccountList" item="cal" separator=",">
+            (#{cal.flowNumber}, #{cal.transactionDate}, #{cal.drawee},
+            #{cal.paymentAccount}, #{cal.transactionAmount}, #{cal.summary},
+            #{cal.receivingBank}, #{cal.claimTimes}, #{cal.status})
+        </foreach>
+    </insert>
+
+    <sql id="Claim_Column_List">
+        id id, flow_number flowNumber, transaction_date transactionDate, hotel_id hotelId, drawee drawee, type type,
+         payment_account paymentAccount, transaction_amount transactionAmount, summary summary, receiving_bank receivingBank,
+         claimed_amount claimedAmount, tobe_claimed_amount tobeClaimedAmount, claim_times claimTimes, update_date updateDate,
+         status status
+    </sql>
+
+    <select id="getClaimTimes" resultType="com.aaroom.beans.ClaimAccount">
+        SELECT
+        <include refid="Claim_Column_List"/>
+         FROM claim_account WHERE id = #{claimAccountId}
+    </select>
+
+    <insert id="saveClaimAccount" parameterType="com.aaroom.beans.CollectClaim" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO collected_claim(account_id, claim_account_id, price, adjust_price)
+        VALUES(#{accountId}, #{claimAccountId}, #{claimPrice}, #{adjustPrice})
+    </insert>
+
+    <select id="getClaimAccountData" resultType="com.aaroom.beans.ClaimAccount">
+        SELECT
+        <include refid="Claim_Column_List"/>
+        FROM claim_account
+         <where>
+             <if test="status != null">
+                 status = #{status}
+             </if>
+             <if test="hotelId != null">
+                 AND hotel_id = #{hotelId}
+             </if>
+             <if test="beginTime != null and beginTime != ''">
+                 <![CDATA[ and DATE_FORMAT(transaction_date,'%Y-%m-%d') >= DATE_FORMAT(#{beginTime},'%Y-%m-%d')]]>
+             </if>
+             <if test="endTime != null and endTime != ''">
+                 <![CDATA[ and DATE_FORMAT(transaction_date,'%Y-%m-%d') <= DATE_FORMAT(#{endTime},'%Y-%m-%d')]]>
+             </if>
+         </where>
+        ORDER BY transaction_date DESC
+    </select>
+
+    <update id="updateClaimAccount" parameterType="com.aaroom.beans.ClaimAccount">
+        UPDATE claim_account SET hotel_id = #{ca.hotelId}, claimed_amount = #{ca.claimedAmount}, tobe_claimed_amount = #{ca.tobeClaimedAmount},
+        claim_times = #{ca.claimTimes}, update_date = #{ca.updateDate}, status = #{ca.status} WHERE id = #{ca.id}
+    </update>
+
+    <select id="getClaimAccount" resultType="com.aaroom.beans.ClaimAccount">
+        SELECT
+         <include refid="Claim_Column_List"/>
+         FROM claim_account WHERE flow_number = #{flowNumber}
+    </select>
+
+
+    
+    <insert id="saveChargeConfig" parameterType="com.aaroom.beans.ChargeConfig" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO charge_config(hotel_id, charge_item, charge_rate, charge_standard, charge_rule, type)
+        VALUES
+        <foreach collection="chargeConfigList" item="ccl" separator=",">
+            (#{hotelId}, #{ccl.chargeItem}, #{ccl.chargeRate}, #{ccl.chargeStandard}, #{ccl.chargeRule}, #{ccl.type})
+        </foreach>
+    </insert>
+
+    <insert id="saveChargeConfigIntetionStore" parameterType="com.aaroom.beans.ChargeConfig" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO charge_config(survey_id, charge_item, charge_rate, charge_standard, charge_rule, type, reduction)
+        VALUES
+        <foreach collection="chargeConfigList" item="ccl" separator=",">
+            (#{surveyId}, #{ccl.chargeItem}, #{ccl.chargeRate}, #{ccl.chargeStandard}, #{ccl.chargeRule}, #{ccl.type}, #{ccl.reduction})
+        </foreach>
+    </insert>
+
+    <!--启用@EmployeeOperator时用-->
+    <!--<insert id="saveChargeConfig" parameterType="com.aaroom.beans.ChargeConfig" useGeneratedKeys="true" keyProperty="id">-->
+        <!--INSERT INTO charge_config(hotel_id, charge_item, charge_rate, charge_standard, charge_rule, type, creater_id)-->
+        <!--VALUES-->
+        <!--<foreach collection="chargeConfigList" item="ccl" separator=",">-->
+            <!--(#{hotelId}, #{ccl.chargeItem}, #{ccl.chargeRate}, #{ccl.chargeStandard}, #{ccl.chargeRule}, #{ccl.type}, #{ccl.creater_id})-->
+        <!--</foreach>-->
+    <!--</insert>-->
+
+
+
+    <insert id="saveChargeConfigAttach" parameterType="com.aaroom.beans.ChargeConfigAttach" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO charge_config_attach(hotel_id, contract_num, start_date, end_date, remark)
+        VALUES (#{hotelId}, #{cca.contractNum}, #{cca.startDate}, #{cca.endDate}, #{cca.remark})
+    </insert>
+
+    <!--启用@EmployeeOperator时用-->
+    <!--<insert id="saveChargeConfigAttach" parameterType="com.aaroom.beans.ChargeConfigAttach" useGeneratedKeys="true" keyProperty="id">-->
+        <!--INSERT INTO charge_config_attach(hotel_id, contract_num, start_date, end_date, remark, creater_id)-->
+        <!--VALUES (#{hotelId}, #{cca.contractNum}, #{cca.startDate}, #{cca.endDate}, #{cca.remark}, #{cca.creater_id})-->
+    <!--</insert>-->
+
+
+
+    <sql id="ChargeConfig_Column_List">
+        id id, hotel_id hotelId, charge_item chargeItem, charge_rate chargeRate, charge_standard chargeStandard, charge_rule chargeRule, type type, reduction reduction
+    </sql>
+    
+    <select id="getChargeConfig" resultType="com.aaroom.beans.ChargeConfig">
+        SELECT
+        <include refid="ChargeConfig_Column_List"/>
+        FROM charge_config WHERE hotel_id = #{hotelId}
+    </select>
+
+    <select id="getChargeConfigIntentionStore" resultType="com.aaroom.beans.ChargeConfig">
+        SELECT
+        <include refid="ChargeConfig_Column_List"/>
+        FROM charge_config WHERE survey_id = #{surveyId}
+    </select>
+
+    <sql id="ChargeConfigAttach_Column_List">
+        id id, hotel_id hotelId, contract_num contractNum, start_date startDate, end_date endDate, remark remark
+    </sql>
+    
+    <select id="getChargeConfigAttach" resultType="com.aaroom.beans.ChargeConfigAttach">
+        SELECT
+        <include refid="ChargeConfigAttach_Column_List"/>
+        FROM charge_config_attach WHERE hotel_id = #{hotelId}
+    </select>
+    
+    <insert id="saveChargeRenewConfig" parameterType="com.aaroom.beans.ChargeRenewConfig" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO charge_renew_config(charge, begin_date, contract_num, charge_config_id, hotel_id)
+        VALUES (#{crc.charge}, #{crc.beginDate}, #{crc.contractNum}, #{crc.chargeConfigId}, #{crc.hotelId})
+    </insert>
+
+    <update id="updateChargeRenewConfig" parameterType="com.aaroom.beans.ChargeRenewConfig">
+        UPDATE charge_renew_config SET charge = #{crc.charge}, begin_date = #{crc.beginDate}, contract_num = #{crc.contractNum}
+        WHERE charge_config_id = #{crc.chargeConfigId} AND status = #{crc.status}
+    </update>
+
+    <!--启用@EmployeeOperator时用-->
+    <!--<update id="updateChargeRenewConfig" parameterType="com.aaroom.beans.ChargeRenewConfig">-->
+        <!--UPDATE charge_renew_config SET charge = #{crc.charge}, begin_date = #{crc.beginDate}, contract_num = #{crc.contractNum}, updater_id = #{crc.updater_id}-->
+        <!--WHERE charge_config_id = #{crc.chargeConfigId} AND status = #{crc.status}-->
+    <!--</update>-->
+
+    <sql id="ChargeRenewConfig_Column_List">
+        id id, charge charge, begin_date beginDate, contract_num contractNum, charge_config_id chargeConfigId, status status, hotel_id hotelId
+    </sql>
+
+    <select id="getUpdateChargeConfig" resultType="com.aaroom.beans.ChargeRenewConfig">
+        SELECT
+        <include refid="ChargeRenewConfig_Column_List"/>
+        FROM  charge_renew_config WHERE charge_config_id = #{chargeConfigId} AND status = 0
+    </select>
+    
+    <select id="getChargeRenewConfig" resultType="com.aaroom.beans.ChargeRenewConfig">
+        SELECT
+        <include refid="ChargeRenewConfig_Column_List"/>
+        FROM  charge_renew_config WHERE charge_config_id = #{chargeConfigId} AND hotel_id = #{hotelId} ORDER BY begin_date DESC
+    </select>
+    
+    <select id="getChargeRenewConfigByStatus" resultType="com.aaroom.beans.ChargeRenewConfig">
+        SELECT
+        <include refid="ChargeRenewConfig_Column_List"/>
+        FROM  charge_renew_config WHERE status = 0
+    </select>
+    
+    <update id="updateChargeConfig">
+        UPDATE charge_config SET charge_rule = #{charge}, reduction = #{reduction}, status = 1 WHERE id = #{chargeConfigId}
+    </update>
+    
+    <update id="updateChargeRenewConfigStatus" parameterType="java.lang.Integer">
+        UPDATE charge_renew_config SET status = 1 WHERE id = #{id}
+    </update>
+    
+    <select id="queryChargeConfig" resultType="com.aaroom.beans.ChargeConfig">
+        SELECT
+        <include refid="ChargeConfig_Column_List"/>
+        FROM charge_config WHERE hotel_id = #{hotelId} AND charge_item = #{chargeItem}
+    </select>
+
+    <delete id="deleteNostandardData" parameterType="java.lang.Integer">
+        DELETE FROM charge_config_attach WHERE hotel_id = #{hotelId}
+    </delete>
+
+    <update id="updateChargeRate" parameterType="java.lang.Integer">
+        UPDATE charge_config SET charge_rate = #{chargeRate} WHERE hotel_id = #{hotelId} AND id = #{chargeConfigId}
+    </update>
+
+    <select id="getChargeConfigBySurveyId" resultType="com.aaroom.beans.ChargeConfig">
+        SELECT
+        <include refid="ChargeConfig_Column_List"/>
+        FROM charge_config WHERE survey_id = #{surveyId}
+    </select>
+
+    <update id="updateChargeRenewConfigByCcId">
+        UPDATE charge_renew_config SET charge = #{chargeRule} WHERE charge_config_id = #{ccid}
+    </update>
+</mapper>

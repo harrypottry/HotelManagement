@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AAroom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">    -->
+    <link rel="stylesheet" href="adminlte/css/adminlte.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .footerp{
+            position:fixed;
+            bottom:5px;
+            left:0;
+            width:100%;
+            text-align:center;
+            color:#fff;
+            font-size:0.7em;
+        }
+        .form-control{padding-left:2.1rem;}
+        .form-group{position:relative}
+        .form-group>span{position:absolute;top:11px;left:.75rem;color:#C7C7C7}
+    </style>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p style="text-align:center;margin:5px 0;"><img src="adminlte/img/logo.png" style="width:30%"></p>
+            <p class="login-box-msg" style="color:#5AB89D;font-size:1.4rem">酒店前台管理系统</p>
+            <form id="loginForm">
+                <div class="form-group has-feedback">
+                    <input type="text" name="account" class="form-control" placeholder="账号">
+                    <span class="fa fa-user"></span>
+                </div>
+                    <div class="form-group has-feedback">
+                    <input type="password" name="password" class="form-control" placeholder="密码">
+                    <span class="fa fa-lock"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <button class="btn btn-info btn-block">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<p class="footerp">AA连锁酒店产品研发部</p>
+<script src="adminlte/js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("button.btn").on("click", function(e){
+            e.preventDefault();
+            if(/^[1][3,4,5,7,8][0-9]{9}$/.test($('input[name="account"]').val())){
+                $(this).html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录...');
+                $.ajax({
+                    url : "/login",
+                    data :$("#loginForm").serialize(),
+                    type: "POST",
+                    success:function(data){
+                        console.log(data);
+                        var resp=data.message;
+                        var start = resp.length - 5;
+                        if(resp.substr(start, resp.length) == ".html") {
+                            location.href = resp;
+                        } else {
+                            $("button.btn").html('登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录');
+                            alert(resp);
+                        }
+                    }
+                });
+            }else {
+                alert('请填写正确的手机号');
+            }
+        })
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>合同列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content"><!--合同列表-->
+            <div class="condition row" style="display:inline-block">
+                <span class="col-6">合同列表</span>
+            </div>
+            <div class="card">
+                <ul class="card-body nav">
+                    <li>
+                        <b>合同类型：</b>
+                        <select class="form-control contractType">
+                            <option value="0">全部</option>
+                            <option value="1">AA 服务协议</option>
+                            <option value="2">AA 服务协议补充协议</option>
+                        </select>
+                    </li>
+                    <li>
+                        <b>合同状态：</b>
+                        <select class="form-control contractStatus">
+                            <option value="0">全部</option>
+                            <option value="1">未领用</option>
+                            <option value="2">已领用</option>
+                            <option value="3">已签约</option>
+                            <option value="4">已归档</option>
+                            <option value="5">作废</option>
+                            <option value="6">丢失</option>
+                            <option value="7">其他</option>
+                        </select>
+                    </li>
+                    <li>
+                        <b>领用人：</b>
+                        <select class="form-control contractRecipientId"><option value="0">全部</option></select>
+                    </li>
+                    <li>
+                        <b>签约方：</b>
+                        <input type="text" class="form-control contractSignatoryId" name="0" id="hotelId" value="全部酒店">
+                    </li>
+                    <li>
+                        <span class="btn btn-danger query">查询</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-header row">
+                <span class="col-6"></span>
+                <span class="col-6">
+                    <span class="btn btn-danger btn-sm addservice">添加服务协议</span>
+                    <span class="btn btn-danger btn-sm download">导出</span>
+                </span>
+            </div>
+            <table class="table table-striped" id="table" style="width:100%">
+                <thead>
+                <tr>
+                    <th>合同编号</th>
+                    <th>合同类型</th>
+                    <th>对应服务协议</th>
+                    <th>领用人</th>
+                    <th>领用时间</th>
+                    <th>签约方</th>
+                    <th>签约方ID</th>
+                    <th>合同状态</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+            </table>
+        </section>
+    </div>
+</div>
+<!--添加服务协议service-->
+<div class="modal addservicemodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加 AA服务协议</b></p>
+                <div>
+                    <p>合同编号：<input type="text" class="form-control contractNumber" placeholder="合同编号"></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addservicemodal')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--分配合同（领用）receive-->
+<div class="modal receivemodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">合同详情</b></p>
+                <div>
+                    <p>领用人：<select class="form-control contractRecipientId"></select></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.receivemodal')">取消</span>
+                <span class="btn btn-danger getreceive">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--归档file-->
+<div class="modal filemodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">确定归档吗？</b></p>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.filemodal')">取消</span>
+                <span class="btn btn-danger getfile">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--丢失作废destroy-->
+<div class="modal destroymodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">合同状态</b></p>
+                <div>
+                    <p>状态：<select class="form-control contractStatus"><option value="7">丢失</option><option value="8">作废</option></select></p>
+                    <p><span style="vertical-align:top;">备注：</span><textarea class="form-control comments" rows="3"></textarea></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.destroymodal')">取消</span>
+                <span class="btn btn-danger getdestroy">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加补充协议repair-->
+<div class="modal addrepairmodal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加 补充协议</b></p>
+                <div>
+                    <p>合同编号：<input type="text" class="form-control contractNumberTouch" disabled></p>
+                    <p>补充协议：<input type="text" class="form-control contractNumber" placeholder="补充协议编号"></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addrepairmodal')">取消</span>
+                <span class="btn btn-danger getaddrepair">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script src="../js/compact/compactlist.js"></script>
+</body>
+</html>

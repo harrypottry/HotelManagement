@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 保洁</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+		<div class="toproominfo">
+			<div class="missdesc"></div>
+			<div class="divroom">
+				<!--<label><img src="../adminlte/img/h5/iconhs.png"/><span>909</span>房间</label>-->
+				<!--<a>大床房</a>-->
+				<!--<button class="workbtn fr">返工</button>-->
+			</div>
+		</div>
+		<div class="workreason">
+			<div class="reasoninfo">
+				<h1>返工原因：</h1>
+				<div class="comheight"></div>
+				<label class="moreword">全文</label>
+				<ul class="reasonuls">
+
+				</ul>
+			</div>
+		</div>
+		<div class="upbtnmain">
+			<button class="red">已改正</button>
+		</div>
+	</div>
+    <div class="amendbomb">
+        <div class="amenmain">
+            <p>是否已改正</p>
+            <button class="confirmbtn">确认</button>
+        </div>
+    </div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script>
+	$(function(){
+        //获取地址栏参数//可以是中文参数
+        $.getUrlParam = function(key) {
+            // 获取参数
+            var url = window.location.search;
+            // 正则筛选地址栏
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            // 匹配目标参数
+            var result = url.substr(1).match(reg);
+            //返回参数值
+            return result ? decodeURIComponent(result[2]) : null;
+        }
+            var mission_id = $.getUrlParam('id');
+            var mission_desc = $.getUrlParam('mission_desc');
+		    var room_name = $.getUrlParam('room_name');
+        	var room_desc = $.getUrlParam('room_desc');
+            // alert(mission_desc)
+		var $ps='';
+		var $div='';
+		$ps+='<p class="proom">'+mission_desc+'</p>'
+		$('.missdesc').append($ps);
+		$div+='<label><img src="../adminlte/img/h5/iconhs.png"/><span>'+room_name+'</span>房间</label><a>'+room_desc+'</a><button class="workbtn fr">返工</button>'
+        $('.divroom').append($div);
+		//返工-已改正
+        $.ajax({
+            type: "get",
+            url: "/app/console/api/getMissionQuestionByEmp",
+            data: {mission_id:mission_id},
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                var $html="";
+                var $lis="";
+                if(data.comment===null){
+                    data.comment='';
+                }
+                $html+='<p>'+data.comment+'</p>';
+                for(var i in data.pic){
+                    $lis+='<li><img src="'+data.pic[i].pic+'"/></li>';
+                }
+                $('.comheight').append($html);
+                $('.reasonuls').append($lis);
+                //判断高度
+                var height=$('.comheight').height();
+                if($('.comheight').height()<=74){
+                    $('.moreword').hide();
+                    $('.comheight').addClass('flowauto');
+                }else{
+                    $('.moreword').show();
+                    $('.comheight').removeClass('flowauto');
+                    $('.comheight').addClass('comment');
+                }
+            }
+        });
+        //点击全文
+        $('.moreword').click(function(){
+            $('.comheight p').addClass('flowauto');
+            var wordtext=$(this).text();
+            if(wordtext=='全文'){
+                $(this).text('收起');
+            }else{
+                $(this).text('全文');
+                $('.comheight p').removeClass('flowauto');
+            }
+        })
+        //点击已改正
+        $(".upbtnmain").click(function(){
+            $('.amendbomb').show();
+            $(".confirmbtn").click(function(){
+                $.ajax({
+                    type: "post",
+                    url: "/app/console/api/updateMissionStatusByEmp",
+                    data: {mission_id:mission_id,status:'2'},
+                    dataType: "json",
+                    success: function (data) {
+                        // history.back(-1);
+                        window.android.finish();
+                        console.log(window.android.finish());
+                    }
+                });
+                $('.amendbomb').hide();
+            })
+			$(".amendbomb").click(function(){
+                $('.amendbomb').hide();
+			})
+        });
+	})
+</script>
+</body>
+</html>

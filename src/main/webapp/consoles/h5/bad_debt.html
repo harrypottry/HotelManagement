@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 库管-本月报损列表</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+		<div class="baddebtmain">
+			<!--<div class="baddebtlist">-->
+				<!--&lt;!&ndash;<h1><label>布草ID：12345</label><a>2018-10-22</a></h1>&ndash;&gt;-->
+				<!--&lt;!&ndash;<ul>&ndash;&gt;-->
+					<!--&lt;!&ndash;<li>布草名称：床单</li>&ndash;&gt;-->
+					<!--&lt;!&ndash;<Li>布草规格：130cm*180cm</Li>&ndash;&gt;-->
+					<!--&lt;!&ndash;<li>布草材质：纯棉</li>&ndash;&gt;-->
+					<!--&lt;!&ndash;<li>处理情况情况：待确认</li>&ndash;&gt;-->
+					<!--&lt;!&ndash;<li>报损情况：丢失</li>&ndash;&gt;-->
+				<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+				<!--&lt;!&ndash;<div class="remarkinfo">&ndash;&gt;-->
+					<!--&lt;!&ndash;<P>备注：客户至损，已赔付</P>&ndash;&gt;-->
+				<!--&lt;!&ndash;</div>&ndash;&gt;-->
+			<!--</div>-->
+		</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script>
+	$(function(){
+        //报损列表
+        $.ajax({
+            type: "post",
+            url: "/app/console/api/GetClothErrorList",
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                var $html='';
+                data.list={};
+                var x;
+                for(var i in data.data){
+                    x={};
+                    for (var j of data.data[i].clothTypes_name) {
+                        x[j.cloth_kind] = j.desc;
+                    }
+                    if(data.data[i].type == 'Broken'){
+                        data.data[i].type='损坏'
+                    }else if(data.data[i].type == 'Lost'){
+                        data.data[i].type='丢失'
+                    }else if(data.data[i].type == 'QRBroken'){
+                        data.data[i].type='二维码丢失'
+                    }else{
+                        data.data[i].type='';
+					}
+                    if(data.data[i].status == '0'){
+                        data.data[i].status='报损'
+                    }else if(data.data[i].status == '1'){
+                        data.data[i].status='确认'
+                    }else{
+                        data.data[i].status='';
+					}
+                    var dates=data.data[i].create_time;
+                    data.data[i].create_time=dates.substring(0,10);
+                    data.list[i]=x;
+                    if(data.list[i].Size==null){
+                        data.list[i].Size='';
+					}
+					if(data.list[i].Material==null){
+                        data.list[i].Material='';
+                    }
+                    $html+='<div class="baddebtlist"><h1><label>布草ID：'+data.data[i].cloth_id+'</label><a>'+data.data[i].create_time+'</a></h1><ul><li>布草名称：'+data.list[i].Type+'</li><li>布草规格：'+data.list[i].Size+'</li><li>布草材质：'+data.list[i].Material+'</li><li>处理情况：'+data.data[i].status+'</li><li>报损情况：'+data.data[i].type+'</li></ul><div class="remarkinfo"><p>备注：'+data.data[i].comment+'</p></div></div>';
+				}
+				$('.baddebtmain').append($html);
+            }
+        });
+	})
+</script>
+</body>
+</html>

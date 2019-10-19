@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 库管-本月租赁信息</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+		<div class="leasemain">
+			<div class="leaselisttwo">
+				<p class="dateinfo"><label>总数量</label></p>
+				<div class="leaseinfo">
+					<div class="leasetitle leasetitletwo">
+						<a>布草名称</a>
+						<a>材质</a>
+						<a>规格</a>
+						<a>数量</a>
+						<a>时间</a>
+					</div>
+					<div class="leaseinfobody ByMonth">
+						<!--<ul class="leaseinfoul leaseinfoultwo">-->
+							<!--<li>床单</li>-->
+							<!--<li>棉</li>-->
+							<!--<li>200X280</li>-->
+							<!--<li>27</li>-->
+							<!--<li>300天</li>-->
+						<!--</ul>-->
+					</div>
+				</div>
+			</div>
+			<div class="leaselist">
+
+			</div>
+		</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script>
+	$(function(){
+        //本月洗涤租赁信息
+        $.ajax({
+            type: "post",
+            url: "/app/console/api/GetWashMessagePerMonth",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                var $html = '';
+                var $divs='';
+                var h;
+                var data=data.data;
+                data.list={};
+                for(var a in data.ByMonth){
+                    h={};
+                    for(var c of data.ByMonth[a].clothTypes){
+                        h[c.cloth_kind] = c.desc;
+                    }
+                    data.list[a]=h;
+                    $divs+='<ul class="leaseinfoul leaseinfoultwo"><li>'+data.list[a].Type+'</li><li>'+data.list[a].Material+'</li><li>'+data.list[a].Size+'</li><li>'+data.ByMonth[a].all+'</li><li>'+data.ByMonth[a].SUMspendTimeDay+'天</li></ul>';
+                }
+                $(".ByMonth").html($divs);
+                for(var i in data.ByDay) {
+                    if(JSON.stringify(data.ByDay[i])!='{}'){
+                            $html += '<p class="dateinfo"><label>' + i + '</label></p><div class="leaseinfo"><div class="leasetitle leasetitletwo"><a>布草名称</a><a>材质</a><a>规格</a><a>数量</a><a>时间</a></div><div class="leaseinfobody">';
+                        for(var j in data.ByDay[i]){
+                            $html +='<ul class="leaseinfoul leaseinfoultwo"><li>' + data.ByDay[i][j].clothTypes[0].desc + '</li><li>' + data.ByDay[i][j].clothTypes[2].desc + '</li><li>' + data.ByDay[i][j].clothTypes[1].desc + '</li><li>' + data.ByDay[i][j].all + '</li><li>' + data.ByDay[i][j].SUMspendTimeDay + '天</li></ul>'
+						}
+                        $html += '</div></div>'
+                    }
+                }
+				$(".leaselist").html($html);
+            }
+        });
+	})
+</script>
+</body>
+</html>

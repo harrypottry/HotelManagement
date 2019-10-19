@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AAroom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="adminlte/css/dataTables.bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .card-body::-webkit-scrollbar{width:5px;}
+        /*定义滚动条轨道 内阴影+圆角*/
+        .card-body::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius:10px;}
+        /*定义滑块 内阴影+圆角*/
+        .card-body::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);}
+        .hotels>li>.nav-link{
+            min-height:4em;
+            vertical-align:middle;
+            border-radius:0;
+            cursor: pointer;
+        }
+        .timeline>li>.timeline-item>.timeline-body>.row>.col-md-6>.form-group>span:nth-child(1){
+            display: inline-block;
+            width:5rem;
+            text-align:right;
+        }
+        .membermodal{
+            display:none;
+        }
+        input.form-control{display:inline-block;width:60%;margin-right:0.5rem}
+        button.delete{margin-right:0.5rem}
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- 左侧导航 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 导航head -->
+        <a href="index.html" class="brand-link">
+            <img src="adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">AAroom</span>
+        </a>
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info"><a>当前登录：郝玉棠</a></div>
+            </div>
+            <!-- 动态导航nav -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!-- 页面内容 -->
+    <div class="content-wrapper">
+        <section class="content-header"><!-- 页名 -->
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>酒店管理</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content"><!--main-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">酒店列表</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" onclick="modal('.addhotel')"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0 text-height">
+                                <ul class="nav nav-pills flex-column hotels"><!--酒店列表-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京朝阳区潘家园店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京朝阳区金盏蟹岛南门店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京怀柔区北房镇幸福大街店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京朝阳区潘家园店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京朝阳区金盏蟹岛南门店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京怀柔区北房镇幸福大街店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京朝阳区潘家园店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京朝阳区金盏蟹岛南门店</a>-->
+                                    <!--</li>-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京怀柔区北房镇幸福大街店</a>-->
+                                    <!--</li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">酒店详情</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-primary btn-sm addmember">添加推广员</button><!--addmember-->
+                                </div>
+                            </div>
+                            <div class="card-body text-height">
+                                <ul class="timeline timeline-inverse member"><!--员工存放-->
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="modal addhotel">
+    <div class="modal-dialog"><!--addhotel添加酒店-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>添加酒店</h4>
+            </div>
+            <div class="modal-body text-center">
+                <div class="form-group">
+                    <b>酒店Id：</b>
+                    <input class="form-control hotelid" placeholder="酒店Id">
+                </div>
+                <div class="hotelidtext" style="min-height:24px;color:#dc3545"><!--未查询到酒店，请重新输入...--><!--请输入酒店Id--></div>
+            </div>
+            <div class="modal-footer">
+                <div class="hotelidbtn">
+                    <button class="btn btn-default" style="margin-right:0.5rem" onclick="modal('.addhotel')">取消</button>
+                    <button class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="adminlte/js/jquery.min.js"></script>
+<script src="adminlte/js/dataTables.min.js"></script>
+<script src="adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="adminlte/js/adminlte.min.js"></script>
+<script src="adminlte/js/script.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.text-height').outerHeight(window.innerHeight-200);
+        $.ajax({//获得酒店列表
+            url :"/console/api/getHotelList",
+            data:'',
+            type: "GET",
+            success:function(data){
+                var $lis='';
+                for(var i of data){
+                    $lis+='<li class="nav-item"><a name='+i.id+' class="nav-link">'+i.name+'</a></li>';
+                }
+                $('.hotels').prepend($lis);
+            }
+        });
+    });
+    var btn_hotelid='';
+    $(document).on("click",".card-body>.hotels>li>a", function (hotelid){
+        // $('.member').html('加载中...');
+        hotelid=$(this).attr('name');
+        btn_hotelid=$(this).attr('name');
+        $('.card-body>ul>li>a.active').removeClass('active');
+        $(this).addClass('active');
+        $.ajax({//获得酒店详情
+            url :"/console/api/getHotelView",
+            data:{id:hotelid},
+            type: "GET",
+            success:function(data){
+                //暂隐藏的用来添加推广员的li
+                var $lis='<li class="membermodal"><div class="timeline-item card"><h3 class="timeline-header" data-widget="collapse">推广员：</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>手机：</span><input class="form-control" name="phone"><button class="btn btn-primary btn-sm query">查询</button></div><div class="form-group"><span>姓名：</span><input class="form-control" name="name"></div><div class="form-group"><span name="">账号：</span><input class="form-control" name="account"></div><div class="form-group"><span>密码：</span><input class="form-control" type="password" name="password"></div></div><div class="col-md-6"><div class="form-group"><span>分润比例：</span><input class="form-control" name="profit_rate"><span style="position:absolute;top:7px;right:23%">%</span></div><div class="form-group"><span>银行账号：</span><input class="form-control" name="bank_account"></div><div class="form-group"><span>开户姓名：</span><input class="form-control" name="account_name"></div><div class="form-group"><span>开户行：</span><input class="form-control" name="bank_name"></div></div></div><div class="text-right"><button class="btn btn-danger btn-sm delete">删除</button><button class="btn btn-primary btn-sm putin" name="4">保存</button></div></div></div></li>';
+                //酒店分润信息
+                $lis+='<li><div class="timeline-item card collapsed-card"><h3 class="timeline-header" data-widget="collapse">酒店信息</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>收益比例：</span><input class="form-control" value='+(data.profit_rate||"")+'><span style="position:absolute;top:7px;right:23%">%</span></div></div></div><div class="text-right"><button class="btn btn-primary btn-sm hotel_rate">保存</button></div></div></div></li>';
+                // for(var i of data.employees){//业主店长都存着且顺序正常
+                // //     if(i.role_id!='5'){//role_id=5不显示role_id=4推广员role_id=2业主role_id=3店长
+                // //         $lis+='<li><div class="timeline-item card collapsed-card"><h3 class="timeline-header" data-widget="collapse">'+i.role_name+'：'+i.name+'</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>手机：</span><input class="form-control" name="phone" value='+i.phone+'><input class="form-control" name="id" value='+i.id+' style="display:none"><button class="btn btn-primary btn-sm query">查询</button></div><div class="form-group"><span>姓名：</span><input class="form-control" name="name" value='+i.name+'></div><div class="form-group"><span>账号：</span><input class="form-control" name="account" value='+i.account+'></div><div class="form-group"><span>密码：</span><input class="form-control" type="password" name="password"></div></div><div class="col-md-6"><div class="form-group"><span>分润比例：</span><input class="form-control" name="profit_rate" value='+i.profit_rate+'></div><div class="form-group"><span>银行账号：</span><input class="form-control" name="bank_account" value='+i.bank_account+'></div><div class="form-group"><span>开户姓名：</span><input class="form-control" name="account_name" value='+i.account_name+'></div><div class="form-group"><span>开户行：</span><input class="form-control" name="bank_name" value='+i.bank_name+'></div></div></div><div class="text-right">';
+                // //
+                // //         if(i.role_id=='4'){$lis+='<button class="btn btn-danger btn-sm delete">删除</button>'}
+                // //         $lis+='<button class="btn btn-primary btn-sm putin" name='+i.role_id+'>保存</button></div></div></div></li>';
+                // //     }
+                // // }
+                // 非正常顺序等......
+                var proprietor=0,manager=0;//判断proprietor业主manager店长是否添加
+                if(data.employees){
+                    for(var i of data.employees){//业主
+                        if(i.role_id=='2'){
+                            ++proprietor;
+                            $lis+='<li><div class="timeline-item card collapsed-card"><h3 class="timeline-header" data-widget="collapse">'+i.role_name+'：'+i.name+'</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>手机：</span><input class="form-control" name="phone" value='+i.phone+'><input class="form-control" name="id" value='+i.id+' style="display:none"><button class="btn btn-primary btn-sm query">查询</button></div><div class="form-group"><span>姓名：</span><input class="form-control" name="name" value='+i.name+'></div><div class="form-group"><span>账号：</span><input class="form-control" name="account" value='+i.account+'></div><div class="form-group"><span>密码：</span><input class="form-control" type="password" name="password"></div></div><div class="col-md-6"><div class="form-group"><span>分润比例：</span><input class="form-control" name="profit_rate" value='+(i.profit_rate||"")+'><span style="position:absolute;top:7px;right:23%">%</span></div><div class="form-group"><span>银行账号：</span><input class="form-control" name="bank_account" value='+i.bank_account+'></div><div class="form-group"><span>开户姓名：</span><input class="form-control" name="account_name" value='+i.account_name+'></div><div class="form-group"><span>开户行：</span><input class="form-control" name="bank_name" value='+i.bank_name+'></div></div></div><div class="text-right"><button class="btn btn-primary btn-sm putin" name='+i.role_id+'>保存</button></div></div></div></li>';
+                        }
+                    }
+                }
+                if(!proprietor){
+                    $lis+='<li><div class="timeline-item card collapsed-card"><h3 class="timeline-header" data-widget="collapse">业主：</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>手机：</span><input class="form-control" name="phone"><input class="form-control" name="id" style="display:none"><button class="btn btn-primary btn-sm query">查询</button></div><div class="form-group"><span>姓名：</span><input class="form-control" name="name"></div><div class="form-group"><span>账号：</span><input class="form-control" name="account"></div><div class="form-group"><span>密码：</span><input class="form-control" type="password" name="password"></div></div><div class="col-md-6"><div class="form-group"><span>分润比例：</span><input class="form-control" name="profit_rate"><span style="position:absolute;top:7px;right:23%">%</span></div><div class="form-group"><span>银行账号：</span><input class="form-control" name="bank_account"></div><div class="form-group"><span>开户姓名：</span><input class="form-control" name="account_name"></div><div class="form-group"><span>开户行：</span><input class="form-control" name="bank_name"></div></div></div><div class="text-right"><button class="btn btn-primary btn-sm putin" name="2">保存</button></div></div></div></li>';
+                }
+                if(data.employees){
+                    for(var i of data.employees){//店长
+                        if(i.role_id=='3'){
+                            ++manager;
+                            $lis+='<li><div class="timeline-item card collapsed-card"><h3 class="timeline-header" data-widget="collapse">'+i.role_name+'：'+i.name+'</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>手机：</span><input class="form-control" name="phone" value='+i.phone+'><input class="form-control" name="id" value='+i.id+' style="display:none"><button class="btn btn-primary btn-sm query">查询</button></div><div class="form-group"><span>姓名：</span><input class="form-control" name="name" value='+i.name+'></div><div class="form-group"><span>账号：</span><input class="form-control" name="account" value='+i.account+'></div><div class="form-group"><span>密码：</span><input class="form-control" type="password" name="password"></div></div><div class="col-md-6"><div class="form-group"><span>分润比例：</span><input class="form-control" name="profit_rate" value='+(i.profit_rate||"")+'><span style="position:absolute;top:7px;right:23%">%</span></div><div class="form-group"><span>银行账号：</span><input class="form-control" name="bank_account" value='+i.bank_account+'></div><div class="form-group"><span>开户姓名：</span><input class="form-control" name="account_name" value='+i.account_name+'></div><div class="form-group"><span>开户行：</span><input class="form-control" name="bank_name" value='+i.bank_name+'></div></div></div><div class="text-right"><button class="btn btn-primary btn-sm putin" name='+i.role_id+'>保存</button></div></div></div></li>';
+                        }
+                    }
+                }
+                if(!manager){
+                    $lis+='<li><div class="timeline-item card collapsed-card"><h3 class="timeline-header" data-widget="collapse">店长：</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>手机：</span><input class="form-control" name="phone"><input class="form-control" name="id" style="display:none"><button class="btn btn-primary btn-sm query">查询</button></div><div class="form-group"><span>姓名：</span><input class="form-control" name="name"></div><div class="form-group"><span>账号：</span><input class="form-control" name="account"></div><div class="form-group"><span>密码：</span><input class="form-control" type="password" name="password"></div></div><div class="col-md-6"><div class="form-group"><span>分润比例：</span><input class="form-control" name="profit_rate"><span style="position:absolute;top:7px;right:23%">%</span></div><div class="form-group"><span>银行账号：</span><input class="form-control" name="bank_account"></div><div class="form-group"><span>开户姓名：</span><input class="form-control" name="account_name"></div><div class="form-group"><span>开户行：</span><input class="form-control" name="bank_name"></div></div></div><div class="text-right"><button class="btn btn-primary btn-sm putin" name="3">保存</button></div></div></div></li>';
+                }
+                if(data.employees){
+                    for(var i of data.employees){//推广员
+                        if(i.role_id=='4'){
+                            $lis+='<li><div class="timeline-item card collapsed-card"><h3 class="timeline-header" data-widget="collapse">'+i.role_name+'：'+i.name+'</h3><div class="timeline-body card-body"><div class="row"><div class="col-md-6"><div class="form-group"><span>手机：</span><input class="form-control" name="phone" value='+i.phone+'><input class="form-control" name="id" value='+i.id+' style="display:none"><button class="btn btn-primary btn-sm query">查询</button></div><div class="form-group"><span>姓名：</span><input class="form-control" name="name" value='+i.name+'></div><div class="form-group"><span>账号：</span><input class="form-control" name="account" value='+i.account+'></div><div class="form-group"><span>密码：</span><input class="form-control" type="password" name="password"></div></div><div class="col-md-6"><div class="form-group"><span>分润比例：</span><input class="form-control" name="profit_rate" value='+(i.profit_rate||"")+'><span style="position:absolute;top:7px;right:23%">%</span></div><div class="form-group"><span>银行账号：</span><input class="form-control" name="bank_account" value='+i.bank_account+'></div><div class="form-group"><span>开户姓名：</span><input class="form-control" name="account_name" value='+i.account_name+'></div><div class="form-group"><span>开户行：</span><input class="form-control" name="bank_name" value='+i.bank_name+'></div></div></div><div class="text-right"><button class="btn btn-danger btn-sm delete" name='+i.id+'>删除</button><button class="btn btn-primary btn-sm putin" name='+i.role_id+'>保存</button></div></div></div></li>';
+                        }
+                    }
+                }
+                $('.member').html($lis);
+            }
+        });
+    });
+    // 模态框事件
+    function modal(e){//模态框显示隐藏
+        $(e).fadeToggle(200);
+    }
+    $('.hotelidbtn>.btn-primary').click(function(hotelid){//添加酒店
+        hotelid=$('input.hotelid').val();
+        if(hotelid==''){
+            $('.hotelidtext').html('请输入酒店Id');
+            setTimeout(function(){
+                $('.hotelidtext').html('');
+            },1500);
+        }else {
+            $(this).html('申请中...');
+            $('.hotelidbtn>button').attr('disabled','disabled');
+            $.ajax({//酒店查询
+                url :"/console/api/postHotelId",
+                data:{hotel_id:hotelid},
+                type: "POST",
+                success:function(data){
+                    console.log(data);
+                    if(data.errorCode){
+                        $('.hotelidtext').html(data.errorDesc);
+                        $('.hotelidbtn>.btn-primary').html('确定');
+                        $('.hotelidbtn>button').removeAttr('disabled');
+                        $('input.hotelid').val('');
+                        setTimeout(function(){
+                            $('.hotelidtext').html('');
+                        },2000);
+                    }else {
+                        $('.hotelidtext').html('添加成功');
+                        $('.hotelidbtn>.btn-primary').html('确定');
+                        $('.hotels').prepend('<li class="nav-item"><a name='+data.hotel_id+' class="nav-link">'+data.hotel_name+'</a></li>');
+                        $('.hotels>li:nth-child(1)>a').click();//添加新酒店默认被点击
+                        setTimeout(function(){
+                            $('.addhotel').fadeToggle();
+                        },1000);
+                        setTimeout(function(){
+                            $('.hotelidtext').html('');
+                            $('.hotelidbtn>button').removeAttr('disabled');
+                            $('input.hotelid').val('');
+                        },2000);
+                    }
+                }
+            });
+
+        }
+    });
+    $('button.addmember').click(function () {// 添加推广员
+        if($('.membermodal').length){
+            $('.membermodal').clone(true).removeClass('membermodal').appendTo('.member');
+        }
+    });
+    $(document).on("click",".hotel_rate",function($input){//酒店分润信息添加修改保存
+        $input=$(this).parents('li').find('input');
+        if($input.val()){//非空才可保存
+            $.ajax({
+                url :"/console/api/postHotelBasicInfo",
+                contentType: 'application/json',
+                data:JSON.stringify({"id":btn_hotelid,"profit_rate":$input.val()}),
+                type: "POST",
+                success:function(data){
+                    if(data.errorCode==0){
+                        alert('保存成功');
+                    }else{
+                        alert('保存失败');
+                    }
+                }
+            });
+        }else {
+            alert('请填写收益比例！');
+        }
+    });
+    $(document).on("click",".query",function($input){//查询member信息
+        $input=$(this).parents('li').find('input[name="phone"]');
+        if(/^[1][3,4,5,7,8][0-9]{9}$/.test($input.val())){//正确手机号
+            $.ajax({
+                url :"/console/api/getEmployeeByPhone",
+                data:{phone:$input.val()},
+                type: "GET",
+                success:function(data){
+                    var htmls=$input.parents('li').find('.timeline-header').html();
+                    htmls=htmls.substring(0,htmls.lastIndexOf("\：")+1);
+                    if(data){
+                        $input.parents('li').find('.timeline-header').html(htmls+data.name);
+                        $input.parents('li').find('input').each(function (i) {
+                            i=$(this).attr('name');
+                            $(this).val(data[i]);
+                        });
+                    }else{
+                        $input.parents('li').find('.timeline-header').html(htmls);
+                        $input.parents('li').find('input').each(function(i){
+                            $(this).val('');
+                        });
+                    }
+                }
+            });
+        }else {
+            alert('请填写正确的手机号');
+        }
+    });
+    $(document).on("click",".putin",function($idinput){//保存member信息
+        $idinput=$(this).parents('li').find('input[name="id"]');
+        var data={};
+        data.role_id=$(this).attr('name');
+        data.hotel_id=btn_hotelid;
+        $(this).parents('li').find('input').each(function(i){
+            i=$(this).attr('name');
+            data[i]=$(this).val();
+        });
+        $.ajax({
+            url :"/console/api/postEmployeeInfo",
+            contentType: 'application/json',
+            data:JSON.stringify(data),
+            type: "POST",
+            success:function(data){
+                if(data.errorCode==0){
+                    alert('保存成功');
+                    $idinput.val(data.detail.employee);
+                }else{
+                    alert('保存失败');
+                }
+            }
+        });
+    });
+    $(document).on("click",".delete",function(employee,$li){//删除member信息
+        employee=$(this).parents('li').find('input[name="id"]').val();
+        $li=$(this).parents('li');
+        if(employee){
+            $.ajax({
+                url :"/console/api/unboundHotelEmployee",
+                data:{employee_id:employee,hotel_id:btn_hotelid},
+                type: "GET",
+                success:function(data){
+                    console.log(data);
+                    if(data.errorCode==0){
+                        alert('删除成功');
+                        $li.remove();
+                    }else{
+                        alert('删除失败');
+                    }
+                }
+            });
+        }else{
+            alert('删除成功');
+            $li.remove();
+        }
+    });
+</script>
+</body>
+</html>

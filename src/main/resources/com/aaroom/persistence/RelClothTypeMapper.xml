@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.RelClothTypeMapper" >
+    <insert id="insertSelective" parameterType="com.aaroom.beans.RelClothType" >
+        insert into rel_cloth_type
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="cloth_type_id != null" >
+                cloth_type_id,
+            </if>
+            <if test="cloth_id != null" >
+                cloth_id,
+            </if>
+            <if test="create_time != null" >
+                create_time,
+            </if>
+            <if test="update_time != null" >
+                update_time,
+            </if>
+            <if test="creater_id != null" >
+                creater_id,
+            </if>
+            <if test="updater_id != null" >
+                updater_id,
+            </if>
+            <if test="is_active != null" >
+                is_active,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="cloth_type_id != null" >
+                #{cloth_type_id,jdbcType=INTEGER},
+            </if>
+            <if test="cloth_id != null" >
+                #{cloth_id,jdbcType=INTEGER},
+            </if>
+            <if test="create_time != null" >
+                #{create_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_time != null" >
+                #{update_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater_id != null" >
+                #{creater_id,jdbcType=INTEGER},
+            </if>
+            <if test="updater_id != null" >
+                #{updater_id,jdbcType=INTEGER},
+            </if>
+            <if test="is_active != null" >
+                #{is_active,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="save" parameterType="com.aaroom.beans.RelClothType"  >
+        insert into rel_cloth_type
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="cloth_type_id != null" >
+                cloth_type_id,
+            </if>
+            <if test="cloth_id != null" >
+                cloth_id,
+            </if>
+            <if test="create_time != null" >
+                create_time,
+            </if>
+            <if test="update_time != null" >
+                update_time,
+            </if>
+            <if test="creater_id != null" >
+                creater_id,
+            </if>
+            <if test="updater_id != null" >
+                updater_id,
+            </if>
+            <if test="is_active != null" >
+                is_active,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="cloth_type_id != null" >
+                #{cloth_type_id,jdbcType=INTEGER},
+            </if>
+            <if test="cloth_id != null" >
+                #{cloth_id,jdbcType=INTEGER},
+            </if>
+            <if test="create_time != null" >
+                #{create_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_time != null" >
+                #{update_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater_id != null" >
+                #{creater_id,jdbcType=INTEGER},
+            </if>
+            <if test="updater_id != null" >
+                #{updater_id,jdbcType=INTEGER},
+            </if>
+            <if test="is_active != null" >
+                #{is_active,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insert">
+        insert into rel_cloth_type (cloth_id,cloth_type_id)
+        values( #{cloth_id,jdbcType=INTEGER},#{cloth_type_id,jdbcType=INTEGER})
+    </insert>
+    <select id="getIdsByClothId"  resultType="Integer">
+        select rct.cloth_type_id from rel_cloth_type as rct where cloth_id =#{cloth_id,jdbcType=INTEGER}
+        <if test="is_active != null" >
+            and rct.is_active=#{is_active,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="getDescByclothid" parameterType="Integer" resultType="java.lang.String">
+        SELECT
+	`desc`
+FROM
+	cloth_type
+WHERE
+	id IN ( SELECT cloth_type_id FROM rel_cloth_type WHERE cloth_id = #{cloth_id})
+    </select>
+    <select id="getclothtype_brand" parameterType="Integer" resultType="java.lang.String">
+    SELECT
+	`desc`
+FROM
+	cloth_type
+WHERE
+	id IN ( SELECT cloth_type_id FROM rel_cloth_type WHERE cloth_id = #{cloth_id})
+	and cloth_kind IN ('Type','Brand')
+    </select>
+    <select id="getcloth_size" parameterType="Integer" resultType="java.lang.String">
+    SELECT
+	`desc`
+FROM
+	cloth_type
+WHERE
+	id IN ( SELECT cloth_type_id FROM rel_cloth_type WHERE cloth_id = #{cloth_id})
+	and cloth_kind IN ('Size')
+    </select>
+    <select id="getRelClothTypeByclothid" resultType="com.aaroom.beans.RelClothType">
+    SELECT * FROM rel_cloth_type
+    WHERE cloth_id = #{cloth_id}
+    </select>
+
+    <delete id="deleteRelClothTypesByClothId">
+        DELETE FROM rel_cloth_type
+        WHERE cloth_id = #{cloth_id}
+    </delete>
+</mapper>

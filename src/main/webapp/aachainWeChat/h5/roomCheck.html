@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>房间检查</title>
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/roomCheck.css">
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <image class="banner" src="../assets/images/roomCheck/hotelBanner.png"></image>
+    </div>
+    <div id="firstScanCon">
+      <div class="scanBtn" id="scanBtn">
+        <div class="btn" id="toScan">
+        </div> 
+      </div>
+      <div class="scanState" id="scanState">
+          <p>点击上方扫描按钮</p>
+          <p>查看房间详情</p>
+      </div>
+    </div>
+   
+    <div class="clothCon" id="clothCon">
+    <!--
+        <div class="clothList" id="clothList">
+            <div class="clothItem">
+                <div class="typeCon">
+                  <div class="left">
+                    床单（2）
+                  </div>
+                  <div class="rightArrow">
+                    <img src="../assets/images/roomCheck/rightArrow.png">
+                    <img src="../assets/images/roomCheck/bottomArrow.png" style="display:none;">
+                  </div>
+                </div>
+                <div class="clothDetail">
+                  <div class="conDetail">
+                    <div class="leftDetail">
+                      <span>床单等级：AA级别</span>
+                      <span>面   料：聚酯纤维/全棉</span>
+                      <span>工   艺：双喷贡缎</span>
+                      <span>清洗时间：1天前</span>
+                      <span>更换时间：今天</span>
+                      <span>床单等级：AA级别</span>
+                      <span>更 换 人：今天</span>
+                    </div>
+                    <div class="rightDetail">
+                      <span>查看</span>
+                      <span>详情</span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+         </div>
+     -->
+    </div>
+</div>
+
+<div class="mask" id="mask">
+  <div class="successCon">
+    <image src="../assets/images/roomCheck/icon_success.png">
+    <span>扫描成功</span>
+    <span>请安心入住</span>
+  </div>
+</div>
+
+<script src="../assets/libs/rem.js"></script>
+<script src="../assets/libs/jquery.min.js"></script>
+<script src="../assets/libs/diffDay.js"></script>
+<script src="../assets/libs/getUrlParams.js"></script>
+<script src="../assets/js/roomCheck.js"></script>
+<script>
+
+  // http://localhost:8080/aachainWeChat/h5/roomCheck.html
+
+  var t1;
+
+  $("#toScan").html("立即扫描");
+  $("#mask").css("display","none")
+  $("#clothCon").css("display","none")
+
+  window.onload = function () {
+    getData();
+  };
+   
+  $("#toScan").on("click",function(){
+    var _this = this;
+    $(_this).html("再次扫描");
+    $(_this).parent().next().css("display","none")
+    $(_this).parent().parent().next().css("display","")
+    $(_this).parent().parent().parent().next().css("display","")
+    $(_this).parent().parent().next().find(".clothDetail").css("display","none")
+    $(_this).parent().parent().next().find(".rightArrow img:nth-child(n)").css("display","")
+    $(_this).parent().parent().next().find(".rightArrow img:nth-child(2n)").css("display","none")
+    t1 = window.setInterval(function () {
+      $(_this).parent().parent().parent().next().css("display","none")
+      window.clearInterval(t1); 
+    },1000);
+  })
+
+  $("#clothCon").on("click", ".typeCon", function (e) {
+    $(this).find(".rightArrow>img").toggle();
+    $(this).next(".clothDetail").toggle();
+  })
+</script>
+</body>
+</html>

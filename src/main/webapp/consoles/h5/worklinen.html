@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 保洁</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+		<!--<ul class="tituls">-->
+			<!--<li><a>任务</a></li>-->
+			<!--<li><a class="active">布草</a></li>-->
+		<!--</ul>-->
+		<div class="taskdetails" style="display:block;">
+			<h1 class="workh1"> <label><img src="../adminlte/img/h5/iconbc.png"/>工作间布草</label></h1>
+			<div class="tasklist tasklisttwo mt1">
+				<p><a>布草名称</a><a>规格</a><a>干净/脏/总数</a></p>
+				<div class="linendiv">
+
+				</div>
+			</div>
+		</div>
+		<div class="breakdiv">
+			<button class="red" onclick="javascript:window.location.reload()"><label><img src="../adminlte/img/h5/iconsx.png"/>刷新</label></button>
+		</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script>
+	$(function(){
+	    $('.tituls li a').click(function(){
+	        $(this).addClass('active').parent().siblings().find('a').removeClass();
+		});
+		//工作间布草
+        $.ajax({
+            type: "get",
+            url: "/app/console/api/getClothByEmpFloor",
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                var $html = '';
+                data.list={};
+                var x;
+                for (var i in data.data) {
+                    x={};
+                    for (var j of data.data[i].clothTypes) {
+                        x[j.cloth_kind] = j.desc;
+                    }
+                    data.list[i]=x;
+                    if(data.list[i].Type==null){
+                        data.list[i].Type='';
+                    }
+                    if(data.list[i].Size==null){
+                        data.list[i].Size='';
+                    }
+                    $html+='<ul><li>'+data.list[i].Type+'</li><li>'+data.list[i].Size+'</li><li>'+data.data[i].clean+'/'+data.data[i].dirty+'/'+data.data[i].all+'</li></ul>'
+                }
+                $('.linendiv').html($html);
+            }
+        });
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AAroom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="adminlte/css/dataTables.bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        /*滚动条分页后无用删除*/
+        .dataTables_scrollBody::-webkit-scrollbar{width:5px;}
+        /*定义滚动条轨道 内阴影+圆角*/
+        .dataTables_scrollBody::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius:10px;}
+        /*定义滑块 内阴影+圆角*/
+        .dataTables_scrollBody::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);}
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+            <!--<li class="nav-item d-none d-sm-inline-block">-->
+                <!--<a href="index.html" class="nav-link">xx管理系统</a>-->
+            <!--</li>-->
+        </ul>
+    </nav>
+    <!-- 左侧导航 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 导航head -->
+        <a href="index.html" class="brand-link">
+            <img src="adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">AAroom</span>
+        </a>
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info"><a>当前登录：郝玉棠</a></div>
+            </div>
+            <!-- 动态导航nav -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!-- 页面内容 -->
+    <div class="content-wrapper">
+        <section class="content-header"><!-- 页名 -->
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>宿中服务</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content"><!--main-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="btn-group" style="float:right;margin:-2px 0 -3px;">
+                                    <button type="button" name="0" class="btn btn-outline-primary btn-sm active">未完成</button>
+                                    <button type="button" name="1" class="btn btn-outline-primary btn-sm">已完成</button>
+                                </div>
+                                <h3 class="card-title">申请数据表</h3>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped table-valign-middle" id="mains">
+                                    <thead>
+                                        <tr>
+                                            <th>房间</th>
+                                            <th>需求</th>
+                                            <th>时间</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="adminlte/js/jquery.min.js"></script>
+<script src="adminlte/js/dataTables.min.js"></script>
+<script src="adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="adminlte/js/adminlte.min.js"></script>
+<script src="adminlte/js/script.js"></script>
+<script>
+    var status='0';
+    $(document).ready(function(){
+        initialize(status);//初始化页面
+    });
+    $('.card-header button').click(function(){// 未完成已完成切换
+        status=$(this).attr('name');
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        initialize(status);//初始化页面
+    });
+    $(document).on("click",".btn-success",function(){//点击确定
+        $.ajax({
+            url :"/console/api/updateServeApply",
+            data:{id:$(this).attr('name'),status:'1'},
+            type: "POST",
+            success:function(data){
+                console.log(data);
+                initialize(status);//初始化页面
+            }
+        });
+    });
+    function initialize(status){
+        $("#mains").dataTable({
+            ordering:false,//排序
+            scrollY:window.innerHeight-254,
+            scrollCollapse:true,
+            paging:false,
+            filter:false,
+            info:false,
+            destroy:true,
+            ajax: function (data, callback, settings){
+                //ajax请求数据
+                $.ajax({
+                    type: "GET",
+                    url: "/console/api/listServeApplies",
+                    cache: false,  //禁用缓存
+                    data:{status:status},  //传入组装的参数
+                    dataType: "json",
+                    success: function (result){
+                        // console.log(result);
+                        var returnData = {};//封装返回数据
+                        returnData.data=result;
+                        callback(returnData);
+                    }
+                });
+            },
+            columns:[//列表表头字段
+                {data:'room_id'},
+                {data:'type_id'},
+                {data:'create_time'},
+                {data:'status'},
+                {data:'id'}
+            ],
+            columnDefs:[
+                {
+                    "render": function (value) {
+                        var type=['','保洁','充电宝','客房服务'];
+                        value=type[value];
+                        return value;
+                    },
+                    "targets":1 //需求列
+                },
+                {
+                    "render": function (value) {
+                        value=new Date(value);
+                        return value.toLocaleDateString().replace(/\//g, "-") + " " + value.toTimeString().substr(0, 8);
+                    },
+                    "targets":2 //时间列
+                },
+                { "render":function (value){//value0未完成1已完成
+                    var status=['未完成','已完成'];
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":3 //状态列
+                },
+                {
+                    "render": function (value,type,row){
+                        if(row.status=='0'){
+                            value='<button class="btn btn-success btn-sm" name="'+value+'" style="margin:-.25rem 0">确定</button>'
+                        }else{
+                            value='';
+                        }
+                        return value;
+                    },
+                    "targets":4 //操作列
+                }
+            ]
+        });
+    }
+</script>
+</body>
+</html>

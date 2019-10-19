@@ -1,0 +1,130 @@
+body{
+    background-color: #f5f5f5;
+}
+.container{
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+    width: 100%;
+}
+.header{
+	width: 100%;
+}
+.banner{
+	height: 100%;
+    width: 100%;
+}
+.scanBtn{
+	height: 0.30rem;
+	margin-top: 0.28rem;
+	text-align: center;
+}
+.scanBtn .btn{
+	height: 0.3rem;
+	width: 0.87rem;
+	display: inline-block;
+	background-color: #D0021B;
+	color: #ffffff;
+	font-size: .13rem;
+	border-radius: 0.03rem;
+	line-height: 0.3rem;
+}
+.scanState{
+	margin-top: 0.1rem;
+	height: 0.32rem;
+	color: #999999;
+}
+.scanState p{
+	text-align: center;
+	font-size: 11px;
+	line-height: 0.16rem;
+}
+.clothCon{
+	padding: 0.13rem;
+	box-sizing: border-box;
+}
+.clothList{
+	width: 3.47rem;
+	/* height: 2.08rem; */
+	margin-top: 0.1rem;
+	background-color: #EAD5D5;
+}
+.clothItem .typeCon{
+	height: 0.5rem;
+	line-height: 0.5rem;
+	padding: 0 0.1rem 0 0.24rem;
+	font-size: 0.12rem;
+	box-shadow: 0 1px 3px #999999;
+	background-color: #fff;
+	display: flex;
+	justify-content: space-between;
+}
+.clothItem .typeCon .rightArrow img:nth-of-type(1){
+	height: .15rem;
+	width: .09rem;
+}
+.clothItem .typeCon .rightArrow img:nth-of-type(2){
+	height: .09rem;
+	width: .15rem;
+}
+.clothList .clothItem .clothDetail{
+	margin-top: 2px;
+	display: none;
+}
+.clothList .clothItem .conDetail{
+
+	height: 1.55rem;
+	display: flex;
+	justify-content: space-between;
+}
+.clothList .clothItem .leftDetail{
+	padding: 0.1rem 0 0 0.24rem;
+	background-color: #EAD5D5;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	font-size: 0.12rem;
+	font-weight: 600;
+}
+.clothItem .leftDetail span{
+	flex: 1;
+}
+.clothList .clothItem .rightDetail{
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #ffffff;
+	font-size: 0.17rem;
+	background-color: #EC828F
+}
+.mask {
+	position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(1, 1, 1, 0.4);
+    z-index: 100;
+    height: 100%;
+    width: 100%;
+	border-radius: 0.03rem;
+}
+.mask .successCon{
+	width: 2.70rem;
+	height: 1.30rem;
+	margin: 2.5rem auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	line-height: 0.2rem;
+	background-color: #fff;
+	border-radius: 0.06rem;
+}
+.successCon span:nth-of-type(1){
+	font-size: 0.14rem;
+	margin-top: 0.1rem;
+}
+.successCon span:nth-of-type(2){
+	font-size: 0.11rem;
+}

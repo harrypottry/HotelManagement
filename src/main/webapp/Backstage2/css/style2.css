@@ -1,0 +1,315 @@
+.inputname {
+    display: inline-block;
+    width:auto;
+    min-width: 6rem;
+    text-align: right;
+}
+.buttstyle span{
+    display:inline-block;
+    width:8rem;
+    text-align:right;
+    margin-right:2rem;
+}
+.buttstyle span input{
+    width:5rem;
+    text-align:center;
+    margin-right:0;
+}
+.buttstyle input{
+    margin-right:2rem;
+}
+img.closeimg{
+    width:23px;
+    cursor:pointer;
+}
+.addimg{
+    margin-left:4.5rem;
+    margin-bottom:2rem;
+    width:30px;
+    cursor:pointer;
+}
+.makecopymain h1 b{
+    margin-left:4rem;
+}
+.makecopymain h1 span{
+    color:#999;
+    font-size:12px;
+}
+.makecopyname{
+    display:inline-block;
+    width:100%;
+    margin-left:4rem;
+    margin-top:10px;
+}
+.makecopyname p{
+    display:inline-block;
+    margin-right:2rem;
+    float:left;
+}
+ span.spanname{
+    display:inline-block;
+    border-radius:50px;
+    background:#3296FA;
+    color:#fff;
+    width:50px;
+    height:50px;
+    line-height:50px;
+    text-align:center;
+    font-size:18px;
+}
+.makecopyname p a{
+    padding-top:8px;
+    display:block;
+}
+.rightinfo{
+    color:#3296FA !important;
+    cursor:pointer;
+}
+.addcopy{
+    display:inline-block;
+}
+.addcopy span{
+    width:50px;
+    height:50px;
+    background:url(../img/add2.png) no-repeat;
+    background-size:50px 50px;
+    display:block;
+    float:left
+}
+.addcopy a{
+    padding-top:8px;
+    display:block;
+    float:left;
+    width:100%;
+    text-align:center;
+}
+.makecopydiv p{
+    position:relative;
+    display:inline-block;
+}
+.makecopydiv p input{
+    padding-left:2rem;
+}
+.makecopydiv p img{
+    width:22px;
+    position:absolute;
+    left:5px;
+    top:8px;
+}
+.makecopydiv ul{
+    text-align:left;
+    display:inline-block;
+    width:78%;
+    padding-left:20%
+}
+.makecopydiv ul li{
+    display:inline-block;
+    background:url(../img/no-choose.png) no-repeat;
+    background-size:22px 22px;
+    padding-left:2rem;
+    width:80%;
+    float:left;
+    margin-bottom:1rem;
+}
+.makecopydiv ul li.active{
+    background:url(../img/choose.png) no-repeat;
+    background-size:24px 24px;
+}
+h1.h1title{
+    padding-left:1.6rem;
+}
+h1.h1title span{
+    color: #FE5A5A;
+}
+.buttstyletwo input{
+    margin-right:1rem;
+}
+.buttstylethree span{
+    margin-right:1rem;
+}
+span.cooperatespan{
+    background:url(../img/no-choose2.png) no-repeat;
+    background-size:22px 22px;
+    display:block;
+    padding-left:2rem;
+    display:inline-block;
+    margin-right:2rem;
+    margin-bottom:1rem;
+    min-width:170px;
+    vertical-align:top;
+}
+span.cooperatespan.active{
+    background:url(../img/choose2.png) no-repeat;
+    background-size:19px 19px;
+}
+span.cooperatespan.on{
+    background:url(../img/choosegray.png) no-repeat;
+    background-size:19px 19px;
+}
+.col-md-10 .position1:first-child{
+    margin-top:0;
+}
+.position1{
+    display:inline-block;
+    width:100%;
+    margin-top:1rem;
+}
+.position1 p{
+    display:inline-block;
+    width:25%;
+    margin-bottom:0;
+}
+.position1 p:nth-child(3){
+    width:45%;
+}
+.position1 p span{
+    color: #FE5A5A;
+}
+.position2{
+    margin-top:0.5rem;
+}
+.position2 p span{
+    color:#333;
+}
+.position1 input{
+    margin-bottom:1rem;
+}
+.position1 input:last-child{
+    margin-bottom:0;
+}
+p.exampleword{
+    color:#999;
+}
+p.stateinfo{
+    display:inline-block;
+    width:85%;
+    padding-left:1rem;
+}
+p.stateinfo label{
+    min-width:3rem;
+}
+p.stateinfo a{
+    margin-left:3rem;
+}
+a.submit_a,a.via_a{
+    color:#15bc53 !important;
+}
+a.approva_a{
+    color:#ff943e !important;
+}
+a.resuse_a{
+    color:#f25643 !important;
+}
+span.datespan{
+    color:#999;
+    float:right;
+}
+.divline{
+    width:80%;
+    height:3rem;
+    border-left:1px dashed #ccc;
+    margin-left:25px;
+}
+.statediv{
+    margin-top:8px;
+}
+ul,li{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+ul.roommanages{
+    margin-left:6px;
+    display:inline-block;
+    width:98%;
+    margin-left:2%;
+}
+ul.roommanages li{
+    border:1px solid #ccc;
+    border-radius:8px;
+    width:10rem;
+    padding:10px;
+    background:#fff;
+    margin-top:1rem;
+    margin-right:1rem;
+    display:inline-block;
+}
+ul.roommanages li label{
+    font-size: 22px;
+    display:inline-block;
+    width:100%;
+}
+ul.roommanages li span{
+    display:inline-block;
+    width:100%;
+}
+.bottomroominfo{
+    background:#fff;
+    padding:1rem 0;
+}
+span.spanupload{
+    position:relative;
+}
+.import-btn2 {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 5;
+}
+.groupleft{
+    background:#f3f3f3;
+    border-radius:4px;
+    margin:0 1rem 0 1rem;
+}
+.groupingul li{
+    padding:0 1rem;
+    margin-bottom:1rem;
+    cursor:pointer;
+}
+.groupingul li a{
+    float:right;
+    color:#999;
+}
+.btn-addgroup{
+    padding-top:1rem;
+}
+.groupbody{
+    display:inline-block;
+}
+.groupbody p{
+    display:inline-block;
+}
+p.groupimage{
+    border:1px solid #ccc;
+    width:100%;
+    height:150px;
+}
+p.imgname{
+    margin-bottom:0.5rem;
+    width:100%;
+}
+p.imgname span{
+    width:22px;
+    height:22px;
+    background: url(../img/no-choose2.png) no-repeat;
+    background-size: 22px 22px;
+    display: inline-block;
+    vertical-align: top;
+    cursor:pointer;
+    margin-right:3px;
+}
+p.imgname span.active {
+    background: url(../img/choose2.png) no-repeat;
+    background-size: 19px 19px;
+}
+p.optionbtn a{
+    color:#007bff !important;
+    margin-right:1rem;
+    cursor:pointer;
+}
+#tables1 tr td{
+    vertical-align: middle !important;
+}

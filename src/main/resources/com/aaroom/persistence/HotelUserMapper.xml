@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.HotelUserMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.HotelUser" >
+    <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    <result column="hotel_id" property="hotel_id" jdbcType="INTEGER" />
+    <result column="employee_id" property="employee_id" jdbcType="INTEGER" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+    <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+    <result column="is_active" property="is_active" jdbcType="TINYINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.aaroom.beans.HotelUser" >
+    insert into hotel_user (user_id, hotel_id,employee_id, create_time,
+      update_time, creater_id, updater_id, 
+      is_active)
+    values (#{user_id,jdbcType=VARCHAR}, #{hotel_id,jdbcType=VARCHAR},  #{employee_id,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP},
+      #{update_time,jdbcType=TIMESTAMP}, #{creater_id,jdbcType=INTEGER}, #{updater_id,jdbcType=INTEGER},
+      #{is_active,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.HotelUser" >
+    insert into hotel_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id,
+      </if>
+      <if test="employee_id != null" >
+        employee_id,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="creater_id != null" >
+        creater_id,
+      </if>
+      <if test="updater_id != null" >
+        updater_id,
+      </if>
+      <if test="is_active != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="user_id != null" >
+        #{user_id,jdbcType=VARCHAR},
+      </if>
+      <if test="hotel_id != null" >
+        #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="employee_id != null" >
+        #{employee_id,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        #{is_active,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="listAll" resultType="com.aaroom.beans.HotelUser">
+    SELECT * FROM hotel_user
+  </select>
+
+  <select id="getHotelUserByUserId" resultType="com.aaroom.beans.HotelUser">
+    SELECT * from hotel_user WHERE user_id = #{user_id} AND is_active = 1
+  </select>
+
+  <select id="getMonthlyUserCountByHotelId" resultType="java.lang.Integer">
+    SELECT count(1) FROM hotel_user
+    WHERE is_active = 1 AND hotel_id = #{hotel_id} AND date_format(`create_time`,'%Y%m')=date_format(#{date},'%Y%m')
+  </select>
+
+  <update id="activeHotelUser">
+    UPDATE hotel_user set is_active = 1
+    WHERE user_id = #{user_id} AND hotel_id = #{hotel_id}
+  </update>
+</mapper>

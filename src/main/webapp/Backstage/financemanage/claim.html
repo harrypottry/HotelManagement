@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>收款认领</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <style>
+        .modal table input{width:5rem;height:32px;text-align:center;margin:-5px 0;}
+        .modal .modal-card:last-child{overflow-y: scroll}
+        @media screen and (min-width:991px){
+            /*自定义滚动条样式*/
+            .modal .modal-card:last-child::-webkit-scrollbar{width:5px;height:8px}
+            /*定义滚动条轨道 内阴影+圆角*/
+            .modal .modal-card:last-child::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius:10px;}
+            /*定义滑块 内阴影+圆角*/
+            .modal .modal-card:last-child::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);}
+        }
+        #a1>.table td:first-child,#a2>.table td:first-child,#a3>.table td:first-child{width:140px}
+        #a1>.table td:nth-child(2),#a2>.table td:nth-child(2),#a3>.table td:nth-child(2){width:110px}
+        #statisticstable.table th{width:300px}
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#claim"  data-toggle="tab">款项认领</a></li>
+                <li class="nav-item"><a class="nav-link" href="#statistics" data-toggle="tab">收款统计</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="claim"><!--款项认领-->
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li><b>酒店名称：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="claimhotelId"></li>
+                            <li>
+                                <b>认领状态：</b>
+                                <select class="form-control status">
+                                    <option value="0">未完成认领</option>
+                                    <option value="1">已完成认领</option>
+                                    <option value="2">全部</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>日期：</b>
+                                <input type="text" class="form-control beginTime" value="" readonly>
+                                <input type="text" class="form-control endTime" value="" readonly>
+                            </li>
+                            <li style="margin-right:auto;border:0;">
+                                <span class="btn btn-danger" onclick="btn('claim')">查询</span>
+                            </li>
+                            <li style="border:0;">
+                                <span class="btn btn-danger" style="position:relative">
+                                    <span>上传待认领任务</span>
+                                    <input class="import-btn" type="file" accept=".xlsx">
+                                </span>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="download('EXCEL')">下载EXCEL模板</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="empty"><img src="../../import/img/empty.png"></div>
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('claim')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <table class="table table-striped" id="claimtable" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>流水号</th>
+                            <th>交易日期</th>
+                            <th>酒店名称</th>
+                            <th>酒店编号</th>
+                            <th>打款人</th>
+                            <th>打款是否一致</th>
+                            <th>打款账号</th>
+                            <th>金额</th>
+                            <th>摘要</th>
+                            <th>收款银行</th>
+                            <th>已认领金额</th>
+                            <th>待认领金额</th>
+                            <th>认领笔数</th>
+                            <th>最后修改时间</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane" id="statistics"><!--收款统计-->
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li><b>酒店名称：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="statisticshotelId"></li>
+                            <li>
+                                <b>收款状态：</b>
+                                <select class="form-control status">
+                                    <option value="0">未完成收款</option>
+                                    <option value="1">已完成收款</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>周期：</b>
+                                <input type="text" class="form-control monthTime" value="" readonly>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn('statistics')">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('statistics')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <table class="table table-striped" id="statisticstable" style="table-layout:fixed">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style="vertical-align:middle">账单周期</th>
+                                <th rowspan="2" style="vertical-align:middle">酒店名称</th>
+                                <th rowspan="2" style="vertical-align:middle">酒店编号</th>
+                                <th colspan="4">PMS系统维护费</th>
+                                <th colspan="4">OTA代运营费</th>
+                                <th colspan="4">输送客源费</th>
+                                <th colspan="4">合作服务费</th>
+                                <th colspan="4">会员服务费</th>
+                                <th colspan="4">布草租赁收款</th>
+                                <th colspan="4">布草洗涤收款</th>
+                                <th colspan="4">布草报损赔偿款</th>
+                                <th colspan="4">人力众包收款</th>
+                                <th colspan="4">合计</th>
+                            </tr>
+                            <tr style="border-top: 1px solid #E5E5E5;color:#FE5A5A;font-size:14px">
+                                <td>应收</td><!--PMS系统维护费-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--OTA代运营费-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--输送客源费-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--合作服务费-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--会员服务费-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--布草租赁收款-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--布草洗涤收款-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--布草报损赔偿款-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--人力众包收款-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                                <td>应收</td><!--合计-->
+                                <td>实收</td>
+                                <td>调整</td>
+                                <td>未收</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div style="text-align:center">
+                    <img src="../../import/img/money.png" style="margin-bottom:6px">&nbsp;&nbsp;&nbsp;<b style="font-size:18px;"></b>
+                    <button type="button" class="btn btn-tool" onclick="modal('.modal')" style="float:right;">×</button>
+                </div>
+                <div class="modal-card">
+                    <ul class="nav">
+                        <li style="margin-right:auto;">
+                            <b>酒店名称：</b><input type="text" class="form-control hotelId" value="" name="" id="hotelId">
+                        </li>
+                        <li>
+                            <span class="btn btn-outline-danger getAccountSum">查询账单</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group nav" style="justify-content:center">
+                    <a class="btn btn-outline-secondary btn-sm active" href="#a1" data-toggle="tab">布草租洗款</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="#a2" data-toggle="tab">人力众包款</a>
+                    <a class="btn btn-outline-secondary btn-sm" href="#a3" data-toggle="tab">运营款</a>
+                </div>
+                <div class="modal-card">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="a1"><!--布草租洗款-->
+                            <table class="table">
+                                <thead><tr><th>账单类型</th><th>账单金额</th><th>所属月份</th><th>认领金额</th><th>调整金额</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="a2"><!--人力众包款-->
+                            <table class="table">
+                                <thead><tr><th>账单类型</th><th>账单金额</th><th>所属月份</th><th>认领金额</th><th>调整金额</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="a3"><!--运营款-->
+                            <table class="table">
+                                <thead><tr><th>账单类型</th><th>账单金额</th><th>所属月份</th><th>认领金额</th><th>调整金额</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <ul style="list-style:none">
+                    <li style="padding:5px 0"><b>本次认领款项合计：<span class="claimPriceSum">0</span></b></li>
+                    <li style="padding:5px 0"><b>本次调整金额合计：<span class="adjustPriceSum">0</span></b></li>
+                </ul>
+                <button class="btn btn-danger saveClaimAccount" style="margin-left:auto;">认领款项</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script src="../js/financemanage/claim.js"></script>
+</body>
+</html>

@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.MissionMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.Mission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hotel_id" property="hotel_id" jdbcType="VARCHAR" />
+    <result column="room_id" property="room_id" jdbcType="INTEGER" />
+    <result column="mission_type" property="mission_type" jdbcType="INTEGER" />
+    <result column="publish_employee_id" property="publish_employee_id" jdbcType="INTEGER" />
+    <result column="accept_employee_id" property="accept_employee_id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="clean_begin_time" property="clean_begin_time" jdbcType="TIMESTAMP" />
+    <result column="gaffer_begin_time" property="gaffer_begin_time" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="end_time" jdbcType="TIMESTAMP" />
+    <result column="business_begin_time" property="business_begin_time" jdbcType="TIMESTAMP" />
+    <result column="business_end_time" property="business_end_time" jdbcType="TIMESTAMP" />
+    <result column="is_ok" property="is_ok" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+    <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+    <result column="is_active" property="is_active" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hotel_id, room_id, mission_type, publish_employee_id, accept_employee_id, status,
+    clean_begin_time, gaffer_begin_time, end_time, business_begin_time, business_end_time,
+    is_ok, comment, create_time, update_time, creater_id, updater_id, is_active
+  </sql>
+
+  <select id="getById" resultType="com.aaroom.beans.Mission">
+    select
+    id as id,         <!---->
+    hotel_id as hotel_id,         <!---->
+    room_id as room_id,         <!---->
+    mission_type as mission_type,         <!---->
+    publish_employee_id as publish_employee_id,         <!---->
+    accept_employee_id as accept_employee_id,         <!---->
+    status as status,         <!--0.发布 1.工作中 2.完成 3.任务出错 4.改正-->
+    comment as comment,         <!---->
+    create_time as create_time,         <!---->
+    update_time as update_time,         <!---->
+    creater_id as creater_id,         <!---->
+    updater_id as updater_id,         <!---->
+    is_active as is_active          <!---->
+    from mission
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null">
+        and id=#{id}
+      </if>
+    </trim>
+  </select>
+
+  <select id="getListByMap" resultType="com.aaroom.beans.Mission"
+          parameterType="java.util.Map">
+    select
+    id as id,      <!---->
+    hotel_id as hotel_id,      <!---->
+    room_id as room_id,      <!---->
+    mission_type as mission_type,      <!---->
+    publish_employee_id as publish_employee_id,      <!---->
+    accept_employee_id as accept_employee_id,      <!---->
+    status as status,      <!--0.发布 1.接收 2.完成 3.取消-->
+    comment as comment,      <!---->
+    create_time as create_time,      <!---->
+    update_time as update_time,      <!---->
+    creater_id as creater_id,      <!---->
+    updater_id as updater_id,      <!---->
+    is_active as is_active       <!---->
+    from mission
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id!=''">
+        and id=#{id}
+      </if>
+      <if test="hotel_id != null and hotel_id!=''">
+        and hotel_id=#{hotel_id}
+      </if>
+      <if test="room_id != null">
+        and room_id=#{room_id}
+      </if>
+      <if test="mission_type != null and (mission_type!='' or mission_type==0)">
+        and mission_type=#{mission_type}
+      </if>
+      <if test="publish_employee_id != null and (publish_employee_id!='' or publish_employee_id==0)">
+        and publish_employee_id=#{publish_employee_id}
+      </if>
+      <if test="accept_employee_id != null and (accept_employee_id!='' or accept_employee_id==0)">
+        and accept_employee_id=#{accept_employee_id}
+      </if>
+      <if test="status != null">
+        and status=#{status}
+      </if>
+      <if test="comment != null">
+        and comment=#{comment}
+      </if>
+      <if test="create_time != null">
+        and create_time=#{create_time}
+      </if>
+      <if test="update_time != null">
+        and update_time=#{update_time}
+      </if>
+      <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+        and creater_id=#{creater_id}
+      </if>
+      <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+        and updater_id=#{updater_id}
+      </if>
+      <if test="is_active != null and is_active!=''">
+        and is_active=#{is_active}
+      </if>
+    </trim>
+    order by creationDate desc
+    <if test="beginPos != null and beginPos!='' and pageSize != null  and pageSize !='' ">
+      limit #{beginPos},#{pageSize}
+    </if>
+  </select>
+
+  <select id="getCountByMap" resultType="Integer" parameterType="java.util.Map">
+    select count(1) from mission
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id!=''">
+        and id=#{id}
+      </if>
+      <if test="hotel_id != null and hotel_id!=''">
+        and hotel_id=#{hotel_id}
+      </if>
+      <if test="room_id != null">
+        and room_id=#{room_id}
+      </if>
+      <if test="mission_type != null and (mission_type!='' or mission_type==0)">
+        and mission_type=#{mission_type}
+      </if>
+      <if test="publish_employee_id != null and (publish_employee_id!='' or publish_employee_id==0)">
+        and publish_employee_id=#{publish_employee_id}
+      </if>
+      <if test="accept_employee_id != null and (accept_employee_id!='' or accept_employee_id==0)">
+        and accept_employee_id=#{accept_employee_id}
+      </if>
+      <if test="status != null">
+        and status=#{status}
+      </if>
+      <if test="comment != null">
+        and comment=#{comment}
+      </if>
+      <if test="create_time != null">
+        and create_time=#{create_time}
+      </if>
+      <if test="update_time != null">
+        and update_time=#{update_time}
+      </if>
+      <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+        and creater_id=#{creater_id}
+      </if>
+      <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+        and updater_id=#{updater_id}
+      </if>
+      <if test="is_active != null and is_active!=''">
+        and is_active=#{is_active}
+      </if>
+    </trim>
+  </select>
+
+  <insert id="save" parameterType="com.aaroom.beans.Mission" useGeneratedKeys="true" keyProperty="id"
+          keyColumn="id">
+    insert into mission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hotel_id != null">
+        hotel_id,
+      </if>
+      <if test="room_id != null">
+        room_id,
+      </if>
+      <if test="mission_type != null">
+        mission_type,
+      </if>
+      <if test="publish_employee_id != null">
+        publish_employee_id,
+      </if>
+      <if test="accept_employee_id != null">
+        accept_employee_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="creater_id != null">
+        creater_id,
+      </if>
+      <if test="updater_id != null">
+        updater_id,
+      </if>
+      <if test="is_active != null">
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hotel_id != null">
+        #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="room_id != null">
+        #{room_id,jdbcType=VARCHAR},
+      </if>
+      <if test="mission_type != null">
+        #{mission_type,jdbcType=INTEGER},
+      </if>
+      <if test="publish_employee_id != null">
+        #{publish_employee_id,jdbcType=INTEGER},
+      </if>
+      <if test="accept_employee_id != null">
+        #{accept_employee_id,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null">
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null">
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null">
+        #{is_active,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="modify" parameterType="com.aaroom.beans.Mission" useGeneratedKeys="true" keyProperty="id"
+          keyColumn="id">
+    update mission
+    <trim prefix="set" suffixOverrides="," suffix="where id= #{id}">
+      <if test="id != null and id!=''">
+        id=#{id},
+      </if>
+      <if test="hotel_id != null and hotel_id!=''">
+        hotel_id=#{hotel_id},
+      </if>
+      <if test="room_id != null and room_id!=''">
+        room_id=#{room_id},
+      </if>
+      <if test="mission_type != null and (mission_type!='' or mission_type==0)">
+        mission_type=#{mission_type},
+      </if>
+      <if test="publish_employee_id != null and (publish_employee_id!='' or publish_employee_id==0)">
+        publish_employee_id=#{publish_employee_id},
+      </if>
+      <if test="accept_employee_id != null and (accept_employee_id!='' or accept_employee_id==0)">
+        accept_employee_id=#{accept_employee_id},
+      </if>
+      <if test="status != null">
+        status=#{status},
+      </if>
+      <if test="comment != null">
+        comment=#{comment},
+      </if>
+      <if test="create_time != null">
+        create_time=#{create_time},
+      </if>
+      <if test="update_time != null">
+        update_time=#{update_time},
+      </if>
+      <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+        creater_id=#{creater_id},
+      </if>
+      <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+        updater_id=#{updater_id},
+      </if>
+      <if test="is_active != null and is_active!=''">
+        is_active=#{is_active},
+      </if>
+    </trim>
+  </update>
+
+  <delete id="removeById" parameterType="java.lang.Integer">
+        delete from mission where id = #{id}
+    </delete>
+
+  <select id="getMissionDoneByTime" resultMap="missionDoneMap">
+    SELECT
+	a.id,
+	a.publish_employee_id,
+	a.`status`,
+	a.`comment`,
+	a.room_id,
+	c.room_name,
+	a.mission_type,
+	b.`desc` AS mission_type_desc,
+	d.`desc` AS room_type_desc
+FROM
+	( SELECT * FROM mission AS m WHERE m.accept_employee_id = #{accept_employee_id} AND m.`status` = 2 ORDER BY room_id ) AS a,
+	mission_type AS b,
+	room AS c,
+	room_type AS d
+WHERE
+	a.mission_type = b.id
+	AND c.id = a.room_id
+	AND a.hotel_id = c.hotel_id
+	AND c.room_type_id = d.id
+  </select>
+  <resultMap id="missionDoneMap" type="java.util.Map">
+    <result column="id" property="id" jdbcType="INTEGER"></result>
+    <result column="publish_employee_id" property="publish_employee_id" jdbcType="INTEGER"/>
+    <result column="status" property="status" jdbcType="INTEGER"></result>
+    <result column="comment" property="comment" jdbcType="VARCHAR"></result>
+    <result column="room_id" property="room_id" jdbcType="INTEGER"></result>
+    <result column="room_name" property="room_name" jdbcType="VARCHAR"></result>
+    <result column="mission_type" property="mission_type" jdbcType="VARCHAR"></result>
+    <result column="mission_type_desc" property="mission_type_desc" jdbcType="VARCHAR"></result>
+    <result column="room_type_desc" property="room_type_desc" jdbcType="VARCHAR"></result>
+  </resultMap>
+  <select id="getMissionRoomtypeListByemployee_id" resultMap="missionDoneMap">
+    SELECT
+	a.id,
+	a.publish_employee_id,
+	a.`status`,
+	a.`comment`,
+	a.room_id,
+	c.room_name,
+	a.mission_type,
+	b.`desc` AS mission_type_desc,
+	d.`desc` AS room_type_desc
+FROM
+	( SELECT * FROM mission AS m WHERE m.accept_employee_id = #{accept_employee_id} AND m.`status` in(0,1) ORDER BY room_id ) AS a,
+	mission_type AS b,
+	room AS c,
+	room_type AS d
+WHERE
+	a.mission_type = b.id
+	AND c.id = a.room_id
+	AND a.hotel_id = c.hotel_id
+	AND c.room_type_id = d.id
+  </select>
+  <select id="getMissionByRoomIdZjy" resultMap="missionMap">
+  	SELECT
+	a.id,
+	a.publish_employee_id,
+	a.`status`,
+	a.`comment`,
+	a.room_id,
+	c.room_name,
+	a.mission_type,
+	b.`desc` AS mission_desc,
+	d.`desc` AS room_desc,
+	d.id as room_type_id
+FROM
+	( SELECT * FROM mission AS m WHERE m.accept_employee_id =  #{accept_employee_id} AND m.`status`in(0,1,2,30,60,80,90)  ORDER BY room_id ) AS a,
+	mission_type AS b,
+	room AS c,
+	room_type AS d
+WHERE
+	a.mission_type = b.id
+	AND c.id = a.room_id
+	AND a.hotel_id = c.hotel_id
+	AND c.room_type_id = d.id order by a.room_id
+  </select>
+  <resultMap id="missionMap" type="java.util.Map">
+    <!--column 数据库-->
+    <!--property bean-->
+    <result column="id" property="id" jdbcType="INTEGER"></result>
+    <result column="publish_employee_id" property="publish_employee_id" jdbcType="INTEGER"></result>
+    <result column="status" property="status" jdbcType="INTEGER"></result>
+    <result column="comment" property="comment" jdbcType="VARCHAR"></result>
+    <result column="room_id" property="room_id" jdbcType="INTEGER"></result>
+    <result column="room_name" property="room_name" jdbcType="VARCHAR"></result>
+    <result column="mission_type" property="mission_type" jdbcType="VARCHAR"></result>
+    <result column="mission_desc" property="mission_desc" jdbcType="VARCHAR"></result>
+    <result column="room_desc" property="room_desc" jdbcType="VARCHAR"></result>
+    <result column="room_type_id" property="room_type_id" jdbcType="INTEGER"></result>
+  </resultMap>
+
+
+  <select id="getRoomIdByEmpIdAndHotelId" resultMap="missionDoneMap">
+    SELECT
+				m.room_id
+			FROM
+				`mission` AS m
+			WHERE
+				m.`status` = 0
+				AND m.accept_employee_id = #{accept_employee_id,jdbcType=INTEGER}
+				AND m.hotel_id = #{hotel_id,jdbcType=VARCHAR}
+  </select>
+  <select id="getListByfastmissionlimit" resultType="com.aaroom.beans.Mission">
+    select *
+    from mission
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="mission.id != null">
+        and mission.id=#{mission.id}
+      </if>
+      <if test="mission.mission_type != null">
+        and mission.mission_type=#{mission.mission_type}
+      </if>
+      <if test="mission.accept_employee_id != null">
+        and mission.accept_employee_id=#{mission.accept_employee_id}
+      </if>
+      <if test="mission.hotel_id != null and mission.hotel_id!=''">
+        and mission.hotel_id=#{mission.hotel_id}
+      </if>
+      <if test="mission.room_id != null">
+        and mission.room_id=#{mission.room_id}
+      </if>
+      <if test="mission.mission_type_list != null">
+        and mission.mission_type in
+        <foreach collection="mission.mission_type_list" item="mission_type" index="index" open="(" close=")" separator=",">
+          #{mission_type}
+        </foreach>
+      </if>
+      <if test="mission.accept_employee_id_list != null">
+        and mission.accept_employee_id in
+        <foreach collection="mission.accept_employee_id_list" item="accept_employee_id" index="index" open="(" close=")" separator=",">
+          #{accept_employee_id}
+        </foreach>
+      </if>
+      <if test="mission.status != null">
+        and mission.status=#{mission.status}
+      </if>
+      <if test="mission.comment == 2">
+        and mission.comment IS NOT null
+      </if>
+      <if test="mission.comment == 1">
+        and 1 = 1
+      </if>
+      <if test="mission.create_time != null">
+        and mission.create_time=#{mission.create_time}
+      </if>
+      <if test="mission.endtime != null">
+        and mission.create_time between #{mission.endtime} and #{mission.starttime}
+      </if>
+    </trim>
+    order by mission.create_time desc
+    <if test="index != null  and pageSize != null  ">
+      limit #{index},#{pageSize}
+    </if>
+  </select>
+  <select id="getListByMissionNoLimitToday" resultType="com.aaroom.beans.Mission">
+    select *
+    from mission
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="mission.id != null">
+        and mission.id=#{mission.id}
+      </if>
+      <if test="mission.mission_type != null">
+        and mission.mission_type=#{mission.mission_type}
+      </if>
+      <if test="mission.accept_employee_id != null">
+        and mission.accept_employee_id=#{mission.accept_employee_id}
+      </if>
+      <if test="mission.hotel_id != null and mission.hotel_id!=''">
+        and mission.hotel_id=#{mission.hotel_id}
+      </if>
+      <if test="mission.room_id != null">
+        and mission.room_id=#{mission.room_id}
+      </if>
+      <if test="mission.mission_type_list != null">
+        and mission.mission_type in
+        <foreach collection="mission.mission_type_list" item="mission_type" index="index" open="(" close=")" separator=",">
+          #{mission_type}
+        </foreach>
+      </if>
+      <if test="mission.accept_employee_id_list != null">
+        and mission.accept_employee_id in
+        <foreach collection="mission.accept_employee_id_list" item="accept_employee_id" index="index" open="(" close=")" separator=",">
+          #{accept_employee_id}
+        </foreach>
+      </if>
+      <if test="mission.status != null">
+        and mission.status=#{mission.status}
+      </if>
+      <if test="mission.comment == 2">
+        and mission.comment IS NOT null
+      </if>
+      <if test="mission.comment == 1">
+        and 1 = 1
+      </if>
+      <if test="mission.create_time != null">
+        and mission.create_time=#{mission.create_time}
+      </if>
+      <if test="mission.endtime != null">
+        and mission.create_time between #{mission.endtime} and #{mission.starttime}
+      </if>
+    </trim>
+    order by mission.create_time desc
+  </select>
+  <select id="getMissionListByEmpIdLimit" resultType="com.aaroom.beans.Mission">
+    select *
+    from mission
+    where id=#{accept_employee_id}
+    order by mission.create_time desc
+    <if test="index != null  and pageSize != null  ">
+      limit #{index},#{pageSize}
+    </if>
+  </select>
+  <select id="getMissionListByAcceptemployeeidnullLimit" resultType="com.aaroom.beans.Mission">
+    select *
+    from mission
+    where accept_employee_id is null
+    order by mission.create_time desc
+    <if test="index != null  and pageSize != null  ">
+      limit #{index},#{pageSize}
+    </if>
+  </select>
+  <select id="getListByfastmission" parameterType="com.aaroom.beans.Mission" resultType="com.aaroom.beans.Mission">
+    select *
+    from mission
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="mission.id != null">
+        and mission.id=#{mission.id}
+      </if>
+      <if test="mission.hotel_id != null and mission.hotel_id!=''">
+        and mission.hotel_id=#{mission.hotel_id}
+      </if>
+      <if test="mission.room_id != null and mission.room_id!=''">
+        and mission.room_id=#{mission.room_id}
+      </if>
+      <if test="mission.mission_type_list != null">
+        and mission.mission_type in
+        <foreach collection="mission.mission_type_list" item="mission_type" index="index" open="(" close=")" separator=",">
+          #{mission_type}
+        </foreach>
+      </if>
+      <if test="mission.accept_employee_id_list != null">
+        and mission.accept_employee_id in
+        <foreach collection="mission.accept_employee_id_list" item="accept_employee_id" index="index" open="(" close=")" separator=",">
+          #{accept_employee_id}
+        </foreach>
+      </if>
+      <if test="mission.status != null">
+        and mission.status=#{mission.status}
+      </if>
+      <if test="mission.comment == 2">
+        and mission.comment IS NOT null
+      </if>
+      <if test="mission.comment == 1">
+        and 1 = 1
+      </if>
+      <if test="mission.create_time != null">
+        and mission.create_time=#{mission.create_time}
+      </if>
+      <if test="mission.endtime != null">
+        and mission.create_time between #{mission.endtime} and #{mission.starttime}
+      </if>
+    </trim>
+    order by mission.create_time desc
+  </select>
+  <select id="getCountBymission" resultType="java.lang.Integer" parameterType="com.aaroom.beans.Mission">
+    select count(1) from mission
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="mission.id != null">
+        and mission.id=#{mission.id}
+      </if>
+      <if test="mission.mission_type!= null">
+        and mission.mission_type=#{mission.mission_type}
+      </if>
+      <if test="mission.accept_employee_id!= null">
+        and mission.accept_employee_id=#{mission.accept_employee_id}
+      </if>
+      <if test="mission.hotel_id != null and mission.hotel_id!=''">
+        and mission.hotel_id=#{mission.hotel_id}
+      </if>
+      <if test="mission.room_id != null and mission.room_id!=''">
+        and mission.room_id=#{mission.room_id}
+      </if>
+      <if test="mission.mission_type_list != null">
+        and mission.mission_type in
+        <foreach collection="mission.mission_type_list" item="mission_type" index="index" open="(" close=")" separator=",">
+          #{mission_type}
+        </foreach>
+      </if>
+      <if test="mission.accept_employee_id_list != null">
+        and mission.accept_employee_id in
+        <foreach collection="mission.accept_employee_id_list" item="accept_employee_id" index="index" open="(" close=")" separator=",">
+          #{accept_employee_id}
+        </foreach>
+      </if>
+      <if test="mission.status != null">
+        and mission.status=#{mission.status}
+      </if>
+      <if test="mission.comment == 2">
+        and mission.comment IS NOT null
+      </if>
+      <if test="mission.comment == 1">
+        and 1 = 1
+      </if>
+      <if test="mission.create_time != null">
+        and mission.create_time=#{mission.create_time}
+      </if>
+      <if test="mission.update_time != null">
+        and mission.update_time=#{mission.update_time}
+      </if>
+      <if test="mission.endtime != null">
+        and mission.create_time between #{mission.endtime} and #{mission.starttime}
+      </if>
+    </trim>
+  </select>
+  <select id="getmissionbyhotelidandstatus" resultType="com.aaroom.beans.Mission">
+    SELECT * FROM mission AS m WHERE m.hotel_id = #{hotel_id} AND m.status = #{status}
+  </select>
+  <select id="getMissionIdByHidRidS2" resultType="java.lang.Integer">
+    SELECT id FROM mission AS m
+    WHERE
+    m.room_id = #{room_id} AND m.status = #{status}
+    order by id DESC
+    limit 0,1
+  </select>
+  <select id="getStatusList" resultType="java.lang.Integer">
+    SELECT distinct status FROM mission
+  </select>
+
+  <select id="isActiveMission" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+	m.`status`
+FROM
+	`mission` m
+WHERE
+	m.id =#{id}
+  </select>
+  <select id="getListstatusbyhotelidandempid" resultType="java.lang.Integer">
+    SELECT
+	m.*
+FROM
+	`mission` m
+WHERE
+	m.accept_employee_id =#{accept_employee_id} and m.hotel_id =#{hotel_id} and m.status in (0,1,3)
+  </select>
+
+  <select id="showHistoryMissionByEmp" resultType="com.aaroom.beans.Mission">
+  SELECT
+	*
+FROM
+	mission
+WHERE
+	mission.hotel_id = #{hotel_id}
+	AND mission.`status` = 2
+	AND accept_employee_id = #{accept_employee_id}
+  </select>
+
+  <update id="updateMissionStatus" >
+update `mission`  set mission.`status` =#{status} where id = #{id}
+  </update>
+  <select id="getMissionsByRoomId" resultType="com.aaroom.beans.Mission">
+    select * from `mission`
+    where room_id = #{room_id}
+    <if test="status!= null">
+      and status in
+      <foreach collection="status" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    ORDER BY `id` DESC
+    limit 0, ${limit}
+  </select>
+  <select id="getMissionsByEmployeeId" resultType="com.aaroom.beans.Mission">
+    select * from `mission`
+    where accept_employee_id = #{employee_id}
+    <if test="status!= null">
+      and status in
+      <foreach collection="status" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  <select id="getMissionsByEmployeeIdAndTime" resultType="com.aaroom.beans.Mission">
+    select * from `mission`
+    where accept_employee_id = #{employee_id}
+    <if test="status!= null">
+      and status in
+      <foreach collection="status" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    and create_time between #{StartTime} and #{EndTime}
+    order by create_time desc
+  </select>
+  <select id="getMissionByMonthEmp" resultType="com.aaroom.beans.Mission">
+    SELECT
+		*
+	FROM
+		mission
+	WHERE
+		DATE_FORMAT( update_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' )
+		AND hotel_id =#{hotel_id}
+		AND accept_employee_id = #{accept_employee_id}
+		AND mission.STATUS in (30,90)
+		order by create_time
+    </select>
+
+  <select id="getMissionDetailByMonth" resultType="com.aaroom.beans.Mission">
+    select * from `mission`
+    where accept_employee_id = #{accept_employee_id}
+    <if test="status!= null">
+      and status in
+      <foreach collection="status" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    and hotel_id = #{hotel_id}
+    and DATE_FORMAT( update_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ), '%Y%m' )
+    ORDER BY create_time desc
+    <if test="index!= null and pageSize!=null">
+      limit #{index},#{pageSize}
+    </if>
+  </select>
+  <select id="getMissionDetailByDay" resultType="com.aaroom.beans.Mission">
+    select * from `mission`
+    where
+    <if test="status!= null">
+      status in
+      <foreach collection="status" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    and hotel_id = #{hotel_id}
+  </select>
+  <update id="insertOrUpdateMission">
+        update mission
+        set comment = #{comment}
+        where id = #{id}
+    </update>
+  <select id="selectByPrimaryKey" resultType="com.aaroom.beans.Mission" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from mission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getMissionById" resultType="com.aaroom.beans.Mission" parameterType="java.lang.Integer">
+    select * from mission where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.Mission" >
+    insert into mission (id, hotel_id, room_id,
+      mission_type, publish_employee_id, accept_employee_id,
+      status, clean_begin_time, gaffer_begin_time,
+      end_time, business_begin_time, business_end_time,
+      is_ok, comment, create_time,
+      update_time, creater_id, updater_id,
+      is_active)
+    values (#{id,jdbcType=INTEGER}, #{hotelId,jdbcType=VARCHAR}, #{roomId,jdbcType=INTEGER},
+      #{missionType,jdbcType=INTEGER}, #{publishEmployeeId,jdbcType=INTEGER}, #{acceptEmployeeId,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{cleanBeginTime,jdbcType=TIMESTAMP}, #{gafferBeginTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{businessBeginTime,jdbcType=TIMESTAMP}, #{businessEndTime,jdbcType=TIMESTAMP},
+      #{isOk,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=INTEGER}, #{updaterId,jdbcType=INTEGER},
+      #{isActive,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.Mission" >
+    insert into mission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="missionType != null" >
+        mission_type,
+      </if>
+      <if test="publishEmployeeId != null" >
+        publish_employee_id,
+      </if>
+      <if test="acceptEmployeeId != null" >
+        accept_employee_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="cleanBeginTime != null" >
+        clean_begin_time,
+      </if>
+      <if test="gafferBeginTime != null" >
+        gaffer_begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="businessBeginTime != null" >
+        business_begin_time,
+      </if>
+      <if test="businessEndTime != null" >
+        business_end_time,
+      </if>
+      <if test="isOk != null" >
+        is_ok,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createrId != null" >
+        creater_id,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="missionType != null" >
+        #{missionType,jdbcType=INTEGER},
+      </if>
+      <if test="publishEmployeeId != null" >
+        #{publishEmployeeId,jdbcType=INTEGER},
+      </if>
+      <if test="acceptEmployeeId != null" >
+        #{acceptEmployeeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cleanBeginTime != null" >
+        #{cleanBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gafferBeginTime != null" >
+        #{gafferBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessBeginTime != null" >
+        #{businessBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessEndTime != null" >
+        #{businessEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOk != null" >
+        #{isOk,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createrId != null" >
+        #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.Mission" >
+    update mission
+    <set >
+      <if test="hotel_id != null" >
+        hotel_id = #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="room_id != null" >
+        room_id = #{room_id,jdbcType=INTEGER},
+      </if>
+      <if test="mission_type != null" >
+        mission_type = #{mission_type,jdbcType=INTEGER},
+      </if>
+      <if test="publish_employee_id != null" >
+        publish_employee_id = #{publish_employee_id,jdbcType=INTEGER},
+      </if>
+      <if test="accept_employee_id != null" >
+        accept_employee_id = #{accept_employee_id,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="clean_begin_time != null" >
+        clean_begin_time = #{clean_begin_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gaffer_begin_time != null" >
+        gaffer_begin_time = #{gaffer_begin_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="end_time != null" >
+        end_time = #{end_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="business_begin_time != null" >
+        business_begin_time = #{business_begin_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="business_end_time != null" >
+        business_end_time = #{business_end_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="is_ok != null" >
+        is_ok = #{is_ok,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        creater_id = #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        updater_id = #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        is_active = #{is_active,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.Mission" >
+    update mission
+    set hotel_id = #{hotelId,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=INTEGER},
+      mission_type = #{missionType,jdbcType=INTEGER},
+      publish_employee_id = #{publishEmployeeId,jdbcType=INTEGER},
+      accept_employee_id = #{acceptEmployeeId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      clean_begin_time = #{cleanBeginTime,jdbcType=TIMESTAMP},
+      gaffer_begin_time = #{gafferBeginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      business_begin_time = #{businessBeginTime,jdbcType=TIMESTAMP},
+      business_end_time = #{businessEndTime,jdbcType=TIMESTAMP},
+      is_ok = #{isOk,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creater_id = #{createrId,jdbcType=INTEGER},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getMissionList" resultType="com.aaroom.beans.MissionPriceView">
+    SELECT
+    e.name employeeName,m.accept_employee_id employeeId ,hb.hotel_name hotelName,
+    m.hotel_id hotelId,mt.desc missionType,m.mission_type missionId,m.comment comment,
+    m.clean_begin_time beginTime,m.end_time endTime,m.is_ok isOk,
+    h.price price,h.rework_price reworkPrice,h.clean_price cleanPrice,r.room_name roomName
+    FROM mission m
+    JOIN hotel_missiontype_price h ON m.hotel_id=h.hotel_id AND m.mission_type=h.mission_type
+    JOIN hotel_base hb ON m.hotel_id=hb.id
+    JOIN employee e ON m.accept_employee_id=e.id
+    JOIN mission_type mt ON m.mission_type=mt.id
+    JOIN room r ON m.room_id = r.id
+    <where>
+      <if test="beginDate != null and beginDate != ''">
+        <![CDATA[ and DATE_FORMAT( m.clean_begin_time,'%Y-%m-%d') >= DATE_FORMAT(#{beginDate},'%Y-%m-%d')]]>
+      </if>
+      <if test="endDate != null and endDate != ''">
+        <![CDATA[ and DATE_FORMAT(m.end_time,'%Y-%m-%d') <= DATE_FORMAT(#{endDate},'%Y-%m-%d')]]>
+      </if>
+      <if test="employeeId != null and employeeId != ''">
+        AND m.accept_employee_id = #{employeeId}
+      </if>
+      <if test="hotelId != null and hotelId != ''">
+        AND m.hotel_id=#{hotelId}
+      </if>
+      ORDER BY endTime ASC
+    </where>
+</select>
+</mapper>

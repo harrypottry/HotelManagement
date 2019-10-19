@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 保洁</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+        <!--<div class="find_nav_list hd">-->
+            <!--<ul class="tituls">-->
+                <!--<li class="on"><a>本月已做任务</a></li>-->
+                <!--<li><a>任务详情列表</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <div class="bd">
+            <div class="taskdetails" id="wrapper" style="display:block;">
+                <div class="scroller">
+                    <div class="pullDown"><div class="pullDownIcon"></div><div class="pullDownLabel"></div></div>
+                    <div class="pagelist">
+                        <div class="pageitem">
+
+                        </div>
+                        <p class="pullUp"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script>
+	$(function() {
+	    //任务详情列表
+        var pageNo = 1, datecreate_time = '', upward = '';
+        $(document).ready(function () {
+            Load();
+        });
+        $('#wrapper').bind('touchmove', function (e) {
+            // if ($('.tituls>li.on>a').html() == '任务详情列表') {
+                upward = 1;//滚动过
+                $('.pullUp').html('释放加载更多');
+            // }
+        }).bind('touchend', function (e) {
+            if ($(window).scrollTop() == ($(document).height() - $(window).height())) {//滚动条到达最低端
+                if (upward) {
+                    Load();
+                    $('.pullUp').html('加载中...');
+                }
+            }
+            upward = '';
+        });
+        function Load() {
+            setTimeout(function () {
+                $.ajax({
+                    url: "/app/console/api/getMissionDetailByMonth",
+                    type: 'get',
+                    data: {pageSize: 3, pageNo: pageNo},
+                    success: function (data) {
+                        // console.log(data);
+                        var datas = data.data.data;
+                        var $div = '';
+                        for (var m in datas) {
+                            if (datas[m].mission_type == '1') {
+                                datas[m].mission_type = '客房更新（退房）'
+                            } else if (datas[m].mission_type == '2') {
+                                datas[m].mission_type = '客房更新（不退房）'
+                            } else if (datas[m].mission_type == '3') {
+                                datas[m].mission_type = '抹尘'
+                            } else if (datas[m].mission_type == '4') {
+                                datas[m].mission_type = '大清'
+                            }
+                            if (datas[m].is_ok == '0') {
+                                datas[m].is_ok = '正常完成'
+                            } else {
+                                datas[m].is_ok = '返工完成'
+                            }
+                            var dates = datas[m].create_time;
+                            var times = datas[m].update_time;
+                            datas[m].create_time = dates.substring(0, 10);
+                            datas[m].update_time = times.substring(11, 16);
+                            if (datas[m].create_time != datecreate_time) {
+                                datecreate_time = datas[m].create_time;
+                                $div += '<p class="dateinfo"><label class="fl">' + datas[m].create_time + '</label></p>';
+                            }
+                            $div += '<div class="taskdetailinfo"><div class="taskdetaillist"><h1><img src="../adminlte/img/h5/iconhs.png"/> ' + datas[m].mission_type + '</h1><div class="finishinfo"> <p><label>' + datas[m].room_name + '</label>房间</p><span class="fr tr">' + datas[m].is_ok + '</span><a>完成时间：' + datas[m].update_time + '</a><h2 class="fr tr">报酬¥' + datas[m].price + '</h2></div><p class="tasknums">任务编号：' + datas[m].id + '</p></div></div>'
+                        }
+                        $(".pageitem").append($div);
+                        if (Math.ceil(data.data.pageCount / 3) == pageNo) {//最后一页
+                            $('#wrapper').unbind();//取消下拉刷新事件
+                            $('.pullUp').html('我是有底线的');
+                        } else {
+                            $('.pullUp').html('上拉加载更多');
+                        }
+                        pageNo++;
+                    }
+                });
+                // wrapper.refresh();
+            }, 1000);
+        }
+    });
+</script>
+</body>
+</html>

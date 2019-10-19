@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.CentralWarehouseMapper" >
+    <resultMap id="BaseResultMap" type="com.aaroom.beans.CentralWarehouse" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="central_warehouse_name" property="central_warehouse_name" jdbcType="VARCHAR" />
+        <result column="area_id" property="area_id" jdbcType="VARCHAR" />
+        <result column="province_id" property="province_id" jdbcType="VARCHAR" />
+        <result column="city_id" property="city_id" jdbcType="VARCHAR" />
+        <result column="street_address" property="street_address" jdbcType="VARCHAR" />
+        <result column="warehouse_type" property="warehouse_type" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="create_by" property="create_by" jdbcType="VARCHAR" />
+        <result column="create_by" property="create_by" jdbcType="VARCHAR" />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+        <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+        <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+        <result column="is_active" property="is_active" jdbcType="TINYINT" />
+    </resultMap>
+    <select id="getById" resultType="com.aaroom.beans.CentralWarehouse">
+        select
+                id as id,         <!---->
+                central_warehouse_name as central_warehouse_name,         <!--总仓名-->
+                area_id as area_id,         <!--区代码-->
+                province_id as province_id,         <!--省代码-->
+                city_id as city_id,         <!--城市代码-->
+                street_address as street_address,         <!--街道地址-->
+                warehouse_type as warehouse_type,         <!--总仓类型(预留)-->
+                status as status,         <!--目前营业状态(预留)-->
+                create_by as create_by,         <!--由谁创建-->
+                create_time as create_time,         <!---->
+                update_time as update_time,         <!---->
+                creater_id as creater_id,         <!---->
+                updater_id as updater_id,         <!---->
+                is_active as is_active          <!---->
+        from central_warehouse
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getListByMap" resultType="com.aaroom.beans.CentralWarehouse"
+            parameterType="java.util.Map">
+            select
+                id as id,      <!---->
+                central_warehouse_name as central_warehouse_name,      <!--总仓名-->
+                area_id as area_id,      <!--区代码-->
+                province_id as province_id,      <!--省代码-->
+                city_id as city_id,      <!--城市代码-->
+                street_address as street_address,      <!--街道地址-->
+                warehouse_type as warehouse_type,      <!--总仓类型(预留)-->
+                status as status,      <!--目前营业状态(预留)-->
+                create_by as create_by,      <!--由谁创建-->
+                create_time as create_time,      <!---->
+                update_time as update_time,      <!---->
+                creater_id as creater_id,      <!---->
+                updater_id as updater_id,      <!---->
+                is_active as is_active       <!---->
+            from central_warehouse
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null and (id!='' or id==0)">
+                    and id=#{id}
+                </if>
+                <if test="central_warehouse_name != null and central_warehouse_name!=''">
+                    and central_warehouse_name=#{central_warehouse_name}
+                </if>
+                <if test="area_id != null and area_id!=''">
+                    and area_id=#{area_id}
+                </if>
+                <if test="province_id != null and province_id!=''">
+                    and province_id=#{province_id}
+                </if>
+                <if test="city_id != null and city_id!=''">
+                    and city_id=#{city_id}
+                </if>
+                <if test="street_address != null and street_address!=''">
+                    and street_address=#{street_address}
+                </if>
+                <if test="warehouse_type != null and warehouse_type!=''">
+                    and warehouse_type=#{warehouse_type}
+                </if>
+                <if test="status != null and status!=''">
+                    and status=#{status}
+                </if>
+                <if test="create_by != null and create_by!=''">
+                    and create_by=#{create_by}
+                </if>
+                <if test="create_time != null and create_time!=''">
+                    and create_time=#{create_time}
+                </if>
+                <if test="update_time != null and update_time!=''">
+                    and update_time=#{update_time}
+                </if>
+                <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+                    and creater_id=#{creater_id}
+                </if>
+                <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+                    and updater_id=#{updater_id}
+                </if>
+                <if test="is_active != null and is_active!=''">
+                    and is_active=#{is_active}
+                </if>
+        </trim>
+        order by creationDate desc
+        <if test="beginPos != null and beginPos!='' and pageSize != null  and pageSize !='' ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCountByMap" resultType="Integer" parameterType="java.util.Map">
+        select count(1) from central_warehouse
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null and (id!='' or id==0)">
+                        and id=#{id}
+                    </if>
+                    <if test="central_warehouse_name != null and central_warehouse_name!=''">
+                        and central_warehouse_name=#{central_warehouse_name}
+                    </if>
+                    <if test="area_id != null and area_id!=''">
+                        and area_id=#{area_id}
+                    </if>
+                    <if test="province_id != null and province_id!=''">
+                        and province_id=#{province_id}
+                    </if>
+                    <if test="city_id != null and city_id!=''">
+                        and city_id=#{city_id}
+                    </if>
+                    <if test="street_address != null and street_address!=''">
+                        and street_address=#{street_address}
+                    </if>
+                    <if test="warehouse_type != null and warehouse_type!=''">
+                        and warehouse_type=#{warehouse_type}
+                    </if>
+                    <if test="status != null and status!=''">
+                        and status=#{status}
+                    </if>
+                    <if test="create_by != null and create_by!=''">
+                        and create_by=#{create_by}
+                    </if>
+                    <if test="create_time != null and create_time!=''">
+                        and create_time=#{create_time}
+                    </if>
+                    <if test="update_time != null and update_time!=''">
+                        and update_time=#{update_time}
+                    </if>
+                    <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+                        and creater_id=#{creater_id}
+                    </if>
+                    <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+                        and updater_id=#{updater_id}
+                    </if>
+                    <if test="is_active != null and is_active!=''">
+                        and is_active=#{is_active}
+                    </if>
+        </trim>
+    </select>
+
+    <insert id="save" parameterType="com.aaroom.beans.CentralWarehouse">
+        insert into central_warehouse(
+            central_warehouse_name ,      <!--总仓名-->
+            area_id ,      <!--区代码-->
+            province_id ,      <!--省代码-->
+            city_id ,      <!--城市代码-->
+            street_address ,      <!--街道地址-->
+            warehouse_type ,      <!--总仓类型(预留)-->
+            status ,      <!--目前营业状态(预留)-->
+            create_by ,      <!--由谁创建-->
+            create_time ,      <!---->
+            update_time ,      <!---->
+            creater_id ,      <!---->
+            updater_id ,      <!---->
+            is_active       <!---->
+        )
+        values(
+                    #{central_warehouse_name} ,      <!--总仓名-->
+                    #{area_id} ,      <!--区代码-->
+                    #{province_id} ,      <!--省代码-->
+                    #{city_id} ,      <!--城市代码-->
+                    #{street_address} ,      <!--街道地址-->
+                    #{warehouse_type} ,      <!--总仓类型(预留)-->
+                    #{status} ,      <!--目前营业状态(预留)-->
+                    #{create_by} ,      <!--由谁创建-->
+                    #{create_time} ,      <!---->
+                    #{update_time} ,      <!---->
+                    #{creater_id} ,      <!---->
+                    #{updater_id} ,      <!---->
+                    #{is_active}       <!---->
+        )
+    </insert>
+
+    <update id="modify" parameterType="com.aaroom.beans.CentralWarehouse">
+        update central_warehouse
+        <trim prefix="set" suffixOverrides="," suffix="where id= #{id}">
+                <if test="id != null and (id!='' or id==0)">
+                     id=#{id},
+                </if>
+                <if test="central_warehouse_name != null and central_warehouse_name!=''">
+                     central_warehouse_name=#{central_warehouse_name},
+                </if>
+                <if test="area_id != null and area_id!=''">
+                     area_id=#{area_id},
+                </if>
+                <if test="province_id != null and province_id!=''">
+                     province_id=#{province_id},
+                </if>
+                <if test="city_id != null and city_id!=''">
+                     city_id=#{city_id},
+                </if>
+                <if test="street_address != null and street_address!=''">
+                     street_address=#{street_address},
+                </if>
+                <if test="warehouse_type != null and warehouse_type!=''">
+                     warehouse_type=#{warehouse_type},
+                </if>
+                <if test="status != null and status!=''">
+                     status=#{status},
+                </if>
+                <if test="create_by != null and create_by!=''">
+                     create_by=#{create_by},
+                </if>
+                <if test="create_time != null and create_time!=''">
+                     create_time=#{create_time},
+                </if>
+                <if test="update_time != null and update_time!=''">
+                     update_time=#{update_time},
+                </if>
+                <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+                     creater_id=#{creater_id},
+                </if>
+                <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+                     updater_id=#{updater_id},
+                </if>
+                <if test="is_active != null and is_active!=''">
+                     is_active=#{is_active},
+                </if>
+        </trim>
+    </update>
+
+    <delete id="removeById" parameterType="Long">
+        delete from central_warehouse where id = #{id}
+    </delete>
+</mapper>

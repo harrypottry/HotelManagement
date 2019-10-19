@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.HotelShopListMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.HotelShopList" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hotel_id" property="hotelId" jdbcType="INTEGER" />
+    <result column="proprietor_id" property="proprietorId" jdbcType="INTEGER" />
+    <result column="signatory_time" property="signatoryTime" jdbcType="TIMESTAMP" />
+    <result column="expand_id" property="expandId" jdbcType="INTEGER" />
+    <result column="shop_manager_id" property="shopManagerId" jdbcType="INTEGER" />
+    <result column="shop_status" property="shopStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hotel_id, proprietor_id, signatory_time, expand_id, shop_manager_id, shop_status, 
+    create_time, update_time, create_id, update_id, is_active
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aaroom.beans.HotelShopListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hotel_shop_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hotel_shop_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hotel_shop_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aaroom.beans.HotelShopListExample" >
+    delete from hotel_shop_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.HotelShopList" >
+    insert into hotel_shop_list (id, hotel_id, proprietor_id, 
+      signatory_time, expand_id, shop_manager_id, 
+      shop_status, create_time, update_time, 
+      create_id, update_id, is_active
+      )
+    values (#{id,jdbcType=INTEGER}, #{hotelId,jdbcType=INTEGER}, #{proprietorId,jdbcType=INTEGER}, 
+      #{signatoryTime,jdbcType=TIMESTAMP}, #{expandId,jdbcType=INTEGER}, #{shopManagerId,jdbcType=INTEGER}, 
+      #{shopStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=INTEGER}, #{updateId,jdbcType=INTEGER}, #{isActive,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.HotelShopList" >
+    insert into hotel_shop_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="proprietorId != null" >
+        proprietor_id,
+      </if>
+      <if test="signatoryTime != null" >
+        signatory_time,
+      </if>
+      <if test="expandId != null" >
+        expand_id,
+      </if>
+      <if test="shopManagerId != null" >
+        shop_manager_id,
+      </if>
+      <if test="shopStatus != null" >
+        shop_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="proprietorId != null" >
+        #{proprietorId,jdbcType=INTEGER},
+      </if>
+      <if test="signatoryTime != null" >
+        #{signatoryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expandId != null" >
+        #{expandId,jdbcType=INTEGER},
+      </if>
+      <if test="shopManagerId != null" >
+        #{shopManagerId,jdbcType=INTEGER},
+      </if>
+      <if test="shopStatus != null" >
+        #{shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aaroom.beans.HotelShopListExample" resultType="java.lang.Integer" >
+    select count(*) from hotel_shop_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hotel_shop_list
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotelId != null" >
+        hotel_id = #{record.hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.proprietorId != null" >
+        proprietor_id = #{record.proprietorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.signatoryTime != null" >
+        signatory_time = #{record.signatoryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expandId != null" >
+        expand_id = #{record.expandId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopManagerId != null" >
+        shop_manager_id = #{record.shopManagerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopStatus != null" >
+        shop_status = #{record.shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isActive != null" >
+        is_active = #{record.isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hotel_shop_list
+    set id = #{record.id,jdbcType=INTEGER},
+      hotel_id = #{record.hotelId,jdbcType=INTEGER},
+      proprietor_id = #{record.proprietorId,jdbcType=INTEGER},
+      signatory_time = #{record.signatoryTime,jdbcType=TIMESTAMP},
+      expand_id = #{record.expandId,jdbcType=INTEGER},
+      shop_manager_id = #{record.shopManagerId,jdbcType=INTEGER},
+      shop_status = #{record.shopStatus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      is_active = #{record.isActive,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.HotelShopList" >
+    update hotel_shop_list
+    <set >
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="proprietorId != null" >
+        proprietor_id = #{proprietorId,jdbcType=INTEGER},
+      </if>
+      <if test="signatoryTime != null" >
+        signatory_time = #{signatoryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expandId != null" >
+        expand_id = #{expandId,jdbcType=INTEGER},
+      </if>
+      <if test="shopManagerId != null" >
+        shop_manager_id = #{shopManagerId,jdbcType=INTEGER},
+      </if>
+      <if test="shopStatus != null" >
+        shop_status = #{shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.HotelShopList" >
+    update hotel_shop_list
+    set hotel_id = #{hotelId,jdbcType=INTEGER},
+      proprietor_id = #{proprietorId,jdbcType=INTEGER},
+      signatory_time = #{signatoryTime,jdbcType=TIMESTAMP},
+      expand_id = #{expandId,jdbcType=INTEGER},
+      shop_manager_id = #{shopManagerId,jdbcType=INTEGER},
+      shop_status = #{shopStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      update_id = #{updateId,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getHotelShopList" resultType="java.util.Map">
+     SELECT hs.id id,hs.hotel_id hotelId,hs.proprietor_id proprietorId,hs.signatory_time signatoryTime,hs.expand_id expandId,hs.shop_manager_id shopManagerId,
+	        hs.shop_status shopStatus,hb.hotel_name newHotelName,hb.old_hotel_name oldHotelName,e.name proprietorName
+     FROM hotel_shop_list hs
+     JOIN hotel_base hb ON hs.hotel_id = hb.id
+     JOIN employee e ON hs.proprietor_id = e.id
+    <where>
+      <if test="hotelId != null and hotelId != ''">
+        AND hs.hotel_id = #{hotelId}
+      </if>
+      <if test="proprietorName != null and proprietorName != ''">
+        AND e.name like  CONCAT(CONCAT('%',#{proprietorName},'%'))
+      </if>
+      <if test="expandId != null and expandId != ''">
+        AND hs.expand_id = #{expandId}
+      </if>
+      <if test="shopStatus != null and shopStatus != ''">
+        AND hs.shop_status = #{shopStatus}
+      </if>
+      <if test="shopManagerId != null and shopManagerId != ''">
+        AND hs.shop_manager_id = #{shopManagerId}
+      </if>
+    </where>
+    ORDER BY hotelId ASC
+  </select>
+</mapper>

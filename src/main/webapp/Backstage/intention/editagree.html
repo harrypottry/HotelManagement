@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>意向门店门店详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#basic"  data-toggle="tab">酒店概况</a></li>
+                <li class="nav-item"><a class="nav-link" href="#agree" data-toggle="tab">签约信息</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="basic"><!--酒店概况-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>酒店名称：</b><span class="form-txt" data-id="hotelName"></span></p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>酒店地址：</b><span id="distpicker"></span></span>
+                                    </p>
+                                    <p><b class="inputname"><span>* </span>详细地址：</b><span class="form-txt" data-id="hotelStreetAddress"></span></p>
+                                    <p><b class="inputname"><span>* </span>房间总数：</b><span class="form-txt" data-id="roomNum"></span></p>
+                                    <p><b class="inputname" style="vertical-align:top;"><span>* </span>门头照片：</b><span class="upimg" data-id="doorwayPhoto"><img src=""></span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>业主姓名：</b><span class="form-txt" data-id="owernName"></span></p>
+                                    <p><b class="inputname"><span>* </span>业主电话：</b><span class="form-txt" data-id="owernPhone"></span></p>
+                                    <p><b class="inputname">业主邮箱：</b><span class="form-txt" data-id="owernEmail"></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <b class="inputname" style="vertical-align:top;">业主身份证：</b><span class="upimg" data-id="owernIdcardPhotoz"><img src=""></span>
+                                        <span class="upimg" data-id="owernIdcardPhotof"><img src=""></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><b class="inputname" style="vertical-align:top;">备注：</b><span class="form-txt" data-id="remark"></span></textarea></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="agree"><!--签约信息-->
+                    <div class="card is">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>
+                                        <b class="inputname"><span>* </span>履约保证金：</b>
+                                        <span class="cancel"><input type="text" class="form-control" data-chargeItem="6" data-chargeRate="4" data-chargeStandard="">元</span>
+                                        <span class="check">减免</span>
+                                    </p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>项目咨询费：</b>
+                                        <span class="cancel"><input type="text" class="form-control" data-chargeItem="8" data-chargeRate="4" data-chargeStandard="">元/间</span>
+                                        <span class="check">减免</span>
+                                    </p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>合作服务费：</b>
+                                        <span class="cancel"><input type="text" class="form-control" data-chargeItem="4" data-chargeRate="3" data-chargeStandard="GMV">%/月</span>
+                                        <span class="check">减免</span>
+                                    </p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>输送客源费：</b>
+                                        <span class="cancel"><input type="text" class="form-control" data-chargeItem="3" data-chargeRate="3" data-chargeStandard="自有渠道订单">%/月</span>
+                                        <span class="check">减免</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        <b class="inputname"><span>* </span>PMS 初始安装费：</b>
+                                        <span class="cancel"><input type="text" class="form-control" data-chargeItem="7" data-chargeRate="4" data-chargeStandard="">元</span>
+                                        <span class="check">减免</span>
+                                    </p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>PMS系统维护费：</b>
+                                        <span class="cancel"><input type="text" class="form-control" data-chargeItem="1" data-chargeRate="3" data-chargeStandard="固定金额">元/月</span>
+                                        <span class="check">减免</span>
+                                    </p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>OTA 代运营费：</b>
+                                        <span class="cancel"><input type="text" class="form-control" data-chargeItem="2" data-chargeRate="3" data-chargeStandard="固定金额">元/月</span>
+                                        <span class="check">减免</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><b class="inputname">赠送物资：</b></div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11" style="margin-bottom:0.5rem;">
+                                    <div class="give">
+                                        <span class="check">门招</span>
+                                        <span class="check">前台/吧台背景墙</span>
+                                        <span class="check">床旗</span>
+                                        <span class="check">抱枕</span>
+                                        <span class="check">会员卡</span>
+                                        <span class="check">品牌标识贴</span>
+                                        <span class="check">电梯门海报</span>
+                                    </div>
+                                    <div>
+                                        <span class="check give" style="vertical-align:top;">其他请填写</span>
+                                    </div>
+                                    <div>
+                                        <textarea class="form-control give" rows="3" style="width:70%"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><b class="inputname">补充协议：</b><span class="check mend" style="vertical-align:middle;"></span></div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11" style="margin-bottom:0.5rem;">
+                                    <textarea class="form-control mend" rows="3" style="width:70%"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div style="line-height:38px;"><b class="inputname"><span>* </span>床型信息：</b><span style="color:#FE5A5A">为确保赠送物资尺寸准确性，请据实填写酒店床型尺寸及数量信息</span></div>
+                                    <p class="addreal">
+                                        <span class="inputname">床型：</span>
+                                        <input type="text" class="form-control bedType" placeholder="床型名称">&nbsp;<input type="text" class="form-control bedSize" placeholder="床型尺寸" style="width:8rem">&nbsp;<input type="text" class="form-control bedNum" placeholder="数量" style="width:6rem">
+                                    </p>
+                                    <p class="addpre">
+                                        <span class="inputname">床型：</span>
+                                        <input type="text" class="form-control bedType" placeholder="床型名称">&nbsp;<input type="text" class="form-control bedSize" placeholder="床型尺寸" style="width:8rem">&nbsp;<input type="text" class="form-control bedNum" placeholder="数量" style="width:6rem"><img
+                                            src="../../import/img/close.png" class="delete">
+                                    </p>
+                                    <p><span class="inputname"></span><img src="../../import/img/addimg.png" class="add"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <span class="btn btn-secondary" data-id="1">保存</span>
+                                    <span class="btn btn-danger" data-id="2">提交</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card no" style="display:none">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>履约保证金：</b><span class="cancel"><span></span>&nbsp;元</span></p>
+                                    <p><b class="inputname"><span>* </span>项目咨询费：</b><span class="cancel"><span></span>&nbsp;元/间</span></p>
+                                    <p><b class="inputname"><span>* </span>合作服务费：</b><span class="cancel"><span></span>&nbsp;%/月</span></p>
+                                    <p><b class="inputname"><span>* </span>输送客源费：</b><span class="cancel"><span></span>&nbsp;%/月</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>PMS 初始安装费：</b><span class="cancel"><span></span>&nbsp;元</span></p>
+                                    <p><b class="inputname"><span>* </span>PMS系统维护费：</b><span class="cancel"><span></span>&nbsp;元/月</span></p>
+                                    <p><b class="inputname"><span>* </span>OTA 代运营费：</b><span class="cancel"><span></span>&nbsp;元/月</span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><b class="inputname">赠送物资：</b></div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11" style="margin-bottom:0.5rem;">
+                                    <div class="give"></div>
+                                    <div>
+                                        <span class="check give" style="width:70%;">其他：</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><b class="inputname">补充协议：</b><span class="mend"></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div style="line-height:38px;"><b class="inputname"><span>* </span>床型信息：</b><span style="color:#FE5A5A">为确保赠送物资尺寸准确性，请据实填写酒店床型尺寸及数量信息</span></div>
+                                    <p class="addreal">
+                                        <span class="inputname">床型：</span>
+                                        <input type="text" class="form-control bedType" placeholder="床型名称">&nbsp;<input type="text" class="form-control bedSize" placeholder="床型尺寸" style="width:8rem">&nbsp;<input type="text" class="form-control bedNum" placeholder="数量" style="width:6rem">
+                                    </p>
+                                    <p class="addpre">
+                                        <span class="inputname">床型：</span>
+                                        <input type="text" class="form-control bedType" placeholder="床型名称">&nbsp;<input type="text" class="form-control bedSize" placeholder="床型尺寸" style="width:8rem">&nbsp;<input type="text" class="form-control bedNum" placeholder="数量" style="width:6rem"><img
+                                            src="../../import/img/close.png" class="delete">
+                                    </p>
+                                    <p><span class="inputname"></span><img src="../../import/img/addimg.png" class="add"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    var surveyId=sessionStorage.getItem('surveyId');
+    var serversagree;//false服务器未存在签约信息、1服务器已保存签约信息、2服务器已提交签约信息
+    $(document).ready(function(){
+        getrequest('basic','/console/api/getIntentionStoreSurvey');// 获取酒店概况
+        getrequest('agree','/console/api/getIntentionStoreInfo');// 获取签约信息
+    });
+    //签约信息#agree
+    $('#agree .check').click(function(){
+        $(this).toggleClass('active');
+    });
+    // 添加床型
+    $('#agree img.add').click(function(){
+        $(this).parents('.col-md-12').find('.addpre').before($(this).parents('.col-md-12').find('.addpre').clone().attr('class','addreal'));
+    });
+    //删除床型
+    $(document).on("click","#agree .addreal>img.delete",function(Id){//点击操作内按钮--进入--status状态判断跳转不同页面
+        $(this).parent('.addreal').remove();
+    });
+    $('#agree .btn').click(function(agree){//保存或提交
+        agree={surveyId:surveyId,chargeConfig:[],intentionStoreInfo:{giveMaterial:[]},isiBed:[]};//签约信息
+        agree.intentionStoreInfo['typeS']=$(this).attr('data-id');//1保存2提交
+        goon=true;
+        $('#agree .cancel').each(function(arr,$input){//可减免费用：履约保证金、项目咨询费、合作服务费、输送客源费、PMS 初始安装费、PMS系统维护费、OTA 代运营费
+            arr={},$input=$(this).find('input');
+            arr.chargeItem=$input.attr('data-chargeItem');
+            arr.chargeRate=$input.attr('data-chargeRate');
+            arr.chargeStandard=$input.attr('data-chargeStandard');
+            if($(this).next('.check').attr('class')=='check active'){//减免
+                arr.isJm='1';arr.chargeRule='0';
+            }else{//未减免
+                arr.isJm='0';
+                arr.chargeRule=$input.val();
+                if(agree.intentionStoreInfo.typeS=='2'&&arr.chargeRule==''){
+                    goon=false;
+                    alert('请填写必填项！');
+                    $input.focus();return false;
+                }
+            }
+            agree.chargeConfig.push(arr);
+        });
+        if(goon){
+            $('#agree .addreal').each(function(arr){
+                arr={};
+                arr.bedType=$(this).find('.bedType').val();
+                arr.bedSize=$(this).find('.bedSize').val();
+                arr.bedNum=$(this).find('.bedNum').val();
+                if(agree.intentionStoreInfo.typeS=='1'&&(arr.bedType||arr.bedSize||arr.bedNum)){//保存时输入框只要非空
+                    agree.isiBed.push(arr);
+                }
+                if(agree.intentionStoreInfo.typeS=='2'){//提交时-最少填写一种床型/页面床型不可有空
+                    for(var i in arr){
+                        if(!arr[i]){
+                            goon=false;
+                            alert('请将床型信息填写完整！');
+                            $(this).find('.'+i).focus();return false;
+                        }
+                    }
+                    agree.isiBed.push(arr);
+                }
+            });
+        }
+        if(goon){
+            $('#agree div.give>.active').each(function(){//赠送物资
+                agree.intentionStoreInfo.giveMaterial.push($(this).html());
+            });
+            if($('#agree span.give.active').length){//赠送物资-选中其他请填写
+                if(!$('#agree textarea.give').val()){
+                    alert('请填写赠送物资！');
+                    $('#agree textarea.give').focus();return;
+                }
+                agree.intentionStoreInfo.giveMaterial.push($('#agree textarea.give').val());
+            }
+            if($('#agree span.mend.active').length){//补充协议
+                agree.intentionStoreInfo.type='1';
+                if(!$('#agree textarea.mend').val()){
+                    alert('请填写补充协议内容！');
+                    $('#agree textarea.mend').focus();return;
+                }
+                agree.intentionStoreInfo.content=$('#agree textarea.mend').val();
+            }else{//无补充协议
+                agree.intentionStoreInfo.type='0';
+                agree.intentionStoreInfo.content='';
+            }
+            $.ajax({
+                url:'/console/api/addIntentionStoreInfo',
+                type: 'post',
+                contentType: 'application/json',
+                data:JSON.stringify(agree),
+                success:function (res){
+                    warn(res.msg);
+                }
+            })
+        }
+    });
+    // 获取酒店概况、签约信息
+    function getrequest(Id,url){
+        $.ajax({
+            url :url,
+            data :{surveyId:surveyId},
+            type: "GET",
+            success:function(res){
+                if(Id=='basic'){// 获取酒店概况
+                    var distpicker='';
+                    $('#basic .form-txt').each(function(){
+                        $(this).html(res[$(this).attr('data-id')]);
+                    });
+                    if(res.hotelProvince){distpicker+=ChineseDistricts['86'][res.hotelProvince];}//省
+                    if(res.hotelProvince&&res.hotelCity){distpicker+='-'+ChineseDistricts[res.hotelProvince][res.hotelCity];}//市
+                    if(res.hotelCity&&res.hotelCounty){ distpicker+='-'+ChineseDistricts[res.hotelCity][res.hotelCounty];}//县
+                    $('#distpicker').html(distpicker);
+                    $('#basic .upimg').each(function(Photo){//照片
+                        Photo=res[$(this).attr('data-id')].split('&').slice(-1)[0];
+                        if(Photo!='null'&&Photo!=''){
+                            $(this).find('img').attr('src',res[$(this).attr('data-id')]).show();
+                        }
+                    });
+                }
+                if(Id=='agree'){
+                    if(res.intentionStoreInfo){
+                        console.log(res);
+                        serversagree=res.intentionStoreInfo.typeS;
+                        if(serversagree=='1'){//保存到数据库
+                            $('#agree>.is .cancel').each(function(index,$input){//基本费用
+                                $input=$(this).find('input');
+                                if($input.attr('data-chargeItem')==res.chargeConfig[index].chargeItem){
+                                    $input.val(res.chargeConfig[index].chargeRule);
+                                    $input.attr('data-id',res.chargeConfig[index].id);
+                                    if(res.chargeConfig[index].isJm=='1'){
+                                        $(this).next('.check').attr('class','check active');
+                                    }
+                                }
+                            });
+                            //赠送物资
+                            if(res.intentionStoreInfo.type=='1'){//存在其他赠送物资
+                                $('#agree span.give').attr('class','check give active');
+                                $('#agree textarea.give').val(res.intentionStoreInfo.giveMaterial[res.intentionStoreInfo.giveMaterial.length-1]);
+                            }
+
+                        }
+                        if(serversagree=='2'){//保存到数据库
+                            $('#agree>.is').hide();$('#agree>.no').show();
+                            $('#agree>.no .cancel>span').each(function(index){//基本费用
+                                $(this).html(res.chargeConfig[index].chargeRule);
+                            });
+                            //赠送物资
+                            if(res.intentionStoreInfo.type=='1'){//存在其他赠送物资---pan--
+                                $('#agree>.no span.give').html('其他：'+res.intentionStoreInfo.giveMaterial.pop());
+                            }
+                            for(var i of res.intentionStoreInfo.giveMaterial){
+                                $('#agree>.no div.give').append('<span class="check">'+i+'</span>');
+                            }
+                            // 补充协议
+                            if(res.intentionStoreInfo.type=='1'){//存在补充协议
+                                $('#agree>.no span.mend').html(res.intentionStoreInfo.content);
+                            }
+                        }
+                    }else{//从未保存或提交过签约信息
+                        serversagree=false;
+                    }
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

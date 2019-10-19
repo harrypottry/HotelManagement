@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.HotelExtraMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.HotelExtra" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="room_num" property="room_num" jdbcType="INTEGER" />
+    <result column="profit_rate" property="profit_rate" jdbcType="DOUBLE" />
+    <result column="profit_rate_owner" property="profit_rate_owner" jdbcType="DOUBLE" />
+    <result column="profit_rate_manager" property="profit_rate_manager" jdbcType="DOUBLE" />
+    <result column="profit_rate_bd" property="profit_rate_bd" jdbcType="DOUBLE" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+    <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+    <result column="is_active" property="is_active" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,room_num, profit_rate,profit_rate_owner,profit_rate_manager,profit_rate_bd, create_time, update_time, creater_id, updater_id, is_active
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from hotel_extra
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from hotel_extra
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.HotelExtra" >
+    insert into hotel_extra (id,room_num, profit_rate,profit_rate_owner,
+     profit_rate_manager,profit_rate_bd,create_time,
+      update_time, creater_id, updater_id, 
+      is_active)
+    values (#{id,jdbcType=VARCHAR}, #{room_num,jdbcType=INTEGER},#{profit_rate,jdbcType=DOUBLE},#{profit_rate_owner,jdbcType=DOUBLE},
+    #{profit_rate_manager,jdbcType=DOUBLE},#{profit_rate_bd,jdbcType=DOUBLE}, #{create_time,jdbcType=TIMESTAMP},
+      #{update_time,jdbcType=TIMESTAMP}, #{creater_id,jdbcType=INTEGER}, #{updater_id,jdbcType=INTEGER},
+      #{is_active,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.HotelExtra" >
+    insert into hotel_extra
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="room_num != null" >
+        room_num,
+      </if>
+      <if test="profit_rate != null" >
+        profit_rate,
+      </if>
+      <if test="profit_rate_owner != null" >
+        profit_rate_owner,
+      </if>
+      <if test="profit_rate_manager != null" >
+        profit_rate_manager,
+      </if>
+      <if test="profit_rate_bd != null" >
+        profit_rate_bd,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="creater_id != null" >
+        creater_id,
+      </if>
+      <if test="updater_id != null" >
+        updater_id,
+      </if>
+      <if test="is_active != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="room_num != null" >
+        #{room_num,jdbcType=INTEGER},
+      </if>
+      <if test="profit_rate != null" >
+        #{profit_rate,jdbcType=DOUBLE},
+      </if>
+      <if test="profit_rate_owner != null" >
+        #{profit_rate_owner,jdbcType=DOUBLE},
+      </if>
+      <if test="profit_rate_manager != null" >
+        #{profit_rate_manager,jdbcType=DOUBLE},
+      </if>
+      <if test="profit_rate_bd != null" >
+        #{profit_rate_bd,jdbcType=DOUBLE},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        #{is_active,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.HotelExtra" >
+    update hotel_extra
+    <set >
+      <if test="room_num != null" >
+        room_num = #{room_num,jdbcType=INTEGER},
+      </if>
+      <if test="profit_rate != null" >
+        profit_rate = #{profit_rate,jdbcType=DOUBLE},
+      </if>
+      <if test="profit_rate_owner != null" >
+        profit_rate_owner = #{profit_rate_owner,jdbcType=DOUBLE},
+      </if>
+      <if test="profit_rate_manager != null" >
+        profit_rate_manager = #{profit_rate_manager,jdbcType=DOUBLE},
+      </if>
+      <if test="profit_rate_bd != null" >
+        profit_rate_bd = #{profit_rate_bd,jdbcType=DOUBLE},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        creater_id = #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        updater_id = #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        is_active = #{is_active,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.HotelExtra" >
+    update hotel_extra
+    set profit_rate = #{profit_rate,jdbcType=DOUBLE},
+      profit_rate_owner = #{profit_rate_owner,jdbcType=DOUBLE},
+      profit_rate_manager = #{profit_rate_manager,jdbcType=DOUBLE},
+      profit_rate_bd = #{profit_rate_bd,jdbcType=DOUBLE},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      creater_id = #{creater_id,jdbcType=INTEGER},
+      updater_id = #{updater_id,jdbcType=INTEGER},
+      is_active = #{is_active,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="listAll" resultType="com.aaroom.beans.HotelExtra">
+    SELECT * FROM hotel_extra
+    ORDER BY create_time DESC
+  </select>
+</mapper>

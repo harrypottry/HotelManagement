@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ProjectListMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.ProjectList" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hotel_id" property="hotelId" jdbcType="INTEGER" />
+    <result column="dirname" property="dirname" jdbcType="VARCHAR" />
+    <result column="joint_name" property="jointName" jdbcType="VARCHAR" />
+    <result column="joint_phone" property="jointPhone" jdbcType="VARCHAR" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+    <result column="project_type" property="projectType" jdbcType="INTEGER" />
+    <result column="project_status" property="projectStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hotel_id, dirname, joint_name, joint_phone, comments, project_type, project_status, 
+    create_time, update_time, create_id, update_id, is_active
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aaroom.beans.ProjectListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from project_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aaroom.beans.ProjectListExample" >
+    delete from project_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.ProjectList" >
+    insert into project_list (id, hotel_id, dirname, 
+      joint_name, joint_phone, comments, 
+      project_type, project_status, create_time, 
+      update_time, create_id, update_id, 
+      is_active)
+    values (#{id,jdbcType=INTEGER}, #{hotelId,jdbcType=INTEGER}, #{dirname,jdbcType=VARCHAR}, 
+      #{jointName,jdbcType=VARCHAR}, #{jointPhone,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}, 
+      #{projectType,jdbcType=INTEGER}, #{projectStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, #{updateId,jdbcType=INTEGER}, 
+      #{isActive,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.ProjectList" >
+    insert into project_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="dirname != null" >
+        dirname,
+      </if>
+      <if test="jointName != null" >
+        joint_name,
+      </if>
+      <if test="jointPhone != null" >
+        joint_phone,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+      <if test="projectType != null" >
+        project_type,
+      </if>
+      <if test="projectStatus != null" >
+        project_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="dirname != null" >
+        #{dirname,jdbcType=VARCHAR},
+      </if>
+      <if test="jointName != null" >
+        #{jointName,jdbcType=VARCHAR},
+      </if>
+      <if test="jointPhone != null" >
+        #{jointPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="projectStatus != null" >
+        #{projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aaroom.beans.ProjectListExample" resultType="java.lang.Integer" >
+    select count(*) from project_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update project_list
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotelId != null" >
+        hotel_id = #{record.hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dirname != null" >
+        dirname = #{record.dirname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jointName != null" >
+        joint_name = #{record.jointName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jointPhone != null" >
+        joint_phone = #{record.jointPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null" >
+        comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectType != null" >
+        project_type = #{record.projectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectStatus != null" >
+        project_status = #{record.projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isActive != null" >
+        is_active = #{record.isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update project_list
+    set id = #{record.id,jdbcType=INTEGER},
+      hotel_id = #{record.hotelId,jdbcType=INTEGER},
+      dirname = #{record.dirname,jdbcType=VARCHAR},
+      joint_name = #{record.jointName,jdbcType=VARCHAR},
+      joint_phone = #{record.jointPhone,jdbcType=VARCHAR},
+      comments = #{record.comments,jdbcType=VARCHAR},
+      project_type = #{record.projectType,jdbcType=INTEGER},
+      project_status = #{record.projectStatus,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      is_active = #{record.isActive,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.ProjectList" >
+    update project_list
+    <set >
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="dirname != null" >
+        dirname = #{dirname,jdbcType=VARCHAR},
+      </if>
+      <if test="jointName != null" >
+        joint_name = #{jointName,jdbcType=VARCHAR},
+      </if>
+      <if test="jointPhone != null" >
+        joint_phone = #{jointPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        project_type = #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="projectStatus != null" >
+        project_status = #{projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.ProjectList" >
+    update project_list
+    set hotel_id = #{hotelId,jdbcType=INTEGER},
+      dirname = #{dirname,jdbcType=VARCHAR},
+      joint_name = #{jointName,jdbcType=VARCHAR},
+      joint_phone = #{jointPhone,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR},
+      project_type = #{projectType,jdbcType=INTEGER},
+      project_status = #{projectStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      update_id = #{updateId,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getIntention" resultType="com.aaroom.beans.IntentionView">
+    SELECT hb.id HotelId,hb.room_num roomNum,isc.first_party firstParty,isc.first_party_signatory firstPartySignatory,
+    isc.protocol_num protocolNum,isc.signing_date signingDate,isc.cooperation_date cooperationDate,
+    isi.give_material giveMaterial,e.name expandName
+    FROM hotel_base hb
+    JOIN intention_store_survey iss ON hb.iss_id = iss.id
+    JOIN intention_store_info isi ON isi.survey_id = iss.id
+    JOIN intention_store_contract isc ON isc.isi_id = isi.id
+    JOIN hotel_shop_list hsl ON hsl.hotel_id = hb.id
+    JOIN employee e ON e.id = hsl.expand_id
+    <where>
+      <if test="hotelId != null and hotelId != ''">
+        AND hb.id = #{hotelId}
+      </if>
+  </where>
+    ORDER BY hotelId ASC
+  </select>
+</mapper>

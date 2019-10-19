@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>AA连锁酒店 业务端-布草流转</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<link rel="stylesheet" href="../adminlte/css/h5/common.css" />
+<link rel="stylesheet" href="../adminlte/css/h5/style.css" />
+</head>
+<body class="wrap">
+<section class="wrapper">
+	<div class="taskmain">
+		<div class="leasemain">
+			<p class="roamnullone">暂无数据</p>
+			<div class="leaselist">
+				<!--<p class="dateinfo"></p>-->
+				<!--<div class="leaseinfo">-->
+					<!--<div class="leasetitle roamlist">-->
+						<!--<a>布草名称</a>-->
+						<!--<a>材质</a>-->
+						<!--<a>规格</a>-->
+						<!--<a>数量</a>-->
+					<!--</div>-->
+					<!--<div class="leaseinfobody roambody">-->
+						<!--<p class="roamnull">暂无数据</p>-->
+						<!--<div class="roamlistbody">-->
+							<!--&lt;!&ndash;<ul class="leaseinfoul roamullist">&ndash;&gt;-->
+								<!--&lt;!&ndash;<li>床单</li>&ndash;&gt;-->
+								<!--&lt;!&ndash;<li>棉</li>&ndash;&gt;-->
+								<!--&lt;!&ndash;<li>200X280</li>&ndash;&gt;-->
+								<!--&lt;!&ndash;<li>9</li>&ndash;&gt;-->
+							<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="orderbtn"><button>下单</button></div>-->
+				<!--</div>-->
+			</div>
+		</div>
+	</div>
+</section>
+<script src="../adminlte/js/jquery.min.js"></script>
+<script>
+	$(function(){
+        //布草流转
+		var hotel_name='';
+        $.ajax({
+            type: "post",
+            url: "/app/console/api/orderClothListByAA",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+				if(data.length==0 || data.data==null){
+					$('.roamnullone').show();
+				}else{
+                    $('.roamnullone').hide();
+				}
+                var $html='';
+                data.list={};
+                var x;
+                for(var i in data.data) {
+                    x = {};
+                    for (var j of data.data[i].ClothTypeIdsList) {
+                        x[j.cloth_kind] = j.desc;
+                    }
+                    data.list[i]=x;
+                    if(data.list[i].Type==null){
+                        data.list[i].Type='';
+					}
+					if(data.list[i].Material==null){
+                        data.list[i].Material='';
+					}
+                    if(data.list[i].Size==null){
+                        data.list[i].Size='';
+                    }
+                    if(data.data[i].num==null){
+                        data.data[i].num='';
+					}
+                    if(data.data[i].hotel_name != hotel_name){
+                        hotel_name = data.data[i].hotel_name;
+                        $html+='</div><p class="dateinfo"><span>'+data.data[i].hotel_name+'</span></p><div class="leaseinfo"><div class="leasetitle roamlist"><a>布草名称</a><a>材质</a><a>规格</a><a>数量</a></div>';
+                    }
+                    $html+='<div class="leaseinfobody roambody"><div class="roamlistbody"><ul class="leaseinfoul roamullist"><li>'+data.list[i].Type+'</li><li>'+data.list[i].Material+'</li><li>'+data.list[i].Size+'</li><li>'+data.data[i].num+'</li></ul></div></div>';
+                }
+                $('.leaselist').html($html);
+            }
+        });
+	})
+</script>
+</body>
+</html>

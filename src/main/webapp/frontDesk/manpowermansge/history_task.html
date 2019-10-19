@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>历史任务</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <style>
+        ul.card-body>li {
+            padding: 0.3rem 1rem;
+        }
+        ul.card-body>li:nth-child(4){
+            border:0;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <div class="navheader">
+            <dl class="leftinfodl">
+                <dt><img src="" /></dt>
+            </dl>
+            <div class="rightinfoconts">
+                <p><img src="../../import/img/mail.png"/> 站内信</p>
+                <p><img src="../../import/img/center.png"/> 帮助中心</p>
+                <p><img src="../../import/img/shezhi.png"/> 账户设置</p>
+                <p><button class="offwork" onclick="off()">下班</button></p>
+            </div>
+        </div>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+            <img src="../../import/img/logo.png" alt="AdminLTE Logo" class="elevation-3" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="lease">
+                    <div class="condition conditionone row">
+                        <span class="col-6">历史任务</span>
+                    </div>
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li>
+                                <b>任务类型：</b>
+                                <select class="form-control employeeId" id="tasktype">
+                                    <option value="">全部</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>阿姨名称：</b>
+                                <select class="form-control employeeId" id="cleaning">
+                                    <option value="">全部</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>房间号：</b>
+                                <input type="text" class="form-control" id="roomname" name="room_name" value=""/>
+                            </li>
+                            <li>
+                                <b>任务时间开始-结束：</b>
+                                <input type="text" class="form-control beginTime" value="" readonly>
+                                <input type="text" class="form-control endTime" value="" readonly>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn()">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="condition row conditiontwo">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('history')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped" id="leasetable">
+                                <thead>
+                                <tr>
+                                    <th>房间号</th>
+                                    <th>任务ID</th>
+                                    <th>任务类型</th>
+                                    <th>完成状态</th>
+                                    <th>任务发布时间</th>
+                                    <th>任务完成时间</th>
+                                    <th>阿姨名称</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    $(document).ready(function(){
+        request('/wx/console/api/getmissiontype','');//任务类型
+        request('/wx/console/api/getemployeenamebyloginidfast','');//保洁员列表
+        btn();//初始化页面
+    });
+    function request(url,datas,btn) {
+        $.ajax({
+            type: "get",
+            contentType: "application/json;charset=UTF-8",
+            url: url,
+            data: datas,
+            dataType: 'json',
+            success: function (data) {
+                var $select;
+                if (url == '/wx/console/api/getmissiontype') {//任务类型
+                    $select='';
+                    for(var i of data){
+                        $select+='<option value="'+i.id+'" name="mission_type">'+i.desc+'</option>';
+                    }
+                    $("#tasktype").append($select)
+                }
+                if (url == '/wx/console/api/getemployeenamebyloginidfast') {//保洁员列表
+                    $select='';
+                    for(var i in data){
+                        $select+='<option value="'+i+'" name="accept_employee_id">'+data[i]+'</option>';
+                    }
+                    $("#cleaning").append($select)
+                }
+            }
+        })
+    }
+    //历史任务查询
+    function btn(datas) {
+        datas={};
+        datas['mission_type']=$("#tasktype").val();//任务类型
+        datas['accept_employee_id']=$("#cleaning").val();//保洁员
+        datas['room_name']=$("#roomname").val();//房间号
+        datas['StartTime']=$(".beginTime").val();//开始时间
+        datas['EndTime']=$(".endTime").val();//结束时间
+        $("#leasetable").dataTable({
+            destroy:true,
+            ordering:false,//排序
+            lengthChange:false,
+            paging:true,
+            aLengthMenu:[20],
+            filter:false,
+            serverSide: true,  //启用服务器端分页
+            searching: false,  //禁用原生搜索
+            columnDefs: [{
+                "targets": 'nosort',  //列的样式名
+                "orderable": false    //包含上样式名‘nosort’的禁止排序
+            }],
+            ajax: function (data, callback, settings){
+                //ajax请求数据
+                datas.pageNo=(data.start / data.length)+1;//当前页码
+                $.ajax({
+                    type: "post",
+                    url: "/wx/console/api/GetMissionListFrontDeskHistory",
+                    cache: false,  //禁用缓存
+                    data:datas,  //传入组装的参数
+                    dataType: "json",
+                    success: function (result){
+                        var returnData = {};//封装返回数据
+                        var resultdata=result.data.data;
+                        // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.data.paging.count;//返回数据全部记录
+                        returnData.recordsFiltered = result.data.paging.count;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = resultdata;//返回的数据列表
+                        callback(returnData);
+                        // $('.count').html(result.data.paging.count);//共多少条
+                    }
+                });
+            },
+            columns:[//列表表头字段
+                {data:'room_name'},
+                {data:'id'},
+                {data:'mission_type'},
+                {data:'status'},
+                {data:'create_time'},
+                {data:'endtime'},
+                {data:'accept_employee_name'}
+            ],
+            columnDefs:[
+                {
+                    "render": function (value){
+                        var status={'1':'客房更新/退房','2':'客房更新/不退房','3':'抹尘','4':'大清'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":2 //操作列
+                },
+                {
+                    "render": function (value){
+                        var status={'0':'发布','1':'工作中','2':'提交完成(待检查)','30':'领班-合格','40':'终结','60':'返工（领班','70':'领班-不合格','80':'业务-不合格','90':'业务-合格'};
+                        value=status[value];
+                        return value;
+                    },
+                    "targets":3 //操作列
+                }
+            ],
+            language:{
+                "sProcessing": "加载中...",
+                "sLengthMenu": "每页 _MENU_ 项",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+                "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "未加载到匹配的数据",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页",
+                    "sJump": "跳转"
+                }
+            }
+        });
+    }
+    function download(Ids,datas,url) {//导出
+        datas={};
+        datas['mission_type']=$("#tasktype").val();//任务类型
+        datas['accept_employee_id']=$("#cleaning").val();//保洁员
+        datas['room_name']=$("#roomname").val();//房间号
+        datas['StartTime']=$(".beginTime").val();//开始时间
+        datas['EndTime']=$(".endTime").val();//结束时间
+        if(Ids=='history'){
+            url='/wx/console/api/DownLoadMissionHistoryExcel';
+        }
+        delete datas.pageNo;
+        delete datas.pageSize;
+        //导出请求
+        var form = document.createElement("form");
+        form.style.display = 'none';
+        form.action = url;
+        form.method ="post";
+        document.body.appendChild(form);
+        for(var key in datas){
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = datas[key];
+            form.appendChild(input);
+        }
+        form.submit();
+        form.remove();
+    }
+</script>
+</body>
+</html>

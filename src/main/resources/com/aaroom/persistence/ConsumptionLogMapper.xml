@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ConsumptionLogMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.ConsumptionLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mission_id" property="missionId" jdbcType="INTEGER" />
+    <result column="comsumption_id" property="comsumptionId" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="createrId" jdbcType="INTEGER" />
+    <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mission_id, comsumption_id, num, create_time, update_time, creater_id, updater_id, 
+    is_active
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from consumption_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from consumption_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.ConsumptionLog" >
+    insert into consumption_log (id, mission_id, comsumption_id, 
+      num, create_time, update_time, 
+      creater_id, updater_id, is_active
+      )
+    values (#{id,jdbcType=INTEGER}, #{missionId,jdbcType=INTEGER}, #{comsumptionId,jdbcType=INTEGER}, 
+      #{num,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createrId,jdbcType=INTEGER}, #{updaterId,jdbcType=INTEGER}, #{isActive,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.ConsumptionLog" >
+    insert into consumption_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="missionId != null" >
+        mission_id,
+      </if>
+      <if test="comsumptionId != null" >
+        comsumption_id,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createrId != null" >
+        creater_id,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="missionId != null" >
+        #{missionId,jdbcType=INTEGER},
+      </if>
+      <if test="comsumptionId != null" >
+        #{comsumptionId,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createrId != null" >
+        #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.ConsumptionLog" >
+    update consumption_log
+    <set >
+      <if test="missionId != null" >
+        mission_id = #{missionId,jdbcType=INTEGER},
+      </if>
+      <if test="comsumptionId != null" >
+        comsumption_id = #{comsumptionId,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createrId != null" >
+        creater_id = #{createrId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.ConsumptionLog" >
+    update consumption_log
+    set mission_id = #{missionId,jdbcType=INTEGER},
+      comsumption_id = #{comsumptionId,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creater_id = #{createrId,jdbcType=INTEGER},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

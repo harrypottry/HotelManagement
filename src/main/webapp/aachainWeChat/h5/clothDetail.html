@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>布草详情</title>
+    <script src="../assets/libs/rem.js"></script>
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/clothDetail.css">
+</head>
+<body>
+<div class="container">
+    <div class="header" id="header">
+        <img class="banner" id="banner" ></img>
+    </div>
+    <div class="honorMan">
+        <div class="left">
+            <img class="twoCats" src="../assets/images/roomDetail/twoCat.png">
+        </div>
+        <div class="right">
+            <div>此床单第<span class="scanNum" id="scanNum"> <lable></lable> </span>次被扫描</div>
+            <div id="showTip">这是什么?</div>
+        </div>
+    </div>
+    <div class="clothInfo">
+        <div class="flowInfo">
+            <div class="title">
+                流转信息
+            </div>
+            <div class="flowInfoCon pub2">
+                <div class="clothId">
+                    布草编号：<span id="scanCode"></span>
+                </div>
+                <div class="changeCon">
+                    <div class="changeList">
+                        <div class="left pub3">
+                            <span>更换时间</span><span class="time" id="hotelTime"></span>
+                        </div>
+                        <div class="right pub3">
+                            <span>送洗人： <span space="emsp"></span> <span id="hotelName"></span></span><span>更新时间：<span id="hotelTimeFormat"></span></span>
+                        </div>
+                    </div>
+                    <div class="changeList">
+                        <div class="left pub3">
+                            <span>更换时间</span><span class="time" id="missionTime"></span>
+                        </div>
+                        <div class="right pub3">
+                            <span>送洗人：&nbsp;&nbsp; <span space="emsp"></span> <span id="missionName"></span></span><span>更新时间：<span id="missionTimeFormat"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="otherCloth">
+            <div class="title">
+                该房间其他布草
+            </div>
+            <div class="typeCon pub2">
+                <div class="type" onclick="loadData(0)">
+                </div>
+                <div class="type" onclick="loadData(1)">
+                </div>
+                <div class="type" onclick="loadData(2)">
+                </div>
+                <div class="type" onclick="loadData(3)">
+                </div>
+                <div class="type" onclick="loadData(4)">
+                </div>
+                <div class="type" onclick="loadData(5)">
+                </div>
+            </div>
+        </div>
+        <div class="quality">
+            <div class="title">
+                AA品质
+            </div>
+            <div class="moreCon pub2">
+                <image class="moreImg" src="../assets/images/roomDetail/expectMore.png"></image>
+                <p>正在研发中，敬请期待.......</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mask" class="mask">
+    <div class="tipCon">
+        <div>此床单上次被送洗后，您是第一个扫描此床单的顾客</div>
+        <div id="confirm">确认</div>
+    </div>
+</div>
+
+<script src="../assets/libs/jquery.min.js"></script>
+<script src="../assets/libs/dateFormat.js"></script>
+<script src="../assets/libs/getDiffDate.js"></script>
+<script src="../assets/libs/diffDay.js"></script>
+<script src="../assets/libs/descToNum.js"></script>
+<script src="../assets/js/clothDetail.js"></script>
+<script src="../assets/libs/getUrlParams.js"></script>
+<script>
+
+    $("#mask").css("display","none")
+
+    window.onload = function () {
+        getData(null, 0)
+    };
+
+    function loadData(num){
+        getData(num, 1)
+    }
+
+    $("#showTip").on('click',function(){
+        $("#mask").css("display","")
+    })
+
+    $("#confirm").on('click',function(){
+        $("#mask").css("display","none")
+    })
+
+</script>
+</body>
+</html>

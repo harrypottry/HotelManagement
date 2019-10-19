@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="console/adminlte/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+        token:<input type="text" name="token" id="token" value="djiIG*^Gbfike1nI9877"/>
+        name:<input type="text" name="name" id="data-name" value="appVersion"/>
+    <form id="data">
+        version:<input type="text" id="version" />
+        desc:<textarea id="desc" ></textarea>
+        <button type="button" id="submit">submit</button>
+    </form>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#submit").on("click",function(){
+            var obj = {};
+            obj.token = $("#token").val();
+            obj.name = $("#data-name").val();
+            console.dir(obj);
+            obj.data = JSON.stringify({"version":$("#version").val(),"desc":$("#desc").val()});
+            $.ajax({
+                url :"/postConfiguration",
+                contentType: 'application/json',
+                data:JSON.stringify(obj),
+                type: "POST",
+                success:function(data){
+                    if(data.errorCode==0){
+                        alert('保存成功');
+                    }else{
+                        alert('保存失败');
+                    }
+                }
+            });
+        })
+    })
+</script>

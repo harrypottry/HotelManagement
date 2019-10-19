@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.HotelAdditionMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.HotelAddition" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="hotel_id" property="hotelId" jdbcType="INTEGER" />
+    <result column="longitud" property="longitud" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="faxes" property="faxes" jdbcType="VARCHAR" />
+    <result column="postal_code" property="postalCode" jdbcType="VARCHAR" />
+    <result column="place_address" property="placeAddress" jdbcType="VARCHAR" />
+    <result column="opening_time" property="openingTime" jdbcType="DATE" />
+    <result column="renovation_time" property="renovationTime" jdbcType="DATE" />
+    <result column="hotel_build" property="hotelBuild" jdbcType="INTEGER" />
+    <result column="reception_status" property="receptionStatus" jdbcType="INTEGER" />
+    <result column="channel_cooperation" property="channelCooperation" jdbcType="VARCHAR" />
+    <result column="payment" property="payment" jdbcType="VARCHAR" />
+    <result column="hotel_intro" property="hotelIntro" jdbcType="VARCHAR" />
+    <result column="guide_book" property="guideBook" jdbcType="VARCHAR" />
+    <result column="warm_prompt" property="warmPrompt" jdbcType="VARCHAR" />
+    <result column="hotel_serve" property="hotelServe" jdbcType="VARCHAR" />
+    <result column="park_price" property="parkPrice" jdbcType="DOUBLE" />
+    <result column="breakfast_price" property="breakfastPrice" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="is_active" property="isActive" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hotel_id, longitud, latitude, phone, faxes, postal_code, place_address, opening_time,
+    renovation_time, hotel_build, reception_status, channel_cooperation, payment, hotel_intro,
+    guide_book, warm_prompt, hotel_serve, park_price, breakfast_price, status, create_time,
+    update_time, create_id, update_id, is_active
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.aaroom.beans.HotelAdditionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hotel_addition
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from hotel_addition
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hotel_addition
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.aaroom.beans.HotelAdditionExample" >
+    delete from hotel_addition
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.HotelAddition" >
+    insert into hotel_addition (id, hotel_id, longitud,
+    latitude, phone, faxes,
+    postal_code, place_address, opening_time,
+    renovation_time, hotel_build, reception_status,
+    channel_cooperation, payment, hotel_intro,
+    guide_book, warm_prompt, hotel_serve,
+    park_price, breakfast_price, status,
+    create_time, update_time, create_id,
+    update_id, is_active)
+    values (#{id,jdbcType=INTEGER}, #{hotelId,jdbcType=INTEGER}, #{longitud,jdbcType=VARCHAR},
+    #{latitude,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{faxes,jdbcType=VARCHAR},
+    #{postalCode,jdbcType=VARCHAR}, #{placeAddress,jdbcType=VARCHAR}, #{openingTime,jdbcType=DATE},
+    #{renovationTime,jdbcType=DATE}, #{hotelBuild,jdbcType=INTEGER}, #{receptionStatus,jdbcType=INTEGER},
+    #{channelCooperation,jdbcType=VARCHAR}, #{payment,jdbcType=VARCHAR}, #{hotelIntro,jdbcType=VARCHAR},
+    #{guideBook,jdbcType=VARCHAR}, #{warmPrompt,jdbcType=VARCHAR}, #{hotelServe,jdbcType=VARCHAR},
+    #{parkPrice,jdbcType=DOUBLE}, #{breakfastPrice,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER},
+    #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER},
+    #{updateId,jdbcType=INTEGER}, #{isActive,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.HotelAddition" >
+    insert into hotel_addition
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelId != null" >
+        hotel_id,
+      </if>
+      <if test="longitud != null" >
+        longitud,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="faxes != null" >
+        faxes,
+      </if>
+      <if test="postalCode != null" >
+        postal_code,
+      </if>
+      <if test="placeAddress != null" >
+        place_address,
+      </if>
+      <if test="openingTime != null" >
+        opening_time,
+      </if>
+      <if test="renovationTime != null" >
+        renovation_time,
+      </if>
+      <if test="hotelBuild != null" >
+        hotel_build,
+      </if>
+      <if test="receptionStatus != null" >
+        reception_status,
+      </if>
+      <if test="channelCooperation != null" >
+        channel_cooperation,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="hotelIntro != null" >
+        hotel_intro,
+      </if>
+      <if test="guideBook != null" >
+        guide_book,
+      </if>
+      <if test="warmPrompt != null" >
+        warm_prompt,
+      </if>
+      <if test="hotelServe != null" >
+        hotel_serve,
+      </if>
+      <if test="parkPrice != null" >
+        park_price,
+      </if>
+      <if test="breakfastPrice != null" >
+        breakfast_price,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="hotelId != null" >
+        #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="longitud != null" >
+        #{longitud,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="faxes != null" >
+        #{faxes,jdbcType=VARCHAR},
+      </if>
+      <if test="postalCode != null" >
+        #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="placeAddress != null" >
+        #{placeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="openingTime != null" >
+        #{openingTime,jdbcType=DATE},
+      </if>
+      <if test="renovationTime != null" >
+        #{renovationTime,jdbcType=DATE},
+      </if>
+      <if test="hotelBuild != null" >
+        #{hotelBuild,jdbcType=INTEGER},
+      </if>
+      <if test="receptionStatus != null" >
+        #{receptionStatus,jdbcType=INTEGER},
+      </if>
+      <if test="channelCooperation != null" >
+        #{channelCooperation,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelIntro != null" >
+        #{hotelIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="guideBook != null" >
+        #{guideBook,jdbcType=VARCHAR},
+      </if>
+      <if test="warmPrompt != null" >
+        #{warmPrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelServe != null" >
+        #{hotelServe,jdbcType=VARCHAR},
+      </if>
+      <if test="parkPrice != null" >
+        #{parkPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="breakfastPrice != null" >
+        #{breakfastPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.aaroom.beans.HotelAdditionExample" resultType="java.lang.Integer" >
+    select count(*) from hotel_addition
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hotel_addition
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotelId != null" >
+        hotel_id = #{record.hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.longitud != null" >
+        longitud = #{record.longitud,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faxes != null" >
+        faxes = #{record.faxes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalCode != null" >
+        postal_code = #{record.postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.placeAddress != null" >
+        place_address = #{record.placeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openingTime != null" >
+        opening_time = #{record.openingTime,jdbcType=DATE},
+      </if>
+      <if test="record.renovationTime != null" >
+        renovation_time = #{record.renovationTime,jdbcType=DATE},
+      </if>
+      <if test="record.hotelBuild != null" >
+        hotel_build = #{record.hotelBuild,jdbcType=INTEGER},
+      </if>
+      <if test="record.receptionStatus != null" >
+        reception_status = #{record.receptionStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelCooperation != null" >
+        channel_cooperation = #{record.channelCooperation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payment != null" >
+        payment = #{record.payment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotelIntro != null" >
+        hotel_intro = #{record.hotelIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideBook != null" >
+        guide_book = #{record.guideBook,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warmPrompt != null" >
+        warm_prompt = #{record.warmPrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotelServe != null" >
+        hotel_serve = #{record.hotelServe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkPrice != null" >
+        park_price = #{record.parkPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.breakfastPrice != null" >
+        breakfast_price = #{record.breakfastPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isActive != null" >
+        is_active = #{record.isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hotel_addition
+    set id = #{record.id,jdbcType=INTEGER},
+    hotel_id = #{record.hotelId,jdbcType=INTEGER},
+    longitud = #{record.longitud,jdbcType=VARCHAR},
+    latitude = #{record.latitude,jdbcType=VARCHAR},
+    phone = #{record.phone,jdbcType=VARCHAR},
+    faxes = #{record.faxes,jdbcType=VARCHAR},
+    postal_code = #{record.postalCode,jdbcType=VARCHAR},
+    place_address = #{record.placeAddress,jdbcType=VARCHAR},
+    opening_time = #{record.openingTime,jdbcType=DATE},
+    renovation_time = #{record.renovationTime,jdbcType=DATE},
+    hotel_build = #{record.hotelBuild,jdbcType=INTEGER},
+    reception_status = #{record.receptionStatus,jdbcType=INTEGER},
+    channel_cooperation = #{record.channelCooperation,jdbcType=VARCHAR},
+    payment = #{record.payment,jdbcType=VARCHAR},
+    hotel_intro = #{record.hotelIntro,jdbcType=VARCHAR},
+    guide_book = #{record.guideBook,jdbcType=VARCHAR},
+    warm_prompt = #{record.warmPrompt,jdbcType=VARCHAR},
+    hotel_serve = #{record.hotelServe,jdbcType=VARCHAR},
+    park_price = #{record.parkPrice,jdbcType=DOUBLE},
+    breakfast_price = #{record.breakfastPrice,jdbcType=DOUBLE},
+    status = #{record.status,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    create_id = #{record.createId,jdbcType=INTEGER},
+    update_id = #{record.updateId,jdbcType=INTEGER},
+    is_active = #{record.isActive,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.HotelAddition" >
+    update hotel_addition
+    <set >
+      <if test="hotelId != null" >
+        hotel_id = #{hotelId,jdbcType=INTEGER},
+      </if>
+      <if test="longitud != null" >
+        longitud = #{longitud,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="faxes != null" >
+        faxes = #{faxes,jdbcType=VARCHAR},
+      </if>
+      <if test="postalCode != null" >
+        postal_code = #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="placeAddress != null" >
+        place_address = #{placeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="openingTime != null" >
+        opening_time = #{openingTime,jdbcType=DATE},
+      </if>
+      <if test="renovationTime != null" >
+        renovation_time = #{renovationTime,jdbcType=DATE},
+      </if>
+      <if test="hotelBuild != null" >
+        hotel_build = #{hotelBuild,jdbcType=INTEGER},
+      </if>
+      <if test="receptionStatus != null" >
+        reception_status = #{receptionStatus,jdbcType=INTEGER},
+      </if>
+      <if test="channelCooperation != null" >
+        channel_cooperation = #{channelCooperation,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelIntro != null" >
+        hotel_intro = #{hotelIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="guideBook != null" >
+        guide_book = #{guideBook,jdbcType=VARCHAR},
+      </if>
+      <if test="warmPrompt != null" >
+        warm_prompt = #{warmPrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelServe != null" >
+        hotel_serve = #{hotelServe,jdbcType=VARCHAR},
+      </if>
+      <if test="parkPrice != null" >
+        park_price = #{parkPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="breakfastPrice != null" >
+        breakfast_price = #{breakfastPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.HotelAddition" >
+    update hotel_addition
+    set hotel_id = #{hotelId,jdbcType=INTEGER},
+      longitud = #{longitud,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      faxes = #{faxes,jdbcType=VARCHAR},
+      postal_code = #{postalCode,jdbcType=VARCHAR},
+      place_address = #{placeAddress,jdbcType=VARCHAR},
+      opening_time = #{openingTime,jdbcType=DATE},
+      renovation_time = #{renovationTime,jdbcType=DATE},
+      hotel_build = #{hotelBuild,jdbcType=INTEGER},
+      reception_status = #{receptionStatus,jdbcType=INTEGER},
+      channel_cooperation = #{channelCooperation,jdbcType=VARCHAR},
+      payment = #{payment,jdbcType=VARCHAR},
+      hotel_intro = #{hotelIntro,jdbcType=VARCHAR},
+      guide_book = #{guideBook,jdbcType=VARCHAR},
+      warm_prompt = #{warmPrompt,jdbcType=VARCHAR},
+      hotel_serve = #{hotelServe,jdbcType=VARCHAR},
+      park_price = #{parkPrice,jdbcType=DOUBLE},
+      breakfast_price = #{breakfastPrice,jdbcType=DOUBLE},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      update_id = #{updateId,jdbcType=INTEGER},
+      is_active = #{isActive,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

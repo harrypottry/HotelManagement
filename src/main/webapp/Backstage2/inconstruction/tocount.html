@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>筹建统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content"><!--筹建统计-->
+            <div class="condition row" style="display:inline-block">
+                <span class="col-6">筹建统计</span>
+            </div>
+            <div class="card">
+                <ul class="card-body nav">
+                    <li>
+                        <b>酒店名称：</b>
+                        <input type="text" class="form-control hotelId" name="0" id="hotelId" value="全部酒店">
+                    </li>
+                    <li>
+                        <b>筹建完成时间：</b>
+                        <input type="text" class="form-control endTime">
+                    </li>
+                    <li>
+                        <span class="btn btn-danger query">查询</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-header row">
+                <span class="col-6">筹建事项时间统计</span>
+                <span class="col-6">
+                    <span class="btn btn-danger btn-sm download">导出</span>
+                </span>
+            </div>
+            <table class="table table-striped" id="table" style="width:100%">
+                <thead>
+                <tr>
+                    <th rowspan="2" style="vertical-align:middle">酒店名称</th>
+                    <th rowspan="2" style="vertical-align:middle">酒店编号</th>
+                    <th rowspan="2" style="vertical-align:middle">认领时间</th>
+                    <th colspan="3">立项</th>
+                    <th colspan="3">酒店信息</th>
+                </tr>
+                <tr style="border-top: 1px solid #E5E5E5;color: #FE5A5A;font-size: 14px;">
+                    <!--立项-->
+                    <td>负责人</td>
+                    <td>完成时间</td>
+                    <td>用时</td>
+                    <!--酒店信息-->
+                    <td>负责人</td>
+                    <td>完成时间</td>
+                    <td>用时</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>三里屯酒店</td>
+                        <td>8900789</td>
+                        <td>2019-01-20</td>
+                        <td>蒋双娇</td>
+                        <td>2019-01-20</td>
+                        <td>3</td>
+                        <td>蒋双娇</td>
+                        <td>2019-01-20</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+<!--分配店长-->
+<div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">分配运营店长</b></p>
+                <div>
+                    <p>分配门店给：<select class="form-control shopManagerId"></select></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.modal')">取消</span>
+                <span class="btn btn-danger">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+</body>
+</html>

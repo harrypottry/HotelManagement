@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>考勤统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <!--<style>-->
+        <!--#quickQuery_container{width:200px;}/*酒店下拉框*/-->
+        <!--.modal table input{width:5rem;height:32px;text-align:center;margin:-5px 0;}-->
+        <!--.modal .modal-card:last-child{max-height:400px;overflow-y: scroll}-->
+        <!--@media screen and (max-width:768px){-->
+            <!--.modal .modal-card:last-child{max-height:220px;overflow: scroll}-->
+        <!--}-->
+        <!--@media screen and (min-width:991px){-->
+            <!--/*自定义滚动条样式*/-->
+            <!--.modal .modal-card:last-child::-webkit-scrollbar{width:5px;}-->
+            <!--/*定义滚动条轨道 内阴影+圆角*/-->
+            <!--.modal .modal-card:last-child::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius:10px;}-->
+            <!--/*定义滑块 内阴影+圆角*/-->
+            <!--.modal .modal-card:last-child::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);}-->
+        <!--}-->
+    <!--</style>-->
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content"><!--考勤统计-->
+            <div class="condition row" style="display:inline-block">
+                <span class="col-6">保洁考勤统计</span>
+            </div>
+            <div class="card">
+                <ul class="card-body nav">
+                    <li>
+                        <b>酒店名称：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="hotelId">
+                    </li>
+                    <li>
+                        <b>日期：</b>
+                        <input type="text" class="form-control beginTime" value="" readonly>
+                        <input type="text" class="form-control endTime" value="" readonly>
+                    </li>
+                    <li>
+                        <span class="btn btn-danger" onclick="request()">查询</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-header row">
+                <span class="col-6"></span>
+                <span class="col-6"><span onclick="download('claim')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+            </div>
+
+            <table class="table table-striped" id="table" style="width:100%">
+                <thead>
+                <tr>
+                    <td style="padding-top:0;padding-bottom:0">
+                        <div style="text-align:left">六</div>
+                        <div style="text-align:right">1</div>
+                    </td>
+                </tr>
+                </thead>
+            </table>
+
+            <!--<table class="table table-bordered table-striped" id="claimtable">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>酒店名称</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+            <!--</table>-->
+        </section>
+    </div>
+</div>
+
+
+
+
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    $(document).ready(function(){
+        $quickQuery({"hotelId":hotels},{'isPage':false});
+        request();//初始化页面
+        // console.log(getDateList(new Date('2018-06-29'), new Date('2018-07-25')));
+    });
+    function request(dateList,datas,startDate,endDate,week,$th){//页面内容请求
+        datas={},
+        dateList = [],
+        $th='<th>酒店名称</th><th>姓名</th><th>编号</th>';
+        datas.hotelId=$('#hotelId').attr('name');
+        datas.beginTime=$('.beginTime').val();
+        datas.endTime=$('.endTime').val();
+        // 获取时间数组
+        startDate=new Date(datas.beginTime);
+        endDate=new Date(datas.endTime);
+        dateList.push(new Date(startDate));
+        while (true) {
+            startDate.setDate(startDate.getDate() + 1);
+            if (startDate.getTime() < endDate.getTime()) {
+                dateList.push(new Date(startDate));
+            } else {
+                break
+            }
+        }
+        dateList.push(new Date(endDate));
+        week=['日','一','二','三','四','五','六'];
+        for(var i of dateList){
+            $th+='<td style="padding-top:0;padding-bottom:0"><div style="text-align:left">'+week[i.getDay()]+'</div><div style="text-align:right">'+i.getDate()+'</div></td>';
+        }
+        $('#table>thead>tr').html($th);
+        $('.table-header>span:first-child').html($('#hotelId').val()+'：'+datas.beginTime.replace(/-/g,'.')+'-'+datas.endTime.replace(/-/g,'.'));
+    }
+    function getDateList(startDate, endDate){
+
+        dateList.push(new Date(startDate));
+        while (true) {
+            startDate.setDate(startDate.getDate() + 1);
+            if (startDate.getTime() < endDate.getTime()) {
+                dateList.push(new Date(startDate));
+            } else {
+                break
+            }
+        }
+        dateList.push(new Date(endDate));
+        return dateList;
+    }
+</script>
+</body>
+</html>

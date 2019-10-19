@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>意向门店门店详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#basic"  data-toggle="tab">酒店概况</a></li>
+                <li class="nav-item"><a class="nav-link" href="#agree" data-toggle="tab">签约信息</a></li>
+                <li class="nav-item"><a class="nav-link" href="#compact" data-toggle="tab">合同</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="basic"><!--酒店概况-->
+                    <div class="card">
+                        <ul class="card-body nav" style="border-bottom:1px solid #E5E5E5">
+                            <li>
+                                <b>合同编号：</b><input type="text" class="form-control contractNum" placeholder="请输入合同编号">
+                            </li>
+                            <li>
+                                <b>计费周期：</b>
+                                <input type="text" class="form-control startDate" value="" readonly>
+                                <input type="text" class="form-control endDate" value="" readonly>
+                            </li>
+                            <li></li>
+                        </ul>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>收费项目</th>
+                                    <th>收费频率</th>
+                                    <th>收费基准</th>
+                                    <th>计费规则</th>
+                                    <th>生效日期</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>PMS系统维护费</td>
+                                    <td>
+                                        <select class="form-control">
+                                            <option value="1">年度</option>
+                                            <option value="2">季度</option>
+                                            <option value="3">月度</option>
+                                            <option value="4">一次性</option>
+                                        </select>
+                                    </td>
+                                    <td>固定金额</td>
+                                    <td>
+                                        <input class="form-control chargeRule" name="1" type="text">
+                                        <span name="1">元/年</span>
+                                    </td>
+                                    <td><input type="text" class="form-control validDate" value="" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>OTA代运营费</td>
+                                    <td>
+                                        <select class="form-control">
+                                            <option value="1">年度</option>
+                                            <option value="2">季度</option>
+                                            <option value="3">月度</option>
+                                            <option value="4">一次性</option>
+                                        </select>
+                                    </td>
+                                    <td>固定金额</td>
+                                    <td>
+                                        <input class="form-control chargeRule" name="2" type="text">
+                                        <span name="1">元/年</span>
+                                    </td>
+                                    <td><input type="text" class="form-control validDate" value="" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>输送客源费</td>
+                                    <td>月度</td>
+                                    <td>自有渠道订单</td>
+                                    <td>
+                                        <input class="form-control chargeRule" name="3" type="text">
+                                        <span name="3">%/月</span>
+                                    </td>
+                                    <td><input type="text" class="form-control validDate" value="" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>合作服务费</td>
+                                    <td>月度</td>
+                                    <td>GMV</td>
+                                    <td>
+                                        <input class="form-control chargeRule" name="4" type="text">
+                                        <span name="3">%/月</span>
+                                    </td>
+                                    <td><input type="text" class="form-control validDate" value="" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>会员服务费</td>
+                                    <td>月度</td>
+                                    <td>间夜费</td>
+                                    <td>
+                                        <input class="form-control chargeRule"  name="5" type="text">
+                                        <span name="3">元/间夜</span>
+                                    </td>
+                                    <td><input type="text" class="form-control validDate" value="" readonly></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div style="padding:1rem 2rem">
+                                <p>
+                                    <b style="vertical-align:top;">备注：</b>
+                                    <textarea class="form-control remark" rows="3" style="width:70%;margin-left:1rem;"></textarea>
+                                </p>
+                                <p style="text-align:center"><span class="btn btn-danger" style="width:230px;" onclick="putIn()">确认</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="agree"><!--签约信息-->
+                    待开发
+                </div>
+                <div class="tab-pane" id="compact"><!--合同-->
+                    待开发
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+</body>
+</html>

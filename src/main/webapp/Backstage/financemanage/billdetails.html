@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>账单明细</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header" onclick="off()">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#lease"  data-toggle="tab">布草租赁对帐</a></li>
+                <li class="nav-item"><a class="nav-link" href="#washing" data-toggle="tab">布草洗涤对账</a></li>
+                <li class="nav-item"><a class="nav-link" href="#damage" data-toggle="tab">布草报损对账</a></li>
+                <li class="nav-item"><a class="nav-link" href="#manpower" data-toggle="tab">人力众包对账</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="lease"><!--布草租赁对帐-->
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li>
+                                <b>酒店名称：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="leasehotelId">
+                            </li>
+                            <li>
+                                <b>租赁结束时间：</b>
+                                <input type="text" class="form-control beginTime" value="" readonly>
+                                <input type="text" class="form-control endTime" value="" readonly>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn('lease')">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('lease')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <table class="table table-striped" id="leasetable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>布草名称</th>
+                                <th>尺寸</th>
+                                <th>布草材质</th>
+                                <th>布草ID</th>
+                                <th>配属酒店名称</th>
+                                <th>配属酒店编号</th>
+                                <th>租赁开始时间</th>
+                                <th>租赁结束时间</th>
+                                <th>结算价格（含税）</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane" id="washing"><!--布草洗涤对账-->
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li>
+                                <b>酒店名称：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="washinghotelId">
+                            </li>
+                            <li>
+                                <b>洗涤供应商：</b>
+                                <select class="form-control employeeId">
+                                    <option value="">全部</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>租赁结束时间：</b>
+                                <input type="text" class="form-control beginTime" value="" readonly>
+                                <input type="text" class="form-control endTime" value="" readonly>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn('washing')">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('washing')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <table class="table table-striped" id="washingtable" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>布草名称</th>
+                            <th>尺寸</th>
+                            <th>布草材质</th>
+                            <th>布草ID</th>
+                            <th>配属酒店名称</th>
+                            <th>配属酒店编号</th>
+                            <th>租赁开始时间</th>
+                            <th>租赁结束时间</th>
+                            <th>AA收取酒店价格（含税）</th>
+                            <th>AA支付酒店价格（含税）</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane" id="damage"><!--布草报损对账-->
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li>
+                                <b>责任人：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="damagehotelId">
+                            </li>
+                            <li>
+                                <b>报损时间：</b>
+                                <input type="text" class="form-control beginTime" value="" readonly>
+                                <input type="text" class="form-control endTime" value="" readonly>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn('damage')">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('damage')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <table class="table table-striped" id="damagetable" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>布草名称</th>
+                            <th>尺寸</th>
+                            <th>布草材质</th>
+                            <th>布草ID</th>
+                            <th>报损类型</th>
+                            <th>流转次数</th>
+                            <th>需赔付金额</th>
+                            <th>责任人</th>
+                            <th>报损时间</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane" id="manpower"><!--人力众包对账-->
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <li>
+                                <b>酒店名称：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="manpowerhotelId">
+                            </li>
+                            <li>
+                                <b>人员姓名：</b>
+                                <select class="form-control employeeId">
+                                    <option value="0">全部阿姨</option>
+                                </select>
+                            </li>
+                            <li>
+                                <b>任务结束时间：</b>
+                                <input type="text" class="form-control beginTime" value="" readonly>
+                                <input type="text" class="form-control endTime" value="" readonly>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn('manpower')">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('manpower')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <table class="table table-striped" id="manpowertable" style="width:100%" >
+                        <thead>
+                            <tr>
+                                <th>人员姓名</th>
+                                <th>人员编号</th>
+                                <th>配属酒店名称</th>
+                                <th>配属酒店编号</th>
+                                <th>房间号</th>
+                                <th>工作任务类型</th>
+                                <th>工作任务编号</th>
+                                <th>任务开始时间</th>
+                                <th>任务结束时间</th>
+                                <th>AA供应酒店价格（含税）</th>
+                                <th>扣款金额</th>
+                                <th>平台补贴金额</th>
+                                <th>AA供应保洁价格（含税）</th>
+                                <th>AA给人力平台结算（含税）</th>
+                                <th>保洁应到手金额（含税）</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script src="../js/financemanage/billdetails.js"></script>
+</body>
+</html>

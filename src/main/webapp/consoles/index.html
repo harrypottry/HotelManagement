@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AAroom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="adminlte/css/dataTables.bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .card-body::-webkit-scrollbar{width:5px;}
+        /*定义滚动条轨道 内阴影+圆角*/
+        .card-body::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius:10px;}
+        /*定义滑块 内阴影+圆角*/
+        .card-body::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);}
+        .hotels>li>.nav-link{min-height:4em;vertical-align:middle;border-radius:0;cursor: pointer;}
+        .timeline>li>.timeline-item>.timeline-body>.row>.col-md-6>.form-group>span:first-child{display: inline-block;width:6rem;text-align:right;}
+        .timeline>li>.timeline-item>.timeline-body>.row>.col-md-6>.form-group>span:last-child{position:absolute;top:7px;right:21%;}
+        .member_model{display:none;}
+        input.form-control{display:inline-block;width:55%}
+        button{margin-left:0.5rem}
+        .required{border-color:#dc3545!important;}
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- 左侧导航 -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- 导航head -->
+        <a href="index.html" class="brand-link">
+            <img src="adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">AAroom</span>
+        </a>
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="info"><a>当前登录：郝玉棠</a></div>
+            </div>
+            <!-- 动态导航nav -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!-- 页面内容 -->
+    <div class="content-wrapper">
+        <section class="content-header"><!-- 页名 -->
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>酒店管理</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content"><!--main-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">酒店列表</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" onclick="modal('.addhotel')"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0 text-height">
+                                <ul class="nav nav-pills flex-column hotels"><!--酒店列表-->
+                                    <!--<li class="nav-item">-->
+                                    <!--<a class="nav-link">尚客优酒店北京朝阳区潘家园店</a>-->
+                                    <!--</li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">酒店详情</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-primary btn-sm addmember">添加推广员</button><!--addmember-->
+                                </div>
+                            </div>
+                            <div class="card-body text-height">
+                                <ul class="timeline timeline-inverse member"><!--员工存放-->
+                                    <!--<li>-->
+                                    <!--<div class="timeline-item card collapsed-card">-->
+                                    <!--<h3 class="timeline-header" data-widget="collapse">酒店信息</h3>-->
+                                    <!--<div class="timeline-body card-body">-->
+                                    <!--<div class="row">-->
+                                    <!--<div class="col-md-6">-->
+                                    <!--<div class="form-group" style="position:relative">-->
+                                    <!--<span>收益比例：</span>-->
+                                    <!--<input class="form-control" name="profit_rate">-->
+                                    <!--<span>%</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group" style="position:relative">-->
+                                    <!--<span>客房数量：</span>-->
+                                    <!--<input class="form-control" name="room_num">-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-6">-->
+                                    <!--<div class="form-group" style="position:relative">-->
+                                    <!--<span>业主分润：</span>-->
+                                    <!--<input class="form-control" name="profit_rate_owner">-->
+                                    <!--<span>%</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group" style="position:relative">-->
+                                    <!--<span>店长分润：</span>-->
+                                    <!--<input class="form-control" name="profit_rate_manager">-->
+                                    <!--<span>%</span>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group" style="position:relative">-->
+                                    <!--<span>推广员分润：</span>-->
+                                    <!--<input class="form-control" name="profit_rate_bd">-->
+                                    <!--<span>%</span>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="text-right">-->
+                                    <!--<button class="btn btn-primary btn-sm hotel_details">保存</button>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                    <!--<div class="timeline-item card collapsed-card">-->
+                                    <!--<h3 class="timeline-header" data-widget="collapse">业主：韩秀洲</h3>-->
+                                    <!--<div class="timeline-body card-body">-->
+                                    <!--<div class="row query" style="display:none">-->
+                                    <!--<div class="col-md-6">-->
+                                    <!--<div class="form-group">-->
+                                    <!--<span>手机：</span>-->
+                                    <!--<input class="form-control">-->
+                                    <!--<button class="btn btn-primary btn-sm querybtn">查询</button>&lt;!&ndash;querybtn查询&ndash;&gt;-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="row">-->
+                                    <!--<div class="col-md-6">-->
+                                    <!--<div class="form-group">-->
+                                    <!--<span>账号：</span>-->
+                                    <!--<input class="form-control" disabled name="phone" value='i.phone'>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <!--<span>姓名：</span>-->
+                                    <!--<input class="form-control" name="name" value='i.name'>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <!--<span>密码：</span>-->
+                                    <!--<input class="form-control" name="password" value='i.password'>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-md-6">-->
+                                    <!--<div class="form-group">-->
+                                    <!--<span>银行账号：</span>-->
+                                    <!--<input class="form-control" name="bank_account" value='i.bank_account'>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <!--<span>开户姓名：</span>-->
+                                    <!--<input class="form-control" name="account_name" value='i.account_name'>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                    <!--<span>开户行：</span>-->
+                                    <!--<input class="form-control" name="bank_name" value='i.bank_name'>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="text-right">-->
+                                    <!--<button class="btn btn-primary btn-sm reset" style="display:none">重置</button>&lt;!&ndash;reset重置&ndash;&gt;-->
+                                    <!--<button class="btn btn-danger btn-sm delete">删除</button>&lt;!&ndash;delete删除&ndash;&gt;-->
+                                    <!--<button class="btn btn-primary btn-sm save">保存</button>&lt;!&ndash;save保存&ndash;&gt;-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="modal addhotel">
+    <div class="modal-dialog"><!--addhotel添加酒店-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>添加酒店</h4>
+            </div>
+            <div class="modal-body text-center">
+                <div class="form-group">
+                    <b>酒店Id：</b>
+                    <input class="form-control hotelid" placeholder="酒店Id">
+                </div>
+                <div class="hotelidtext" style="min-height:24px;color:#dc3545"><!--未查询到酒店，请重新输入...--><!--请输入酒店Id--></div>
+            </div>
+            <div class="modal-footer">
+                <div class="hotelidbtn">
+                    <button class="btn btn-default" style="margin-right:0.5rem" onclick="modal('.addhotel')">取消</button>
+                    <button class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="adminlte/js/jquery.min.js"></script>
+<script src="adminlte/js/dataTables.min.js"></script>
+<script src="adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="adminlte/js/adminlte.min.js"></script>
+<script src="adminlte/js/script.js"></script>
+<script src="adminlte/js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ClothPriceMapper" >
+  <select id="getPriceByHotelIdAndClothId" resultType="double">
+    SELECT cloth_price from cloth_price
+    <where>
+      cloth_type_id = #{clothTypeId} and hotel_id = #{hotelId}
+    </where>
+  </select>
+  <select id="getClothPriceById" resultType="com.aaroom.beans.ClothPrice">
+    SELECT * from cloth_price
+    where id = #{id} and hotel_id = #{hotelId}
+  </select>
+  <select id="getClothPriceByClothId" resultType="com.aaroom.beans.ClothPrice">
+    SELECT * from cloth_price
+    where cloth_id = #{ClothId} and hotel_id = #{hotelId}
+  </select>
+  <insert id="insert"  parameterType="com.aaroom.beans.ClothPrice">
+    insert into cloth_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rental_price != null" >
+        rental_price,
+      </if>
+      <if test="pay_wash_price != null" >
+        pay_wash_price,
+      </if>
+      <if test="collect_wash_price != null" >
+        collect_wash_price,
+      </if>
+      <if test="cloth_id != null" >
+        cloth_id,
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id,
+      </if>
+      <if test="cloth_type_id != null" >
+        cloth_type_id,
+      </if>
+      <if test="cloth_price != null" >
+        cloth_price,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="creater_id != null" >
+        creater_id,
+      </if>
+      <if test="updater_id != null" >
+        updater_id,
+      </if>
+      <if test="is_active != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rental_price != null" >
+        #{rental_price,jdbcType=DOUBLE},
+      </if>
+      <if test="pay_wash_price != null" >
+        #{pay_wash_price,jdbcType=DOUBLE},
+      </if>
+      <if test="collect_wash_price != null" >
+        #{collect_wash_price,jdbcType=DOUBLE},
+      </if>
+      <if test="cloth_id != null" >
+        #{cloth_id,jdbcType=INTEGER},
+      </if>
+      <if test="hotel_id != null" >
+        #{hotel_id,jdbcType=INTEGER},
+      </if>
+      <if test="cloth_type_id != null" >
+        #{cloth_type_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cloth_price != null" >
+        #{cloth_price,jdbcType=DOUBLE},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        #{is_active,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>物资-添加发货-购买单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <link rel="stylesheet" href="../css/style2.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link" href="#projectorder"  data-toggle="tab">立项单</a></li>
+                <li class="nav-item"><a class="nav-link" href="#hotelinfo" data-toggle="tab">酒店信息</a></li>
+                <li class="nav-item"><a class="nav-link" href="#guest_room" data-toggle="tab">客房信息</a></li>
+                <li class="nav-item"><a class="nav-link" href="#materiel" data-toggle="tab">物料设计</a></li>
+                <li class="nav-item"><a class="nav-link" href="#photooptimize" data-toggle="tab">照片优化</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#material" data-toggle="tab">物资</a></li>
+                <li class="nav-item"><a class="nav-link" href="#materialinstall" data-toggle="tab">物料安装</a></li>
+                <li class="nav-item"><a class="nav-link" href="#pmsmain" data-toggle="tab">PMS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tocheck" data-toggle="tab">筹建验收</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="material"><!--物资-->
+                    <div class="table-header row">
+                        <span class="col-6"></span>
+                        <span class="col-6">
+                            <span class="btn btn-danger btn-sm">添加</span>
+                        </span>
+                    </div>
+                    <table class="table table-striped" id="tables1" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>大类</th>
+                            <th>品名</th>
+                            <th>数量</th>
+                            <th>单价</th>
+                            <th>参数</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control" data-id=""></td>
+                            <td><input type="text" class="form-control" data-id=""></td>
+                            <td><input type="text" class="form-control" data-id="" style="width:35%;"></td>
+                            <td><input type="text" class="form-control" data-id="" style="width:35%;"></td>
+                            <td><input type="text" class="form-control" data-id=""></td>
+                            <td><span class="getbtn">删除</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">合计金额：<b>200</b></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h1title"><b>收款信息</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p class="buttstyletwo">
+                                        <b class="inputname"><span>* </span>收款金额：</b><input type="text" class="form-control" data-id="">
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname"><span>* </span>收款时间：</b><input type="text" class="form-control beginTime" data-id="">
+                                    </p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>配送信息</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p class="buttstyletwo">
+                                        <b class="inputname">收件人：</b><input type="text" class="form-control" data-id="">
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname">联系电话：</b><input type="text" class="form-control" data-id="">
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname">收货地址：</b><input type="text" class="form-control" data-id="">
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname">物流公司：</b><input type="text" class="form-control" data-id="">
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname">快递单号：</b><input type="text" class="form-control" data-id="">
+                                    </p>
+                                    <p class="buttstyletwo">
+                                        <b class="inputname">发货时间：</b><input type="text" class="form-control beginTime" data-id="">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p><b class="inputname" style="vertical-align:top;">备注：</b><textarea class="form-control" rows="3" style="width:70%" data-id="remark"></textarea></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <span class="btn btn-secondary" data-id="1">保存</span>
+                                    <span class="btn btn-danger" data-id="2">确定发货</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="materialinstall"><!--物料安装-->
+                    <div class="table-header row">
+                        <span class="col-6">物料制作信息</span>
+                        <span class="col-6">
+                            <span class="btn btn-danger btn-sm btn-makedelivery">添加制作信息</span>
+                            <span class="btn btn-danger btn-sm">事项完成</span>
+                        </span>
+                    </div>
+                    <table class="table table-striped" id="tables2" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>报价</th>
+                            <th>实付</th>
+                            <th>类型</th>
+                            <th>开始安装时间</th>
+                            <th>安装状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>门招背景墙制作安装</td>
+                                <td>600</td>
+                                <td>0</td>
+                                <td>赠送</td>
+                                <td>2019-01-20</td>
+                                <td>待确认</td>
+                                <td><span class="getbtn">详情</span></td>
+                            </tr>
+                            <tr>
+                                <td>门招背景墙制作安装</td>
+                                <td>600</td>
+                                <td>600</td>
+                                <td>购买</td>
+                                <td>2019-01-20</td>
+                                <td>已完成 2019-01-21</td>
+                                <td><span class="getbtn">详情</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="pmsmain"><!--PMS-->
+                    <!--<div class="row" style="margin:1rem 0;">--><!--开启pms按钮-->
+                        <!--<div class="col-md-12 text-center">-->
+                            <!--<span class="btn btn-danger btn-startpms" data-id="">开启pms流程</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="condition row ">
+                        <span class="col-6">pms培训</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><b class="inputname">培训时间：</b><input type="text" class="form-control beginTime" data-id=""></p>
+                                    <p><b class="inputname">模拟账号：</b><input type="text" class="form-control" data-id=""></p>
+                                    <p><b class="inputname" style="vertical-align:top;">培训内容：</b><textarea class="form-control" rows="3" style="width:70%" data-id="remark"></textarea></p>
+                                    <p><b class="inputname">培训图片：</b><span class="btn btn-danger spanupload"><b>上传</b><img src=""><input class="import-btn2" type="file" accept="image/*" data-id=""></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <span class="btn btn-danger" data-id="1">提交</span>
+                                </div>
+                            </div>
+                            <div class="condition row ">
+                                <span class="col-6">状态</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="statediv">
+                                        <span class="spanname">伟</span>
+                                        <p class="stateinfo">
+                                            <label>店长</label><a class="submit_a">已提交</a><a class="submit_a">已提交</a><a class="submit_a">已提交</a><span class="datespan">2019-01-10  17:30</span>
+                                        </p>
+                                    </div>
+                                    <div class="divline"></div>
+                                    <div class="statediv">
+                                        <span class="spanname">康</span>
+                                        <p class="stateinfo">
+                                            <label>我</label><a class="approva_a">审批中</a><a class="via_a">已通过</a><a class="resuse_a">已拒绝</a><span class="datespan">2019-01-10  17:30</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tocheck"><!--筹建验收-->
+                    <div class="table-header row">
+                        <span class="col-6">筹建事项时间统计</span>
+                        <span class="col-6">
+                            <span class="btn btn-danger btn-sm btn-tocomplete">筹建完成</span>
+                        </span>
+                    </div>
+                    <table class="table table-striped" id="tables3" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>项目</th>
+                            <th>负责人</th>
+                            <th>开始时间</th>
+                            <th>完成时间</th>
+                            <th>耗费天数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>加盟款认领</td>
+                                <td>蒋双娇</td>
+                                <td>2018-01-20 12:00:00</td>
+                                <td>2018-01-20 12:00:00</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>立项</td>
+                                <td>蒋双娇</td>
+                                <td>2018-01-20 12:00:00</td>
+                                <td>2018-01-20 12:00:00</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>酒店信息</td>
+                                <td>蒋双娇</td>
+                                <td>2018-01-20 12:00:00</td>
+                                <td>2018-01-20 12:00:00</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!--添加抄送-->
+<div class="modal addmakecopy">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+            <p><b style="font-size:18px;">添加抄送成员</b></p>
+                <div class="makecopydiv">
+                <p><img src="../img/search.png"/><input type="text" class="form-control" placeholder="搜索" /></p>
+                <ul>
+                <li class="active">蒋双娇</li>
+                <li>徐浩</li>
+                </ul>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addmakecopy')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加房型-->
+<div class="modal addrooms">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加房型</b></p>
+                <div>
+                    <p>房型名称：<select class="form-control"><option value="">特价大床房</option><option value="">标准大床房</option><option value="">豪华大床房</option></select></p>
+                    <p>门市价：<input type="text" class="form-control" placeholder="单行输入"></p>
+                    <p>房间数量：<input type="text" class="form-control" placeholder="请输入此房型的房间数量"></p>
+                    <p>房间编号：<input type="text" class="form-control" placeholder=""></p>
+                    <p><span style="vertical-align:top;">备注：</span><textarea class="form-control" rows="3"></textarea></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addrooms')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--客房信息-业主审批拒绝-->
+<div class="modal examination">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">拒绝意见</b></p>
+                <div class="rejectdiv">
+                    <textarea rows="3" placeholder="请输入退回理由" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.examination')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加设计任务-->
+<div class="modal addmateriel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加设计任务</b></p>
+                <div>
+                    <p><span style="color: #FE5A5A;">*</span>任务名称：<input type="text" class="form-control" placeholder="单行输入"></p>
+                    <p>供应商：<input type="text" class="form-control" placeholder="单行输入"></p>
+                    <p>测量时间：<input type="text" class="form-control beginTime" value="" readonly=""></p>
+                    <p><span style="vertical-align:top;">尺寸信息：</span><textarea class="form-control" rows="3"></textarea></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addmateriel')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--物料设计-事项完成-->
+<div class="modal completebomb">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">事项完成后不可再编辑图片，请确认是否完成</b></p>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.completebomb')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--照片优化-点击开启流程-->
+<div class="modal startflow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">确认开启流程么？</b></p>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.startflow')">暂时不</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--物资-添加发货信息-->
+<div class="modal deliveryinfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加发货信息</b></p>
+                <div>
+                    <p>物资类型：<select class="form-control"><option value="">赠送物资</option><option value="">购买物资</option></select></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.deliveryinfo')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--物料制作-添加制作信息-->
+<div class="modal makedeliveryinfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加制作信息</b></p>
+                <div>
+                    <p>类型：<select class="form-control"><option value="">赠送</option><option value="">购买</option></select></p>
+                    <p>名称：<input type="text" class="form-control" placeholder="单行输入"></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.makedeliveryinfo')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--PMS-点击开启流程-->
+<div class="modal startpms">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">确认开启流程么？</b></p>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.startpms')">暂时不</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--筹建验收-点击筹建完成-->
+<div class="modal tocomplete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">筹建完成后所有事项均不可更改，请确认是否筹建完成</b></p>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.tocomplete')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/distpicker.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    $(".lixiang").click(function(){
+        location.href='3.2.1.2.html'
+    })
+    $("span.cooperatespan").click(function(){
+        $(this).toggleClass('active');
+    });
+    $('.addcopy').click(function () {//添加抄送
+        $('.addmakecopy').fadeToggle(200);
+    });
+    $('.addroom').click(function () {//添加房型
+        $('.addrooms').fadeToggle(200);
+    });
+    $(".makecopydiv ul li").click(function(){
+        $(this).addClass('active').siblings().removeClass();
+    });
+    $('.btn-reject').click(function () {//审批拒绝
+        $('.examination').fadeToggle(200);
+    });
+    $('.btnaddmateriel').click(function () {//添加设计任务btn-startflow
+        $('.addmateriel').fadeToggle(200);
+    });
+    $('.btn-startflow').click(function () {//开启流程
+        $('.startflow').fadeToggle(200);
+    });
+    $('.btn-complete').click(function () {//物料设计-事项完成
+        $('.completebomb').fadeToggle(200);
+    });
+    $('.btn-delivery').click(function(){//物资-添加发货信息
+        $('.deliveryinfo').fadeToggle(200);
+    })
+    $('.btn-makedelivery').click(function(){//物料制作-添加制作信息
+        $('.makedeliveryinfo').fadeToggle(200);
+    })
+    $('.btn-startpms').click(function(){//开启pms
+        $('.startpms').fadeToggle(200);
+    });
+    $('.btn-tocomplete').click(function(){
+        $('.tocomplete').fadeToggle(200);
+    })
+</script>
+</body>
+</html>

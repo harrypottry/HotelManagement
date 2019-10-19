@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ApprovalProcessMapper">
+
+    <insert id="saveApprovalProcess" parameterType="com.aaroom.beans.ApprovalParams" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO act_mod(user_name, transactor, module_id, proc_inst_id, begin_date)
+        VALUES(#{ap.userName}, #{ap.transactor}, #{ap.moduleId}, #{ap.procInstId}, #{ap.beginDate})
+    </insert>
+
+    <sql id="Approval_Params_Column_List">
+        id id, user_name userName, transactor transactor, module_id moduleId, proc_inst_id procInstId, begin_date beginDate, end_date endDate
+    </sql>
+    
+    <select id="getApprovalByModuleId" parameterType="java.lang.String" resultType="com.aaroom.beans.ApprovalParams">
+        SELECT 
+        <include refid="Approval_Params_Column_List"/>
+        FROM act_mod WHERE module_id = #{moduleId}
+    </select>
+    
+</mapper>

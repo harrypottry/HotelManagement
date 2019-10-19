@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>管理费用对账单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <div class="navheader">
+            <dl class="leftinfodl">
+                <dt><img src="" /></dt>
+            </dl>
+            <div class="rightinfoconts">
+                <p><img src="../../import/img/mail.png"/> 站内信</p>
+                <p><img src="../../import/img/center.png"/> 帮助中心</p>
+                <p><img src="../../import/img/shezhi.png"/> 账户设置</p>
+                <p><button class="offwork" onclick="off()">下班</button></p>
+            </div>
+        </div>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="hotel">
+                    <div class="condition conditionone row">
+                        <span class="col-6">管理费用对账单</span>
+                    </div>
+                    <div class="card">
+                        <ul class="card-body nav">
+                            <!--<li>-->
+                                <!--<b>酒店名称：</b><input type="text" class="form-control hotelId" value="全部酒店" name="0" id="hotelhotelId">-->
+                            <!--</li>-->
+                            <li>
+                                <b>周期：</b>
+                                <input type="text" class="form-control monthTime" value="" readonly>
+                            </li>
+                            <li>
+                                <span class="btn btn-danger" onclick="btn('hotel')">查询</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="condition conditionts row">
+                        <span class="col-6"></span>
+                        <span class="col-6"><span onclick="download('hotel')"><img src="../../import/img/download.png" class="align-text-bottom">导出为EXCEL</span></span>
+                    </div>
+                    <table class="table table-bordered table-striped" id="hoteltable">
+                        <thead>
+                        <tr>
+                            <th>配属酒店名称</th>
+                            <th>配属酒店编号</th>
+                            <th>保洁薪资</th>
+                            <th>布草租赁费</th>
+                            <th>布草洗涤费</th>
+                            <th>布草报损赔偿偿金</th>
+                            <th>合计</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script src="../js/checkmanage/billtotal.js"></script>
+</body>
+</html>

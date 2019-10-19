@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.LaundryFactoryMapper" >
+    <resultMap id="BaseResultMap" type="com.aaroom.beans.LaundryFactory" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="laundryfactory_name" property="laundryfactory_name" jdbcType="VARCHAR" />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+        <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+        <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+        <result column="is_active" property="is_active" jdbcType="TINYINT" />
+    </resultMap>
+    <select id="getById" resultType="com.aaroom.beans.LaundryFactory">
+        select
+                id as id,         <!---->
+                laundryfactory_name as laundryfactory_name,         <!--洗衣厂名-->
+                create_time as create_time,         <!---->
+                update_time as update_time,         <!---->
+                creater_id as creater_id,         <!---->
+                updater_id as updater_id,         <!---->
+                is_active as is_active          <!---->
+        from laundry_factory
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and id=#{id}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getListByMap" resultType="com.aaroom.beans.LaundryFactory"
+            parameterType="java.util.Map">
+            select
+                id as id,      <!---->
+                laundryfactory_name as laundryfactory_name,      <!--洗衣厂名-->
+                create_time as create_time,      <!---->
+                update_time as update_time,      <!---->
+                creater_id as creater_id,      <!---->
+                updater_id as updater_id,      <!---->
+                is_active as is_active       <!---->
+            from laundry_factory
+        <trim prefix="where" prefixOverrides="and | or">
+                <if test="id != null and (id!='' or id==0)">
+                    and id=#{id}
+                </if>
+                <if test="laundryfactory_name != null and laundryfactory_name!=''">
+                    and laundryfactory_name=#{laundryfactory_name}
+                </if>
+                <if test="create_time != null and create_time!=''">
+                    and create_time=#{create_time}
+                </if>
+                <if test="update_time != null and update_time!=''">
+                    and update_time=#{update_time}
+                </if>
+                <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+                    and creater_id=#{creater_id}
+                </if>
+                <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+                    and updater_id=#{updater_id}
+                </if>
+                <if test="is_active != null and is_active!=''">
+                    and is_active=#{is_active}
+                </if>
+        </trim>
+        order by creationDate desc
+        <if test="beginPos != null and beginPos!='' and pageSize != null  and pageSize !='' ">
+            limit #{beginPos},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getCountByMap" resultType="Integer" parameterType="java.util.Map">
+        select count(1) from laundry_factory
+        <trim prefix="where" prefixOverrides="and | or">
+                    <if test="id != null and (id!='' or id==0)">
+                        and id=#{id}
+                    </if>
+                    <if test="laundryfactory_name != null and laundryfactory_name!=''">
+                        and laundryfactory_name=#{laundryfactory_name}
+                    </if>
+                    <if test="create_time != null and create_time!=''">
+                        and create_time=#{create_time}
+                    </if>
+                    <if test="update_time != null and update_time!=''">
+                        and update_time=#{update_time}
+                    </if>
+                    <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+                        and creater_id=#{creater_id}
+                    </if>
+                    <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+                        and updater_id=#{updater_id}
+                    </if>
+                    <if test="is_active != null and is_active!=''">
+                        and is_active=#{is_active}
+                    </if>
+        </trim>
+    </select>
+
+    <insert id="save" parameterType="com.aaroom.beans.LaundryFactory">
+        insert into laundry_factory(
+            laundryfactory_name ,      <!--洗衣厂名-->
+            create_time ,      <!---->
+            update_time ,      <!---->
+            creater_id ,      <!---->
+            updater_id ,      <!---->
+            is_active       <!---->
+        )
+        values(
+                    #{laundryfactory_name} ,      <!--洗衣厂名-->
+                    #{create_time} ,      <!---->
+                    #{update_time} ,      <!---->
+                    #{creater_id} ,      <!---->
+                    #{updater_id} ,      <!---->
+                    #{is_active}       <!---->
+        )
+    </insert>
+
+    <update id="modify" parameterType="com.aaroom.beans.LaundryFactory">
+        update laundry_factory
+        <trim prefix="set" suffixOverrides="," suffix="where id= #{id}">
+                <if test="id != null and (id!='' or id==0)">
+                     id=#{id},
+                </if>
+                <if test="laundryfactory_name != null and laundryfactory_name!=''">
+                     laundryfactory_name=#{laundryfactory_name},
+                </if>
+                <if test="create_time != null and create_time!=''">
+                     create_time=#{create_time},
+                </if>
+                <if test="update_time != null and update_time!=''">
+                     update_time=#{update_time},
+                </if>
+                <if test="creater_id != null and (creater_id!='' or creater_id==0)">
+                     creater_id=#{creater_id},
+                </if>
+                <if test="updater_id != null and (updater_id!='' or updater_id==0)">
+                     updater_id=#{updater_id},
+                </if>
+                <if test="is_active != null and is_active!=''">
+                     is_active=#{is_active},
+                </if>
+        </trim>
+    </update>
+
+    <delete id="removeById" parameterType="Long">
+        delete from laundry_factory where id = #{id}
+    </delete>
+</mapper>

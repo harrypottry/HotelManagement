@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设计-照片优化任务</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+    <link rel="stylesheet" href="../css/style2.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link" href="#projectorder"  data-toggle="tab">立项单</a></li>
+                <li class="nav-item"><a class="nav-link" href="#hotelinfo" data-toggle="tab">酒店信息</a></li>
+                <li class="nav-item"><a class="nav-link" href="#guest_room" data-toggle="tab">客房信息</a></li>
+                <li class="nav-item"><a class="nav-link" href="#materiel" data-toggle="tab">物料设计</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#photooptimize" data-toggle="tab">照片优化</a></li>
+                <li class="nav-item"><a class="nav-link" href="#shoplist" data-toggle="tab">物资</a></li>
+                <li class="nav-item"><a class="nav-link" href="#shoplist" data-toggle="tab">物料安装</a></li>
+                <li class="nav-item"><a class="nav-link" href="#shoplist" data-toggle="tab">PMS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#shoplist" data-toggle="tab">筹建验收</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="photooptimize"><!--照片优化-->
+                    <!--<div class="row" style="margin:1rem 0;">-->
+                        <!--<div class="col-md-12 text-center">-->
+                            <!--<span class="btn btn-danger btn-startflow" data-id="">开启流程</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="condition row ">
+                        <span class="col-6">酒店照片优化</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h1title"><b>照片要求</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p><b class="inputname">硬件：</b><span>500万像素以上相机拍摄(分辨率大于1024X768像素)</span></p>
+                                    <p><b class="inputname">尺寸：</b><span>横版布局；800X600px;4:3</span></p>
+                                    <p><b class="inputname">大小：</b><span>单张图片≥3M 格式：jpg</span></p>
+                                    <p><b class="inputname">数量：</b><span>每个房型至少4张，整体图片数量至少20张以上</span></p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>拍摄区域</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <p><b class="inputname">外观图：</b><span>酒店建筑图，建筑位置位于图片中间，可分别上传白天与夜间图</span></p>
+                                    <p><b class="inputname">公共区域：</b><span>餐厅、餐厅美食、大厅、娱乐设施、游泳等</span></p>
+                                    <p><b class="inputname">客房：</b><span>整体客房、卧室、浴室、休息区</span></p>
+                                    <p><b class="inputname">周边环境：</b><span>周边风景、商城、生活服务设施，可分别上传白天与夜间图</span></p>
+                                </div>
+                            </div>
+                            <h1 class="h1title"><b>图片</b></h1>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <span class="btn btn-danger spanupload"><b>上传图片</b><img src=""><input class="import-btn2" type="file" accept="image/*" data-id=""></span>
+                                    <span class="btn btn-danger spanupload"><b>上传附件</b><img src=""><input class="import-btn2" type="file" accept="image/*" data-id=""></span>
+                                </div>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-md-3 groupleft">
+                                    <p class="btn-addgroup text-center"><span class="btn btn-danger" data-id="">添加分组</span></p>
+                                    <ul class="groupingul">
+                                        <li>未分组 <a>18</a></li>
+                                        <li>门招 <a>18</a></li>
+                                        <li>大厅 <a>18</a></li>
+                                        <li>走廊 <a>18</a></li>
+                                        <li>标准大床房 <a>18</a></li>
+                                        <li>豪华大床房 <a>18</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="table-header row" style="background:none;">
+                                        <span class="col-6">未分组</span>
+                                        <span class="col-6">
+                                            <span class="btn btn-danger btn-sm">修改分组</span>
+                                            <span class="btn btn-danger btn-sm">删除</span>
+                                        </span>
+                                    </div>
+                                    <div class="row my-4">
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span class="active"></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span class="active"></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-3 groupbody">
+                                            <p class="groupimage"></p>
+                                            <P class="imgname"><span></span>123456.png</P>
+                                            <p class="optionbtn"><a>改名</a><a>分组</a><a>删除</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!--添加抄送-->
+<div class="modal addmakecopy">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+            <p><b style="font-size:18px;">添加抄送成员</b></p>
+                <div class="makecopydiv">
+                <p><img src="../img/search.png"/><input type="text" class="form-control" placeholder="搜索" /></p>
+                <ul>
+                <li class="active">蒋双娇</li>
+                <li>徐浩</li>
+                </ul>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addmakecopy')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加房型-->
+<div class="modal addrooms">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加房型</b></p>
+                <div>
+                    <p>房型名称：<select class="form-control"><option value="">特价大床房</option><option value="">标准大床房</option><option value="">豪华大床房</option></select></p>
+                    <p>门市价：<input type="text" class="form-control" placeholder="单行输入"></p>
+                    <p>房间数量：<input type="text" class="form-control" placeholder="请输入此房型的房间数量"></p>
+                    <p>房间编号：<input type="text" class="form-control" placeholder=""></p>
+                    <p><span style="vertical-align:top;">备注：</span><textarea class="form-control" rows="3"></textarea></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addrooms')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--客房信息-业主审批拒绝-->
+<div class="modal examination">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">拒绝意见</b></p>
+                <div class="rejectdiv">
+                    <textarea rows="3" placeholder="请输入退回理由" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.examination')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加设计任务-->
+<div class="modal addmateriel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">添加设计任务</b></p>
+                <div>
+                    <p><span style="color: #FE5A5A;">*</span>任务名称：<input type="text" class="form-control" placeholder="单行输入"></p>
+                    <p>供应商：<input type="text" class="form-control" placeholder="单行输入"></p>
+                    <p>测量时间：<input type="text" class="form-control beginTime" value="" readonly=""></p>
+                    <p><span style="vertical-align:top;">尺寸信息：</span><textarea class="form-control" rows="3"></textarea></p>
+                </div>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.addmateriel')">取消</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--照片优化-点击开启流程-->
+<div class="modal startflow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p><b style="font-size:18px;">确认开启流程么？</b></p>
+            </div>
+            <div class="modal-footer modal-footertwo">
+                <span class="btn btn-secondary" onclick="modal('.startflow')">暂时不</span>
+                <span class="btn btn-danger getaddservice">确定</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/jquery.dataTables.min.js"></script>
+<script src="../../import/adminlte/js/dataTables.bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap-datepicker.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/packer.js"></script>
+<script src="../../import/adminlte/js/distpicker.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    $(".lixiang").click(function(){
+        location.href='3.2.1.2.html'
+    })
+    $("span.cooperatespan").click(function(){
+        $(this).toggleClass('active');
+    });
+    $('.addcopy').click(function () {//添加抄送
+        $('.addmakecopy').fadeToggle(200);
+    });
+    $('.addroom').click(function () {//添加房型
+        $('.addrooms').fadeToggle(200);
+    });
+    $(".makecopydiv ul li").click(function(){
+        $(this).addClass('active').siblings().removeClass();
+    });
+    $('.btn-reject').click(function () {//审批拒绝
+        $('.examination').fadeToggle(200);
+    });
+    $('.btnaddmateriel').click(function () {//添加设计任务
+        $('.addmateriel').fadeToggle(200);
+    });
+    $('.btn-startflow').click(function () {//开启流程
+        $('.startflow').fadeToggle(200);
+    });
+    $('p.imgname span').click(function(){
+        $(this).toggleClass('active');
+    })
+</script>
+</body>
+</html>

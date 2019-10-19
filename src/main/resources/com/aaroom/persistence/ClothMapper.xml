@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ClothMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.Cloth" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="recycle_num" property="recycle_num" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="hotel_id" property="hotel_id" jdbcType="INTEGER" />
+    <result column="rfID" property="rfID" jdbcType="VARCHAR" />
+    <result column="scan_num" property="scan_num" jdbcType="INTEGER" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+    <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+    <result column="is_active" property="is_active" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, status,recycle_num,comment,hotel_id,rfID, scan_num,create_time, update_time, creater_id, updater_id, is_active
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from cloth
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cloth
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.Cloth"  useGeneratedKeys="true" keyProperty="id"
+          keyColumn="id">
+    insert into cloth (id, status, recycle_num,comment,hotel_id,rfID,scan_num,
+      create_time, update_time, creater_id, 
+      updater_id, is_active)
+    values (#{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{recycle_num,jdbcType=INTEGER},
+     #{comment,jdbcType=VARCHAR},#{hotel_id,jdbcType=VARCHAR},#{rfID,jdbcType=VARCHAR},#{scan_num,jdbcType=INTEGER},
+      #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}, #{creater_id,jdbcType=INTEGER},
+      #{updater_id,jdbcType=INTEGER}, #{is_active,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.Cloth"  useGeneratedKeys="true" keyProperty="id"
+          keyColumn="id">
+    insert into cloth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="recycle_num != null" >
+        recycle_num,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id,
+      </if>
+      <if test="rfID != null" >
+        rfID,
+      </if>
+      <if test="scan_num != null" >
+        scan_num,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="creater_id != null" >
+        creater_id,
+      </if>
+      <if test="updater_id != null" >
+        updater_id,
+      </if>
+      <if test="is_active != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="recycle_num != null" >
+        #{recycle_num,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="hotel_id != null" >
+        #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="rfID != null" >
+        #{rfID,jdbcType=VARCHAR},
+      </if>
+      <if test="scan_num != null" >
+        #{scan_num,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        #{is_active,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertQRCodeAndRfid" parameterType="com.aaroom.beans.Cloth">
+    insert into cloth(id,rfID) values (#{id,jdbcType=INTEGER},#{rfID,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.Cloth" >
+    update cloth
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="recycle_num != null" >
+        recycle_num = #{recycle_num,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id = #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="rfID != null" >
+        rfID = #{rfID,jdbcType=VARCHAR},
+      </if>
+      <if test="scan_num != null" >
+        scan_num = #{scan_num,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater_id != null" >
+        creater_id = #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        updater_id = #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_active != null" >
+        is_active = #{is_active,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.Cloth" >
+    update cloth
+    set status = #{status,jdbcType=INTEGER},
+      recycle_num = #{recycle_num,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      hotel_id = #{hotel_id,jdbcType=VARCHAR},
+      rfID = #{rfID,jdbcType=VARCHAR},
+      scan_num = #{scan_num,jdbcType=INTEGER},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      creater_id = #{creater_id,jdbcType=INTEGER},
+      updater_id = #{updater_id,jdbcType=INTEGER},
+      is_active = #{is_active,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getIdByClothTypeId" parameterType="Integer" resultType="Integer">
+    select id from cloth where cloth_type_id=#{cloth_type_id}
+  </select>
+  <select id="getClothByid" parameterType="Integer" resultType="com.aaroom.beans.Cloth">
+    select * from cloth where id = #{id}
+  </select>
+  <select id="getClothid" resultType="java.lang.Integer">
+    select id from cloth
+  </select>
+  <select id="getClothByRfid" resultType="com.aaroom.beans.Cloth">
+    select * from cloth where rfID = #{rfID};
+  </select>
+  <insert id="insertClothByClothTypeId" parameterType="Integer">
+      insert into cloth set cloth.cloth_type_id =#{cloth_type_id}
+  </insert>
+  <update id="updateStatusByclothId">
+    update cloth set status = #{status,jdbcType=INTEGER} where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getLatestClothList" resultType="com.aaroom.beans.Cloth">
+    SELECT * from cloth c
+    WHERE <![CDATA[ c.create_time>=#{start} ]]>
+    AND c.id in
+      (
+        select cloth_id from rel_cloth_type
+        where cloth_type_id in
+          <foreach item="cloth_type_id" index="index" collection="cloth_type_ids"
+                   open="(" separator="," close=")">
+            #{cloth_type_id}
+          </foreach>
+        group by cloth_id
+        having count(cloth_type_id) = #{size}
+      )
+  </select>
+
+  <select id="getClothDetail" parameterType="Integer" resultType="com.aaroom.beans.Cloth">
+    select * from cloth where id = #{id}
+  </select>
+
+  <select id="selectByrfID" resultType="com.aaroom.beans.Cloth">
+    SELECT * FROM cloth where rfID = #{rfID}
+  </select>
+
+</mapper>

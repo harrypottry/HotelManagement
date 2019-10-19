@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaroom.persistence.ClothErrorMapper" >
+  <resultMap id="BaseResultMap" type="com.aaroom.beans.ClothError" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cloth_id" property="cloth_id" jdbcType="INTEGER" />
+    <result column="reporter_id" property="reporter_id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="responser_id" property="responser_id" jdbcType="INTEGER" />
+    <result column="responser_type" property="responser_type" jdbcType="INTEGER" />
+    <result column="hotel_id" property="hotel_id" jdbcType="INTEGER" />
+    <result column="creater_id" property="creater_id" jdbcType="INTEGER" />
+    <result column="updater_id" property="updater_id" jdbcType="INTEGER" />
+    <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+    <result column="is_active" property="is_active" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cloth_id, reporter_id, type, comment, status, responser_id, responser_type, hotel_id,
+    creater_id, updater_id, create_time, update_time, is_active
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from cloth_error
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cloth_error
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaroom.beans.ClothError" >
+    insert into cloth_error (id, cloth_id, reporter_id,
+      type, comment, status,
+      responser_id, responser_type, hotel_id,
+      creater_id, updater_id, create_time,
+      update_time, is_active)
+    values (#{id,jdbcType=INTEGER}, #{cloth_id,jdbcType=INTEGER}, #{reporter_id,jdbcType=INTEGER},
+      #{type,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{responser_id,jdbcType=INTEGER}, #{responser_type,jdbcType=INTEGER}, #{hotel_id,jdbcType=VARCHAR},
+      #{creater_id,jdbcType=INTEGER}, #{updater_id,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP},
+      #{update_time,jdbcType=TIMESTAMP}, #{is_active,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaroom.beans.ClothError" >
+    insert into cloth_error
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cloth_id != null" >
+        cloth_id,
+      </if>
+      <if test="reporter_id != null" >
+        reporter_id,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="responser_id != null" >
+        responser_id,
+      </if>
+      <if test="responser_type != null" >
+        responser_type,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id,
+      </if>
+      <if test="creater_id != null" >
+        creater_id,
+      </if>
+      <if test="updater_id != null" >
+        updater_id,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="is_active != null" >
+        is_active,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cloth_id != null" >
+        #{cloth_id,jdbcType=INTEGER},
+      </if>
+      <if test="reporter_id != null" >
+        #{reporter_id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="responser_id != null" >
+        #{responser_id,jdbcType=INTEGER},
+      </if>
+      <if test="responser_type != null" >
+        #{responser_type,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="hotel_id != null" >
+        #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="creater_id != null" >
+        #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="is_active != null" >
+        #{is_active,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaroom.beans.ClothError" >
+    update cloth_error
+    <set >
+      <if test="cloth_id != null" >
+        cloth_id = #{cloth_id,jdbcType=INTEGER},
+      </if>
+      <if test="reporter_id != null" >
+        reporter_id = #{reporter_id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="responser_id != null" >
+        responser_id = #{responser_id,jdbcType=INTEGER},
+      </if>
+      <if test="responser_type != null" >
+        responser_type = #{responser_type,jdbcType=INTEGER},
+      </if>
+      <if test="hotel_id != null" >
+        hotel_id = #{hotel_id,jdbcType=VARCHAR},
+      </if>
+      <if test="creater_id != null" >
+        creater_id = #{creater_id,jdbcType=INTEGER},
+      </if>
+      <if test="updater_id != null" >
+        updater_id = #{updater_id,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="is_active != null" >
+        is_active = #{is_active,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaroom.beans.ClothError" >
+    update cloth_error
+    set cloth_id = #{cloth_id,jdbcType=INTEGER},
+      reporter_id = #{reporter_id,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      responser_id = #{responser_id,jdbcType=INTEGER},
+      responser_type = #{responser_type,jdbcType=INTEGER},
+      hotel_id = #{hotel_id,jdbcType=VARCHAR},
+      creater_id = #{creater_id,jdbcType=INTEGER},
+      updater_id = #{updater_id,jdbcType=INTEGER},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      is_active = #{is_active,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getErrorsByHotelId" resultType="com.aaroom.beans.ClothError">
+    select * from cloth_error
+    where hotel_id = #{hotel_id} and is_active = 1
+  </select>
+  <select id="getClothErrorsByHotelIdAndClothId" resultType="com.aaroom.beans.ClothError">
+    select * from cloth_error
+    where hotel_id = #{hotel_id} and is_active = 1
+    and cloth_id = #{cloth_id}
+  </select>
+  <select id="getErrorClothidByHotelId" resultType="java.lang.Integer">
+    select cloth_id from cloth_error
+    where hotel_id = #{hotel_id} and is_active = 1
+  </select>
+
+  <select id="getErrorClothListByHotelidOrType" resultType="com.aaroom.beans.ClothError">
+    select * from cloth_error
+    <where>
+      1=1
+      <if test="type != null and type != ''">
+        and `type` = #{type}
+      </if>
+      <if test="hotelId != null and hotelId != ''">
+        and hotel_id = #{hotelId}
+      </if>
+    </where>
+    <if test="index!= null and pageSize!=null">
+      limit #{index},#{pageSize}
+    </if>
+  </select>
+  <select id="getErrorClothListByHotelidOrTypeNolimit" resultType="java.lang.Integer">
+    select count(1) from cloth_error
+    <where>
+      1=1
+      <if test="type != null and type != ''">
+        and `type` = #{type}
+      </if>
+      <if test="hotelId != null and hotelId != ''">
+        and hotel_id = #{hotelId}
+      </if>
+    </where>
+  </select>
+
+  <select id="getClothErrorByDuringTime" resultType="com.aaroom.beans.ClothError">
+    select * from cloth_error
+    where hotel_id = #{hotel_id} and is_active = 1
+    AND create_time between #{StartTime} and #{EndTime}
+  </select>
+  <select id="getClothErrorList" resultType="com.aaroom.model.ClothErrorView">
+    SELECT ce.cloth_type_id cloth_type_id,ce.cloth_id cloth_id,ce.type error_type,c.recycle_num recycle_num ,
+    hb.hotel_name hotel_name,cp.cloth_price cloth_price ,c.create_time create_time,ce.create_time error_time,
+    hb.id hotel_id
+    FROM cloth_error ce LEFT JOIN cloth_price cp
+    ON ce.cloth_id = cp.cloth_id LEFT JOIN  cloth c ON cp.cloth_id  = c.id
+    LEFT JOIN  hotel_base hb ON ce.hotel_id = hb.id
+    <where>
+      1=1
+      <if test="beginDate != null and beginDate != ''">
+          and ce.create_time >= #{beginDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+          and ce.create_time &lt;= #{endDate}
+      </if>
+      <if test="hotelId != null and hotelId != ''">
+          and hb.id = #{hotelId}
+      </if>
+    </where>
+    group by ce.cloth_id
+      <if test="index != null and pageSize != null">
+        limit #{index},#{pageSize}
+      </if>
+  </select>
+<select id="getErrorClothListCount" resultType="long">
+  SELECT count(distinct ce.cloth_id)
+  FROM cloth_error ce LEFT JOIN cloth_price cp
+  ON ce.cloth_id = cp.cloth_id LEFT JOIN  cloth c ON cp.cloth_id  = c.id
+  LEFT JOIN  hotel_base hb ON ce.hotel_id = hb.id
+
+  <where>
+    1=1
+    <if test="beginDate != null and beginDate != ''">
+      and ce.create_time >= #{beginDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and ce.create_time &lt;= #{endDate}
+    </if>
+    <if test="hotelId != null and hotelId != ''">
+      and hb.id = #{hotelId}
+    </if>
+  </where>
+</select>
+  <select id="getAllErrorClothListInfo" resultType="com.aaroom.model.ClothErrorView">
+    SELECT ce.cloth_type_id cloth_type_id,ce.cloth_id cloth_id,ce.type error_type,c.recycle_num recycle_num ,
+    hb.hotel_name hotel_name,cp.cloth_price cloth_price ,c.create_time create_time,ce.create_time error_time,
+    hb.id hotel_id
+    FROM cloth_error ce LEFT JOIN cloth_price cp
+    ON ce.cloth_id = cp.cloth_id LEFT JOIN  cloth c ON cp.cloth_id  = c.id
+    LEFT JOIN  hotel_base hb ON ce.hotel_id = hb.id
+    group by ce.cloth_id
+  </select>
+
+</mapper>

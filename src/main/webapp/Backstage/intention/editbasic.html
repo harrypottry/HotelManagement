@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>意向门店门店详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../import/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../import/adminlte/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../import/style.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 上导航 -->
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    超级管理员：史鑫
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">个人资料</span>
+                    <span class="dropdown-item dropdown-header">修改密码</span>
+                    <span class="dropdown-item dropdown-header">退出</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="../index.html" class="brand-link">
+            <img src="../../import/img/logo.png" style="height:30px">
+        </a>
+        <!-- 左导航 -->
+        <div class="sidebar">
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"></ul>
+            </nav>
+        </div>
+    </aside>
+    <!--页面content-->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#basic" data-toggle="tab">酒店概况</a></li>
+            </ul>
+        </section>
+        <section class="content">
+            <div class="tab-content">
+                <div class="tab-pane active show" id="basic"><!--酒店概况-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>酒店名称：</b><input type="text" class="form-control hotelName" data-id="hotelName"></p>
+                                    <p>
+                                        <b class="inputname"><span>* </span>酒店地址：</b><span id="distpicker"><select class="form-control" id="province1" style="width:6.5rem" data-id="hotelProvince"></select>&nbsp;<select class="form-control" id="city1" style="width:7rem" data-id="hotelCity"></select>&nbsp;<select class="form-control" id="district1" style="width:7rem" data-id="hotelCounty"></select></span>
+                                    </p>
+                                    <p><b class="inputname"><span>* </span>详细地址：</b><input type="text" class="form-control" data-id="hotelStreetAddress"></p>
+                                    <p><b class="inputname"><span>* </span>房间总数：</b><input type="text" class="form-control" data-id="roomNum"></p>
+                                    <p><b class="inputname" style="vertical-align:top;"><span>* </span>门头照片：</b><span class="upimg"><b>上传门头照片</b><img src=""><input class="import-btn" type="file" accept="image/*" data-id="doorwayPhoto"></span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b class="inputname"><span>* </span>业主姓名：</b><input type="text" class="form-control" data-id="owernName"></p>
+                                    <p><b class="inputname"><span>* </span>业主电话：</b><input type="text" class="form-control" data-id="owernPhone"></p>
+                                    <p><b class="inputname">业主邮箱：</b><input type="text" class="form-control" data-id="owernEmail"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>
+                                        <b class="inputname" style="vertical-align:top;">业主身份证：</b><span class="upimg"><b>上传业主身份证正面</b><img src=""><input class="import-btn" type="file" accept="image/*" data-id="owernIdcardPhotoz"></span>
+                                        <span class="upimg"><b>上传业主身份证反面</b><img src=""><input class="import-btn" type="file" accept="image/*" data-id="owernIdcardPhotof"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><b class="inputname" style="vertical-align:top;">备注：</b><textarea class="form-control" rows="3" style="width:70%" data-id="remark"></textarea></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <span class="btn btn-secondary" data-id="1">保存</span>
+                                    <span class="btn btn-danger" data-id="2">提交</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="warn">
+    <div></div>
+</div>
+<script src="../../import/adminlte/js/jquery.min.js"></script>
+<script src="../../import/adminlte/js/bootstrap.min.js"></script>
+<script src="../../import/adminlte/js/options.js"></script>
+<script src="../../import/adminlte/js/distpicker.js"></script>
+<script src="../../import/adminlte/js/adminlte.min.js"></script>
+<script src="../../import/script.js"></script>
+<script>
+    var basic={id:sessionStorage.getItem('surveyId')};//酒店概况数据
+    var serversbasic={id:sessionStorage.getItem('surveyId')};//数据库酒店概况数据
+    $(document).ready(function(){
+        getrequest();// 获取酒店概况
+    });
+    function getrequest(){
+        $.ajax({
+            url :'/console/api/getIntentionStoreSurvey',
+            data :{surveyId:basic.id},
+            type: "GET",
+            success:function(res,Province,City,County){
+                Province='',City='',County='';
+                $('#basic .form-control').each(function (name) {
+                    name=$(this).attr('data-id');
+                    if(!(name=='hotelProvince'||name=='hotelCity'||name=='hotelCounty')){$(this).val(res[name]);}
+                    if(name=='hotelProvince'&&res.hotelProvince){Province=ChineseDistricts['86'][res[name]];}//省
+                    if(name=='hotelCity'&&res.hotelProvince&&res.hotelCity){City=ChineseDistricts[res.hotelProvince][res[name]];}//市
+                    if(name=='hotelCounty'&&res.hotelCity&&res.hotelCounty){ County=ChineseDistricts[res.hotelCity][res[name]];}//县
+                });
+                $("#distpicker").distpicker({province:Province,city:City,district:County});//省市县
+                $('#basic .import-btn').each(function(Photo){//照片
+                    Photo=res[$(this).attr('data-id')].split('&').slice(-1)[0];
+                    if(Photo!='null'&&Photo!=''){
+                        $(this).prev('img').attr('src',res[$(this).attr('data-id')]).show();
+                        basic[$(this).attr('data-id')]=Photo;
+                    }
+                });
+            }
+        });
+    }
+    // 照片上传
+    $('#basic .import-btn').change(function($input,file){
+        $input=$(this);
+        file=$input[0].files[0];
+        var formData = new FormData();
+        formData.append('file',file);
+        $.ajax({
+            url:'/console/api/addIntentionStoreSurveyPhoto',
+            type: 'post',
+            processData: false,// 告诉jQuery不要去处理发送的数据
+            contentType: false,// 告诉jQuery不要去设置Content-Type请求头
+            data:formData,
+            success: function (res) {
+                if(res.length){
+                    basic[$input.attr('data-id')]=res[0];
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function(e){
+                        $input.prev('img').attr('src',e.target.result).show();
+                    }
+                }else{
+                    $input.prev('img').hide();
+                    basic[$input.attr('data-id')]='';
+                }
+            }
+        })
+    });
+    $('#basic .btn').click(function(goon){//保存或提交
+        basic['type']=$(this).attr('data-id');//1保存2提交
+        goon=true;
+        $('#basic .form-control').each(function(name){
+            name=$(this).attr('data-id');
+            basic[name]=$(this).val();
+            if(basic.type=='1'&&name=='hotelName'){//1保存--酒店名称必填
+                if(!$(this).val()){
+                    goon=false;alert('请填写酒店名称！');$(this).focus();return false;
+                }
+            }
+            if(basic.type=='2'&&!(name=='hotelCity'||name=='hotelCounty'||name=='owernEmail'||name=='remark')){//2提交
+                if(!$(this).val()){
+                    goon=false;
+                    alert('请填写必填项！');
+                    $(this).focus();return false;
+                }
+            }
+        });
+        if(goon){
+            if(basic.type=='2'){//2提交
+                if(!basic['doorwayPhoto']){alert('请上传门头照片！');return false;}
+                if(!basic['owernIdcardPhotoz']){alert('请上传业主身份证正面！');return false;}
+                if(!basic['owernIdcardPhotof']){alert('请上传业主身份证反面！');return false;}
+            }
+            $.ajax({
+                url:'/console/api/updateIntentionStoreSurvey',
+                type: 'post',
+                contentType: 'application/json',
+                data:JSON.stringify(basic),
+                success:function (res){
+                    warn(res.msg);
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>
